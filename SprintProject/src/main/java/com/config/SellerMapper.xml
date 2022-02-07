@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SellerMapper">
+
+
+<insert id="insert" parameterType="SellerDTO">
+	insert into seller( sid,spw,sname,saddress1,saddress2, semail1,semail2 ,spost , sphone1 ,
+	sphone2 , sphone3 , sbirth ) values
+	
+( #{sid}, #{spw}, #{sname}, #{saddress1}, #{saddress2}, #{semail1},#{semail2} ,#{spost} , #{sphone1} ,
+	#{sphone2} , #{sphone3} , null  )
+
+</insert>
+	
+	
+<select id="idCheck" resultType="int" parameterType="string">
+	select count(*)
+	from seller
+	where sid = #{sid}
+
+</select>	
+
+<select id="login" resultType="SellerDTO" parameterType="map">
+	select *
+	from seller
+	where sid = #{sid} and spw = #{spw}
+</select>
+	
+
+
+
+
+
+</mapper>

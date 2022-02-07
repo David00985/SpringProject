@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GoodsMapper">
+
+
+
+	<select id="selectAllByCategory" parameterType="string" resultType="GoodsDTO">
+		select *
+		from goods
+		where gcategory = #{gcategory}
+	
+	</select>
+	
+	
+	
+	
+	
+	<select id="goodsRetrieve" parameterType="string" resultType="GoodsDTO" >
+		select * from goods where gid = #{gid}
+	</select>
+	
+	<update id="GhitPlusOne" parameterType="string">
+		update goods set ghit = ghit +1 where gid = #{gid}
+	</update>
+	
+	<insert id="SellerGoodsAdd" parameterType="GoodsDTO" >
+insert into goods (gid, sid, gcategory, gname, gprice, gdiscount, gimage1, gimage2, gimage3, gdetail, grdate)
+values (#{gid}, #{sid}, #{gcategory}, #{gname}, #{gprice}, 0, #{gimage1}, #{gimage2}, #{gimage3}, #{gdetail}, sysdate)
+
+</insert> 
+
+
+<select id="SellerGoodsList" resultType="GoodsDTO">
+select * from goods where sid = #{sid}
+
+</select>
+
+<update id="SellerGoodsUpdate" parameterType="GoodsDTO">
+update goods set
+gname =  #{gname},
+gprice = #{gprice},
+gdetail = #{gdetail}
+where gid = #{gid}
+
+</update>
+
+<delete id="SellerGoodsDelete" parameterType="String">
+
+delete from goods where gid = #{gid}
+
+</delete>
+
+
+<select id="SellerGoodsIDCheck" resultType="int" parameterType="String">
+select count(*) from goods where gid = #{gid}
+</select>
+
+
+
+
+
+</mapper>
