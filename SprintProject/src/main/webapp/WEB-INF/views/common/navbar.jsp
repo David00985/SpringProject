@@ -88,8 +88,7 @@
 	    <nav class="navbar2">
 	        <a href="loginCheck/cart">장바구니</a>
 	        <a href="loginCheck/mypage">마이페이지</a>
-	        <a href="#">주문확인</a>
-	        <a href="#">배송확인</a>
+	        <a href="loginCheck/orderChart">주문조회</a>
 	        <a href="loginCheck/logout">로그아웃</a>
 	    </nav>
 	
