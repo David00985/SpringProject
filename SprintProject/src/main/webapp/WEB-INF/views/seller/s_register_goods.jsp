@@ -162,6 +162,7 @@ function reload(){
 			var gname = $("#gname"+gid).val();
 			var gprice = $("#gprice"+gid).val();
 			var gdetail = $("#gdetail"+gid).val();
+			var gcategory = $("#gcategory"+gid).val();
 			var gprice2 = gprice.replace(",","");
 		
 		$.ajax({
@@ -173,7 +174,8 @@ function reload(){
 				gid : gid,
 				gname : gname,
 				gprice : gprice2,
-				gdetail : gdetail
+				gdetail : gdetail,
+				gcategory : gcategory
 				
 			},
 			
@@ -272,9 +274,7 @@ function reload(){
 	   int gprice = d.getGprice();
 	   String gdetail = d.getGdetail();
 	   String grdate = d.getGrdate();
-	 	
-	 
-	
+		
 
    %>	
    
@@ -282,7 +282,7 @@ function reload(){
 <table border="1" style="padding: 15px" >
 	<caption>상품현황 </caption>
 		 <tr>
-		 	<th rowspan="11">상품 이미지</th><!-- 수정구현 필 -->
+		 	<th rowspan="11"><img alt="" width="160" height="240" src="resources/images/items/<%=d.getGimage1() %>.gif"></th><!-- 수정구현 필 -->
 			<th>상품 아이디</th>
 		</tr>
 		<tr>
@@ -305,10 +305,10 @@ function reload(){
 		<tr>
 			<td><center><input type="text" name="gdetail" id="gdetail<%=gid%>" value="<%=gdetail %>"></center></td>
 		<tr>
-			<th>상품 등록일</th>
+			<th>상품 카테고리</th>
 		</tr>
 		<tr>
-			<th><%=grdate %></th>
+			<td><center><input type="text" name="gcategory" id="gcategory<%=gid%>" value="<%=gcategory %>"></center></td>
 		</tr>
 		<tr>
 			<td colspan="2">
