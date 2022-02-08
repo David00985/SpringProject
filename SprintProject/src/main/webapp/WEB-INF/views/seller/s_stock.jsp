@@ -12,21 +12,18 @@
    <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
 
   
-<%-- 
+
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <%
-	int count = (int)request.getAttribute("count");
+	int count = (int)session.getAttribute("count");
 %>
-
- --%>
-
 <!-- 재고 관리 페이지 -->
 
 <div class="cardBox">
 	<div class="card">
 		
 		<div>
-			<div class="numbers"><%-- <%=count %> --%></div>
+			<div class="numbers"><%=count %></div>
 			<div class="cardName">등록 상품 수</div>
 		</div>
 		<div class="iconBx">
@@ -65,10 +62,105 @@
 	</div>
 </div>
 <!-- end cardBox -->
+
+<script type="text/javascript">
+function back() {
+	history.back();
+}
+</script>
+
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	$("#check").on("click", function() {
+		var gid = $("#gid").val();
+		var gsize = $("#gsize").val();
+		var gcolor = $("#gcolor").val();
+		var gstock = $("#gstock").val();
+		
+		if (gid == "") {
+			alert("아이디를 입력해주세요");
+		}else if (gstock == "") {
+			alert("재고수량을 입력해주세요");
+		}
+		
+		if(gid != "" && gstock != 0){
+		$.ajax({
+			
+			url: "SellerStockCheck",
+			type: "get",
+			dataType : "text",
+			data: {
+				gid : gid,
+				gsize : gsize,
+				gcolor : gcolor
+			},
+		success: function(data, status, xhr) {
+				console.log(data);
+				if (data == 0) {
+					alert("등록 가능한 상품입니다.");
+				}else if(data == 1){
+					alert("중복된 상품입니다.");
+				}
+				
+				
+		},
+		error : function(xhr, status, error) {
+					console.log(error);			
+		}
+		
+			
+		})//ajax
+		}
+	})//keyup
+
+})//function
+</script>
+<hr>
+ <h2><center>재고등록 </center></h2><br>
+<hr>
+<form action="SellerStockAdd" method="get">
+
+<table border="1">
+			<tr>
+				<th>상품번호</th>
+				<th>상품사이즈</th>
+				<th>상품색상</th>
+				<th>상품 재고수량</th>
+			</tr>
+			<tr>
+				<td><input type="text" name="gid" id="gid" placeholder="상품번호"></td>
+				<td><select name="gsize" id="gsize" >
+					<option>samll</option>
+					<option>medium</option>
+					<option>large</option>
+				</select></td>
+				<td><select name="gcolor" id="gcolor">
+					<option>black</option>
+					<option>navy</option>
+					<option>ivory</option>
+					<option>white</option>
+				</select></td>
+				<td><input type="text" name="gstock" id="gstock">
+				<input type="button" name="check" id="check" value="중복확인" ></td>					
+			</tr>
+</table>
+
+<hr>
+<input type="submit" value="상품등록">
+	<input type="reset" value="다시입력">
+</form>
+<hr>
+<!-- 재고현황 페이지  -->
 <script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
 </script>
   <script type="text/javascript">
   $(function() {
+	  
+function reload(){  
+       location.reload();
+}
 		
  	 $(".update").on("click", function() {//수정 ajax 처리 
 			var num = $(this).attr("data-num");
@@ -78,7 +170,7 @@
  		 
  		 $.ajax({
  		
- 			 url :"SellerStockUpdateSerlvet",
+ 			 url :"SellerStockUpdate",
  			 type :"get",
  			 dateType :"text",
  			 data : {
@@ -88,8 +180,11 @@
  				 gstock : gstock
  			 },
  			 success: function(data, status, xhr) {
-				console.log(data);
-			},
+				if (data = 1) {
+					alert("수정되었습니다.");
+				}
+ 				 	reload();
+ 			 },
 			error: function(xhr, status, error) {
 				console.log(error);
 			}
@@ -105,14 +200,17 @@
  		 
  		 $.ajax({
  		
- 			 url :"SellerStockDeleteSerlvet",
+ 			 url :"SellerStockDelete",
  			 type :"get",
  			 dateType :"text",
  			 data : {
  				 num : num,
  			 },
  			 success: function(data, status, xhr) {
-				console.log(data);
+ 				if (data = 1) {
+					alert("삭제되었습니다.");
+				}
+ 				 	reload();
 			},
 			error: function(xhr, status, error) {
 				console.log(error);
@@ -125,14 +223,13 @@
 })//fun
 </script>
     
- <%-- 
+ 
 <hr>
- <h1>재고현황 페이지입니다.</h1><br>
- <a id = "stockadd" href="SellerStockAddUiSerlvet">재고등록</a>
+ <h2><center>재고현황 페이지입니다.</center></h2><br>
  <span id="result"></span>
 <hr>
 <%
-	List<StockDTO2> dto2 = (List<StockDTO2>)request.getAttribute("list");
+	List<StockDTO2> dto2 = (List<StockDTO2>)session.getAttribute("list");
  	SellerDTO dto = (SellerDTO)session.getAttribute("login_seller");
 
 		String gid = "";
@@ -193,6 +290,6 @@ if(dto != null){
     
     
     
-     --%>
+    
     
     
