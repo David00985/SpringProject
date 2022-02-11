@@ -1,3 +1,5 @@
+<%@page import="com.dto.StockDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="com.dto.MemberDTO"%>
 <%@page import="com.dto.GoodsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,6 +10,9 @@
 //GoodsController.goodsRetrieve에서 넘어온 데이터이다. 앞으로 바뀔부분.. 1. 리뷰보기  2. select바꾸기 3. 추천상품 나열하기 4. qna 보고쓰기  
 	MemberDTO login_member = (MemberDTO)session.getAttribute("login_member");
 	GoodsDTO dto = (GoodsDTO) request.getAttribute("goodsRetrieve");
+	List<String> sizelist = (List<String>) request.getAttribute("sizelist");
+	List<String> colorlist = (List<String>) request.getAttribute("colorlist");
+	
 	// 넘어오는 데이터:    [large: { "red","25"} ,{"blue","10"}] ,[small: { "red","20"} ,{"white","10"}] ... 
 	// 즉 데이터 형식은 :  Map<"String" , Map<"String", "int">> 
 	// 첫번째 select 에서 뭘 선택하냐에 따라서 두번째 select값이 바껴야 한다. 예를들어 첫번째select에서 large를 선택하면 두번째 color select에서 large에 맞는 색깔과 제고정보가
@@ -56,22 +61,23 @@
    		  </div>
               <h1><%=dto.getGname() %></h1>
               <h4><%=dto.getGprice() %>원</h4>
-              <!-- 추가할 부분~~~~~~ stock에 저장된 사이즈 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` -->
-              <select name="gsize" id="gsize">
+              <!-- 추가할 부분~~~~~~ stock에 저장된 사이즈 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` success-->
+              <select name="gsize" id="gsize" class="stockcheck">
                         <option value="Select Size">Select Size</option>
-                        <option>Large</option>
-                        <option>Medium</option>
-                        <option>Small</option>
+                      	<%for(String size : sizelist){%> <!--해당상품에 대한 사이즈 출력하기 -->
+                        <option><%=size %></option>
+                       	<% }%> 
               </select>
-                <!-- 추가할 부분~~~~~~ stock에 저장된 색깔 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` -->
-              <select name="gcolor" id="gcolor">
-	                        <option>Select Color</option>
-	                        <option>Red</option>
-	                        <option>Blue</option>
-	                        <option>White</option>
-	              </select>
+                <!-- 추가할 부분~~~~~~ stock에 저장된 색깔 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` success-->
+              <select name="gcolor" id="gcolor" class="stockcheck">
+	                    <option>Select Color</option>
+	                    <%for(String color : colorlist){%><!--해당상품에 대한 컬러 출력하기 -->
+                        <option><%=color%></option>
+                       	<% }%> 
+	              </select><br>
+	          	 <p id="stock"></p>
               <input type="number" value="1" name="gamount" id="cqty">
-              <button id="" class="btn" data-id="<%=dto.getGid() %>" data-login="<%=check %>" >Add To Cart</button>
+              <button id="cart" class="btn" data-id="<%=dto.getGid() %>" data-login="<%=check %>" >Add To Cart</button>
               <h3>Product Details</h3><br>
               <p><%=dto.getGdetail() %></p>
    		</div>

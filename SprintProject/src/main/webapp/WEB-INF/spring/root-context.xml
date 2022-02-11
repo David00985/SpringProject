@@ -38,6 +38,7 @@
 				<value>classpath:com/config/MemberMapper.xml</value>				
 				<value>classpath:com/config/SellerMapper.xml</value>				
 				<value>classpath:com/config/StockMapper.xml</value>				
+				<value>classpath:com/config/OrderMapper.xml</value>				
 			</list>		
 		</property>
 		<property name="typeAliases">
@@ -50,7 +51,7 @@
 				<value>com.dto.StockDTO2</value>	
 				<value>com.dto.CouponDTO</value>	
 				<value>com.dto.CouponUserDTO</value>	
-							
+				<value>com.dto.OrderDTO</value>	
 			</list>		
 		</property>
 	</bean>	

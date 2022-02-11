@@ -2,9 +2,14 @@ package com.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,8 +29,10 @@ import com.dto.CouponDTO;
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
 import com.dto.MemberDTO;
+import com.dto.StockDTO;
 import com.service.CartService;
 import com.service.GoodsService;
+import com.service.StockService;
 
 @Controller
 public class GoodsController {
@@ -243,11 +250,25 @@ public class GoodsController {
 	
 	
 	
-	// 현재는 gooddto 1개만 보내지만, 앞으로 게시판, 리뷰정보 등등. 많이 고쳐야한다. 여기 정말 많이 바껴야 한다. 
+	// 현재는 gooddto 2개만 보내지만, 앞으로 게시판, 리뷰정보 등등. 많이 고쳐야한다. 여기 정말 많이 바껴야 한다. 
 	@RequestMapping(value = "/goodsRetrieve")
 	public ModelAndView goodsRetrieve(@RequestParam String gid) {		
 		ModelAndView mav = new ModelAndView();		
 		GoodsDTO dto = service.goodsRetrieve(gid);	
+		
+		//gid에 대한 아이디 재고현황 리스트 뽑기 
+		List<StockDTO> sdto = service.stockRetrieve(gid);
+		
+		List<String> size = new ArrayList<String>(); //사이즈를 담을 리스트
+		List<String> color = new ArrayList<String>();//사이즈를 담을 컬러
+		
+		for(StockDTO s : sdto ) {
+		size.add(s.getGsize()); //재고현황리스트에 사이즈만 생성된 List에 넣는다
+		color.add(s.getGcolor()); // 재고현황리스트에 컬러만 생성된 List에 넣는다.
+		}
+		
+		List<String> sizelist = size.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
+		List<String> colorlist = color.stream().distinct().collect(Collectors.toList());//여러개의 중복사이즈 데이터중 중복된 데이터를 제거
 		
 		if( dto == null) {
 			//주소로 gid를 보내기때문에 그럴 가능성은 적지만.. 			
@@ -260,6 +281,8 @@ public class GoodsController {
 			
 			// gid에 맞는 상품정보를 mav에 담에서 보낸다. 
 			mav.addObject("goodsRetrieve", dto);
+			mav.addObject("sizelist", sizelist);
+			mav.addObject("colorlist", colorlist);
 			mav.setViewName("goodsRetrieve");
 		}
 		return mav;		
@@ -306,8 +329,15 @@ public class GoodsController {
 		return nextpage;
 	}
 	
-	
-	
+	@RequestMapping(value = "/goodsRetrieveStockCheck")
+	@ResponseBody
+	public int goodsRetrieveStockCheck(StockDTO dto) {
+		
+		int stock = service.goodsRetrieveStockCheck(dto);
+		
+		return stock;
+				
+	}
 	
 	
 	

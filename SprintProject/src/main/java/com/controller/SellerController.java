@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.GoodsDTO;
+import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
 import com.dto.StockDTO2;
@@ -125,15 +126,25 @@ public class SellerController {
 	@RequestMapping(value = "/registerGoods")
 	public String registerGoods(HttpSession session , HttpServletRequest request) {
 		SellerDTO seller = (SellerDTO) session.getAttribute("login_seller");
+		String curPage = request.getParameter("curPage");
+		System.out.println(curPage);
+		if(curPage == null){curPage = "1";};
+		
 		String sid = seller.getSid();
+		
+		
 		int count = 0;
 		List<GoodsDTO> list = service.SellerGoodsList(sid);
-
+		PageDTO pdto = service.SellergoodsPage(sid,Integer.parseInt(curPage));
+		
+		System.out.println(pdto);
+		
 		for (int i = 0; i <= list.size(); i++) {
 			count = i;
 		}
 
 		session.setAttribute("list", list);
+		session.setAttribute("pdto", pdto);
 		session.setAttribute("listcount", count);
 
 		return  "s_register_goods";
@@ -141,7 +152,7 @@ public class SellerController {
 	
 	//상품현황 삭제
 	@RequestMapping(value = "/SellerGoodsDelete")
-	@ResponseBody
+	@ResponseBody//문자열로 리턴 jsp가아니라 
 	public int SellerGoodsDelete(String gid, HttpSession session) {
 		
 		int num = service.SellerGoodsDelete(gid);
@@ -151,7 +162,7 @@ public class SellerController {
 			mesg = 1;
 		}
 		
-		return mesg;
+		return mesg; //jsp가아니라 문자열 ajax의 success부분의 data로 리턴 
 	}
 	
 	//상품현황 수정
@@ -182,7 +193,6 @@ public class SellerController {
 		List<StockDTO> sDTO = service.SelectStock(sid);//판매자 상품 재고현황 리스트
 		List<GoodsDTO> gDTO = service.SelectGoods(sid);//로그인 된 판매자의 상품리스 가져오기
 		
-		
 		for (int i = 0; i <= sDTO.size(); i++) {
 			count = i;
 		}
@@ -193,6 +203,7 @@ public class SellerController {
 		String gsize = null; // 상품 사이즈 값
 		int gstock = 0;  // 상수 수량값
 		String gname = null; // 상품이름 
+		String gimage = null;
 		int num = 0;
 		
 		for (StockDTO s : sDTO) {
@@ -208,9 +219,9 @@ public class SellerController {
 					gsize = s.getGsize();
 					gstock = s.getGstock();
 					gname = g.getGname();
+					gimage = g.getGimage1();
 					
-					
-			StockDTO2 dto2  = new StockDTO2(gid, gcolor, gstock, gsize, gname, num);//for문안에서 객체생성
+			StockDTO2 dto2  = new StockDTO2(gid2, gcolor, gstock, gsize, gname, num, gimage);//for문안에서 객체생성
 			
 			list.add(dto2); //list에 담아준다.
 					
@@ -220,7 +231,7 @@ public class SellerController {
 		
 		session.setAttribute("list", list);
 		session.setAttribute("count",count);	
-		
+		session.setAttribute("gDTO",gDTO);	
 		
 		return  "s_stock";
 	}
