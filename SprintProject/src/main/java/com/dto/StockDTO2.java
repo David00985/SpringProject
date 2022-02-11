@@ -10,6 +10,7 @@ public class StockDTO2 {
 	String gsize;
 	String gname;
 	int num;
+	String gimage;
 
 	public StockDTO2() {
 		super();
@@ -24,13 +25,21 @@ public class StockDTO2 {
 		this.num = num;
 	}
 
+	public String getGimage() {
+		return gimage;
+	}
+
+	public void setGimage(String gimage) {
+		this.gimage = gimage;
+	}
+
 	@Override
 	public String toString() {
 		return "StockDTO2 [gid=" + gid + ", gcolor=" + gcolor + ", gstock=" + gstock + ", gsize=" + gsize + ", gname="
-				+ gname + ", num=" + num + "]";
+				+ gname + ", num=" + num + ", gimage=" + gimage + "]";
 	}
 
-	public StockDTO2(String gid, String gcolor, int gstock, String gsize, String gname, int num) {
+	public StockDTO2(String gid, String gcolor, int gstock, String gsize, String gname, int num, String gimage) {
 		super();
 		this.gid = gid;
 		this.gcolor = gcolor;
@@ -38,6 +47,7 @@ public class StockDTO2 {
 		this.gsize = gsize;
 		this.gname = gname;
 		this.num = num;
+		this.gimage = gimage;
 	}
 
 	public String getGid() {
@@ -79,6 +89,5 @@ public class StockDTO2 {
 	public void setGname(String gname) {
 		this.gname = gname;
 	}
-	
-	
+
 }

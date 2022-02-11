@@ -52,7 +52,6 @@
 				<value>com.dto.CouponDTO</value>	
 				<value>com.dto.CouponUserDTO</value>	
 				<value>com.dto.OrderDTO</value>	
-							
 			</list>		
 		</property>
 	</bean>	

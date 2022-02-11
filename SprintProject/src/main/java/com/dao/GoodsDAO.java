@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.dto.CartDTO;
 import com.dto.GoodsDTO;
+import com.dto.StockDTO;
 
 @Service
 public class GoodsDAO {
@@ -38,6 +39,16 @@ public class GoodsDAO {
 		// TODO Auto-generated method stub
 		int m = session.insert("CartMapper.cartAdd" , dto);
 		return m;
+	}
+
+	public List<StockDTO> stockRetrieve(String gid) {
+		List<StockDTO> list = session.selectList("GoodsMapper.stockRetrieve",gid);
+		return list;
+	}
+
+	public int goodsRetrieveStockCheck(StockDTO dto) {
+		int stock = session.selectOne("GoodsMapper.goodsRetrieveStockCheck",dto);
+		return stock;
 	}
 
 	

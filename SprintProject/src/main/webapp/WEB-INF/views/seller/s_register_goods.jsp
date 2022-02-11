@@ -1,3 +1,4 @@
+<%@page import="com.dto.PageDTO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.dto.GoodsDTO"%>
 <%@page import="java.util.List"%>
@@ -88,6 +89,34 @@ $(function() {
 		
 	})//keyup
 	
+	
+	$("#sub").on("click", function() {
+		var gid = $("#gid").val();
+		var gname = $("#gname").val();
+		var gprice = $("#gprice").val();
+		var gimage = $("#gimage1").val();
+		var gdetail = $("#gdetail").val();
+		
+		if (gid.length == 0 ) {
+			alert("상품의 아이디를 입력해주세요");
+			event.preventDefault();
+		}else if (gname.length == 0 ) {
+			alert("상품의 이름을 입력해주세요");
+			event.preventDefault();
+		}else if (gprice.length == 0 ) {
+			alert("상품의 가격을 입력해주세요");
+			event.preventDefault();
+		}else if (gimage.length == 0) {
+			alert("상품의 이미지를 입력해주세요");
+			event.preventDefault();
+		}else if (gdetail.length == 0) {
+			alert("상품의 설명을 입력해주세요");
+			event.preventDefault();
+		}
+		
+	})//click
+	
+	
 })
 
 </script>
@@ -137,7 +166,7 @@ $(function() {
 			<td><textarea type="text" name="gdetail" id="gdetail" rows="5" cols="30" placeholder="상품설명" ></textarea></td>
 		</tr>
 </table>
-<input type="submit" value="상품등록">
+<input type="submit" id="sub" value="상품등록">
 <input type="reset" value="다시입력하기">
 </form>
 <!-- 상품현황 시작 -->
@@ -204,6 +233,7 @@ function reload(){
 			dateType :"text",
 			data: {
 				gid : gid,
+				//key : value (데이터)
 			},
 			
 			success: function(data, status, xhr) {
@@ -240,30 +270,21 @@ function reload(){
     <%
     	} session.removeAttribute("mesg");
     %>
-
-<hr>
-<table width="100%" cellspacing="0" cellpadding="0">
-
-   <tr>
-      <td>
-         <table align="center" width="1200" cellspacing="0" cellpadding="0"
-            border="0">
-            
-            <tr>
-               <td height="5"></td>
-            </tr>
-            <tr>
-               <td height="1" colspan="8" bgcolor="CECECE"></td>
-            </tr>
-            <tr>
-               <td height="10"></td>
-            </tr>
-
-            <tr>
+<table border="1" >
+	<caption>상품현황 </caption>
+		 <tr>
+		 	<th></th>
+		 	<th>상품 아이디</th>
+		 	<th>상품이름</th>
+		 	<th>상품가격</th>
+		 	<th>상품 설명</th>
+		 	<th>상품 카테고리</th>
+		 </tr>
 
    <%
-   	List<GoodsDTO> dto = (List<GoodsDTO>)session.getAttribute("list");
-   
+/*    	List<GoodsDTO> dto = (List<GoodsDTO>)session.getAttribute("list");
+ */	PageDTO pdto = (PageDTO)session.getAttribute("pdto");
+	List<GoodsDTO> dto = pdto.getList();
    DecimalFormat f = new DecimalFormat("###,###,###");
    
    for(int i=1; i<=dto.size(); i++){
@@ -274,68 +295,45 @@ function reload(){
 	   int gprice = d.getGprice();
 	   String gdetail = d.getGdetail();
 	   String grdate = d.getGrdate();
-		
 
    %>	
    
-  <td>
-<table border="1" style="padding: 15px" >
-	<caption>상품현황 </caption>
+
 		 <tr>
-		 	<th rowspan="11"><img alt="" width="160" height="240" src="resources/images/items/<%=d.getGimage1() %>.gif"></th><!-- 수정구현 필 -->
-			<th>상품 아이디</th>
-		</tr>
-		<tr>
+		 	<th rowspan=""><img alt="" width="160" height="240" src="resources/images/items/<%=d.getGimage1() %>.gif"></th><!-- 수정구현 필 -->
 			<th><center><input type="text" name="gid" id="gid<%=gid %>" value="<%=gid %>"></center></th>
-		<tr>
-		<tr>
-			<th>상품이름</th>
-		</tr>
-		<tr>	
 			<td><center><input type="text" name="gname" id="gname<%=gid%>" value="<%=gname %>"></center></td>
-		</tr>
-		<tr>
-			<th>상품가격</th>
-		</tr>
-		<tr>	
 			<td><center><input type="text" name="gprice" id="gprice<%=gid%>" value="<%=f.format(gprice) %>"></center></td>
-		</tr>
-		<tr>
-			<th>상품 설명</th>
-		<tr>
 			<td><center><input type="text" name="gdetail" id="gdetail<%=gid%>" value="<%=gdetail %>"></center></td>
-		<tr>
-			<th>상품 카테고리</th>
-		</tr>
-		<tr>
 			<td><center><input type="text" name="gcategory" id="gcategory<%=gid%>" value="<%=gcategory %>"></center></td>
-		</tr>
-		<tr>
 			<td colspan="2">
 			<center><input type="button" name="update" class="update" data-num ="<%=gid%>" value="수정">
 					<input type="button" name="delete" class="delete" data-num ="<%=gid%>" value="삭제"></center></td> 
 		</tr>
-</table>
-</td>
-               <!-- 한줄에 4개씩 보여주기 -->   
-               <%
-                if(i%3==0){//i는 1부터 
-               %>
-                   <tr>
-                    <td height="10">
-                   </tr>
-               <%
-                }//end if
-               %>      
+
 <%
    } //end for
 %>
-         </table>&nbsp;
-      </td>
-   </tr>
-   <tr>
-      <td height="10">
-   </tr>
+ <tr>
+     <td colspan="7">
+   	<%
+   	int curPage = pdto.getCurPage();//3 
+    int perPage = pdto.getPerPage();//2 
+	int totalCount = pdto.getTotalCount();//13
+	int totalPage = totalCount/perPage;//총필요페이지 
+	if(totalCount%perPage!= 0) totalPage++;//나머지페이지 추가 
+    for(int s=1; s<= totalPage; s++){
+      	if(s== curPage){//3 인경우 
+      		out.print(s+"&nbsp;");
+    }else{
+  		out.print("<a href='registerGoods?curPage="+s+">"+s+"</a>&nbsp;");
+
+    }
+    }
+%>
+</td>
+</tr>
+	
 </table>
    
  <%

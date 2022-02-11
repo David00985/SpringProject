@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.dao.SellerDAO;
 import com.dto.GoodsDTO;
+import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
 
@@ -90,7 +91,19 @@ public class SellerService {
 		int count = dao.SellerStockCheck(dto);
 		return count;
 	}
+
+	public List<GoodsDTO> selectgidT(String T) {
+		List<GoodsDTO> gidT = dao.selectgidT(T);
+		return gidT;
+	}
+
 	
+	public PageDTO SellergoodsPage(String sid, int curPage) {
+		PageDTO dto = dao.SellergoodsPage(sid, curPage);
+		return dto;
+	}
+	 
+
 	
 	
 	

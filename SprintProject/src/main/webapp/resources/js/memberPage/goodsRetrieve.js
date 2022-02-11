@@ -84,12 +84,39 @@ function cloneImg() {
 		})//end 2. add to cart btn click
 		
 		
-		//3. 
+		//3. 색상,사이즈별 재고수량 
 		
-		
-		
-		
-		
-		
-	});//end ready
+		$(".stockcheck").on("change", function () {
+			var gsize = $("#gsize").val();
+			var gcolor = $("#gcolor").val();
+			var gid = $("#cart").attr("data-id");
+			if(gsize == "Select Size" || gcolor == "Select Color"){
+				$("#stock").text(" ");
+			}
+			$.ajax({
+				
+				url: "goodsRetrieveStockCheck",
+				dataType: "text",
+				type : "get",
+				data :{
+					gsize : gsize,
+					gcolor : gcolor,
+					gid : gid
+				},
+			success: function (data, status, xhr) {
+				if (data <= 5) {
+					$("#stock").text("남은 상품수: "+data+"개 (품절임박)");
+				}else{		
+					$("#stock").text("남은 상품수: "+data+"개");
+				}
+			},
+			error: function (xhr, status, error) {
+				console.log(error);
+			}//error end
+
+		})//ajax end
+
+	})//change end
+
+});//end ready
 
