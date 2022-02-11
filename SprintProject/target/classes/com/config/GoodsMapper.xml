@@ -41,7 +41,8 @@ select * from goods where sid = #{sid}
 update goods set
 gname =  #{gname},
 gprice = #{gprice},
-gdetail = #{gdetail}
+gdetail = #{gdetail},
+gcategory = #{gcategory}
 where gid = #{gid}
 
 </update>
@@ -57,8 +58,26 @@ delete from goods where gid = #{gid}
 select count(*) from goods where gid = #{gid}
 </select>
 
+<select id="stockRetrieve" resultType="StockDTO">
+select * from stock where gid = #{gid}
+</select>
 
+<select id="goodsRetrieveStockCheck" resultType="int">
+select gstock from stock where 
+gid = #{gid} and
+gcolor = #{gcolor} and
+gsize = #{gsize}
 
+</select>
+
+<select id="SellergoodsPagetotalcount" resultType="int" parameterType="String">
+select count(*) from goods where sid = #{sid}
+</select>
+
+<select id="SellergoodsPage" resultType="GoodsDTO" parameterType="String">
+select * from goods where sid = #{sid}
+
+</select>
 
 
 </mapper>

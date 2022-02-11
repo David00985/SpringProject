@@ -47,9 +47,9 @@ gsize = #{gsize} and
 gcolor = #{gcolor}
 </select>
 
-
-
-
+<select id="selectgidT" resultType="GoodsDTO" parameterType="String">
+select * from goods where gid LIKE '%'||#{T}||'%'
+</select>
 
 
 </mapper>
