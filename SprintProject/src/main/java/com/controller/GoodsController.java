@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -53,7 +55,7 @@ public class GoodsController {
 	//ajax goodsRetrieve에서 add to cart로 cart에 추가 담기 
 	// db에 stock 추가해서 이부분도 고쳐야한다~~~~~~~~~~~~~~~~~~~~~~~```<- 수정시 제거하기 
 	@RequestMapping(value = "/cartAdd")
-	public @ResponseBody String cartAdd(CartDTO dto , HttpSession session) {
+	public @ResponseBody String cartAdd(CartDTO dto , HttpSession session ,StockDTO sdto) {
 		
 		//1. 추가 파싱하기
 		MemberDTO mdto = (MemberDTO) session.getAttribute("login_member");
@@ -63,9 +65,11 @@ public class GoodsController {
 		dto.setGprice(gdto.getGprice());
 		dto.setGimage(gdto.getGimage1());
 		dto.setGcategory(gdto.getGcategory());
-		
+
 		// stock 정보도 받아서 추가하기.. gid와 사이즈와 컬러값 넘겨서 수량 받아오기.. <- 수정시 제거하기 
-		dto.setStock(5);
+		//gid,gcolor,gsize
+		int stock = service.cartStock(sdto);
+		dto.setStock(stock);
 		
 		
 		//2. cart db에 저장하기
@@ -252,7 +256,7 @@ public class GoodsController {
 	
 	// 현재는 gooddto 2개만 보내지만, 앞으로 게시판, 리뷰정보 등등. 많이 고쳐야한다. 여기 정말 많이 바껴야 한다. 
 	@RequestMapping(value = "/goodsRetrieve")
-	public ModelAndView goodsRetrieve(@RequestParam String gid) {		
+	public ModelAndView goodsRetrieve(@RequestParam String gid ,HttpServletRequest request) {		
 		ModelAndView mav = new ModelAndView();		
 		GoodsDTO dto = service.goodsRetrieve(gid);	
 		
@@ -283,6 +287,7 @@ public class GoodsController {
 			mav.addObject("goodsRetrieve", dto);
 			mav.addObject("sizelist", sizelist);
 			mav.addObject("colorlist", colorlist);
+			mav.addObject("sdto", sdto);
 			mav.setViewName("goodsRetrieve");
 		}
 		return mav;		
@@ -333,11 +338,14 @@ public class GoodsController {
 	@ResponseBody
 	public int goodsRetrieveStockCheck(StockDTO dto) {
 		
+		System.out.println(dto);
+		
 		int stock = service.goodsRetrieveStockCheck(dto);
 		
 		return stock;
 				
 	}
+	
 	
 	
 	

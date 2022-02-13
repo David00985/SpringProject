@@ -271,21 +271,35 @@ function reload(){
     	} session.removeAttribute("mesg");
     %>
 <table border="1" >
-	<caption>상품현황 </caption>
+		<tr>
+			<td colspan="7">
+				<form action="registerGoods">
+					<select name="search">
+						<option value="gcategory">카테고리(top,bottom,outer,dress)</option>
+						<option value="gname" selected="selected">상품이름</option>
+					</select>
+					<input type="text" name="goodsSearch" size="50">
+					<input type="submit" value="검색">
+				</form>
+			<td>
+		<tr>
 		 <tr>
-		 	<th></th>
+		 	<th>상품이미지</th>
 		 	<th>상품 아이디</th>
 		 	<th>상품이름</th>
 		 	<th>상품가격</th>
 		 	<th>상품 설명</th>
 		 	<th>상품 카테고리</th>
+		 	<th>수정/삭제</th>
 		 </tr>
 
    <%
 /*    	List<GoodsDTO> dto = (List<GoodsDTO>)session.getAttribute("list");
  */	PageDTO pdto = (PageDTO)session.getAttribute("pdto");
 	List<GoodsDTO> dto = pdto.getList();
-   DecimalFormat f = new DecimalFormat("###,###,###");
+	String search = (String)session.getAttribute("search");
+	String goodsSearch = (String)session.getAttribute("goodsSearch");
+    DecimalFormat f = new DecimalFormat("###,###,###");
    
    for(int i=1; i<=dto.size(); i++){
 	   GoodsDTO d = dto.get(i-1);
@@ -300,7 +314,7 @@ function reload(){
    
 
 		 <tr>
-		 	<th rowspan=""><img alt="" width="160" height="240" src="resources/images/items/<%=d.getGimage1() %>.gif"></th><!-- 수정구현 필 -->
+		 	<th rowspan=""><img alt="" width="100" height="180" src="resources/images/items/<%=d.getGimage1() %>.gif"></th><!-- 수정구현 필 -->
 			<th><center><input type="text" name="gid" id="gid<%=gid %>" value="<%=gid %>"></center></th>
 			<td><center><input type="text" name="gname" id="gname<%=gid%>" value="<%=gname %>"></center></td>
 			<td><center><input type="text" name="gprice" id="gprice<%=gid%>" value="<%=f.format(gprice) %>"></center></td>
@@ -322,12 +336,11 @@ function reload(){
 	int totalCount = pdto.getTotalCount();//13
 	int totalPage = totalCount/perPage;//총필요페이지 
 	if(totalCount%perPage!= 0) totalPage++;//나머지페이지 추가 
-    for(int s=1; s<= totalPage; s++){
-      	if(s== curPage){//3 인경우 
-      		out.print(s+"&nbsp;");
+    for(int i=1; i<= totalPage; i++){
+      	if(i== curPage){//3 인경우 
+      		out.print(i+"&nbsp;");
     }else{
-  		out.print("<a href='registerGoods?curPage="+s+">"+s+"</a>&nbsp;");
-
+  		out.print("<a href='registerGoodsPage?curPage="+i+"&search="+search+"&goodsSearch="+goodsSearch+"'>"+i+"</a>&nbsp;");
     }
     }
 %>

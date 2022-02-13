@@ -51,5 +51,10 @@ public class GoodsDAO {
 		return stock;
 	}
 
+	public int cartStock(StockDTO sdto) {
+		int stock = session.selectOne("GoodsMapper.cartStock",sdto);
+		return stock;
+	}
+
 	
 }

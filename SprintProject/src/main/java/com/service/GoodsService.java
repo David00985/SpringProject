@@ -51,6 +51,13 @@ public class GoodsService {
 		return stock;
 	}
 
+	public int cartStock(StockDTO sdto) {
+		int stock = dao.cartStock(sdto);
+		return stock;
+	}
+
+
+
 	
 
 

@@ -99,21 +99,20 @@ public class SellerDAO {
 	}
 
 	
-	public PageDTO SellergoodsPage(String sid, int curPage) {
+	public PageDTO SellergoodsPage(HashMap<String, String> map, int curPage) {
 		PageDTO pdto = new PageDTO();
 		int perPage = pdto.getPerPage();
 		int offset = (curPage - 1) * perPage;
-
-		List<GoodsDTO> list = session.selectList("GoodsMapper.SellergoodsPage", sid, new RowBounds(offset, perPage));
+		List<GoodsDTO> list = session.selectList("GoodsMapper.SellergoodsPage", map, new RowBounds(offset, perPage));
 
 		pdto.setCurPage(curPage);// 해당페이지번호 
 		pdto.setList(list); //해당페이지 해당 데이터
-		pdto.setTotalCount(totalCount(session, sid));
+		pdto.setTotalCount(totalCount(session, map));
 		return pdto;
 	}
 
-	public int totalCount(SqlSessionTemplate session2, String sid) {
-		return session.selectOne("GoodsMapper.SellergoodsPagetotalcount", sid);
+	public int totalCount(SqlSessionTemplate session2, HashMap<String, String> map) {
+		return session.selectOne("GoodsMapper.SellergoodsPagetotalcount", map);
 	}
 
 }
