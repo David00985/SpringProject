@@ -1,3 +1,5 @@
+<%@page import="org.apache.ibatis.io.ResolverUtil.Test"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.dto.StockDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.dto.MemberDTO"%>
@@ -10,9 +12,10 @@
 //GoodsController.goodsRetrieve에서 넘어온 데이터이다. 앞으로 바뀔부분.. 1. 리뷰보기  2. select바꾸기 3. 추천상품 나열하기 4. qna 보고쓰기  
 	MemberDTO login_member = (MemberDTO)session.getAttribute("login_member");
 	GoodsDTO dto = (GoodsDTO) request.getAttribute("goodsRetrieve");
+	String gid = dto.getGid();
 	List<String> sizelist = (List<String>) request.getAttribute("sizelist");
 	List<String> colorlist = (List<String>) request.getAttribute("colorlist");
-	
+	List<StockDTO> sDTO = (List<StockDTO>) request.getAttribute("sdto");
 	// 넘어오는 데이터:    [large: { "red","25"} ,{"blue","10"}] ,[small: { "red","20"} ,{"white","10"}] ... 
 	// 즉 데이터 형식은 :  Map<"String" , Map<"String", "int">> 
 	// 첫번째 select 에서 뭘 선택하냐에 따라서 두번째 select값이 바껴야 한다. 예를들어 첫번째select에서 large를 선택하면 두번째 color select에서 large에 맞는 색깔과 제고정보가
@@ -22,7 +25,6 @@
 	// 그려려면? 
 	
 	String check = null;
-	
 	if ( login_member != null){
 		check = login_member.getMid();
 	}
@@ -63,17 +65,37 @@
               <h4><%=dto.getGprice() %>원</h4>
               <!-- 추가할 부분~~~~~~ stock에 저장된 사이즈 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` success-->
               <select name="gsize" id="gsize" class="stockcheck">
-                        <option value="Select Size">Select Size</option>
-                      	<%for(String size : sizelist){%> <!--해당상품에 대한 사이즈 출력하기 -->
-                        <option><%=size %></option>
-                       	<% }%> 
+                        <option  value="Select Size">Select Size</option>
+                      	<% 
+                      	for(String size : sizelist){
+                      	%> 
+                        <option><%=size %></option> <!--  여기에서 S인지 , M인지,L인지 데이터를 가져와야해요-->
+                       	<% } %> 
               </select>
                 <!-- 추가할 부분~~~~~~ stock에 저장된 색깔 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` success-->
               <select name="gcolor" id="gcolor" class="stockcheck">
-	                    <option>Select Color</option>
-	                    <%for(String color : colorlist){%><!--해당상품에 대한 컬러 출력하기 -->
-                        <option><%=color%></option>
-                       	<% }%> 
+	                    <option id="Select Color" >Select Color</option>
+	                    
+	                    	<%
+	                    	String sgid = null;
+	                    	String ssize = null;
+	                    	String scolor = null;
+	                    	int stock = 0;
+	                    	String color2 = null;
+	                    	String ssize2 =null;
+	                 		  for(String color : colorlist){
+	                    			color2 = color;
+	                    	for(StockDTO sdto : sDTO){
+	                    		 sgid = sdto.getGid();
+	                    		 ssize = sdto.getGsize();
+								 scolor = sdto.getGcolor();
+								 stock = sdto.getGstock();
+								if(gid.equals(sgid) && scolor.equals(color)) /* && ssize.equals()) */{
+						%>
+                        <option id = "result" ><%=color%></option>
+                       	<% } //if end
+						   }  // sizelist end
+	                 	   }//colorlist for end%> 
 	              </select><br>
 	          	 <p id="stock"></p>
               <input type="number" value="1" name="gamount" id="cqty">

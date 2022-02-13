@@ -98,8 +98,8 @@ public class SellerService {
 	}
 
 	
-	public PageDTO SellergoodsPage(String sid, int curPage) {
-		PageDTO dto = dao.SellergoodsPage(sid, curPage);
+	public PageDTO SellergoodsPage(HashMap<String, String> map, int curPage) {
+		PageDTO dto = dao.SellergoodsPage(map, curPage);
 		return dto;
 	}
 	 

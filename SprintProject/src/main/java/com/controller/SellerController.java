@@ -124,20 +124,24 @@ public class SellerController {
 	
 	//상품 등록 화면.. 
 	@RequestMapping(value = "/registerGoods")
-	public String registerGoods(HttpSession session , HttpServletRequest request) {
+	public String registerGoods(HttpSession session , HttpServletRequest request, String search, String goodsSearch ) {
 		SellerDTO seller = (SellerDTO) session.getAttribute("login_seller");
-		String curPage = request.getParameter("curPage");
-		System.out.println(curPage);
-		if(curPage == null){curPage = "1";};
+		
+		String curPage = (String)request.getAttribute("curPage");
+		
+		if(curPage == null ){curPage = "1";}
 		
 		String sid = seller.getSid();
 		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("search", search);
+		map.put("goodsSearch", goodsSearch);
+		map.put("sid", sid);
 		
 		int count = 0;
 		List<GoodsDTO> list = service.SellerGoodsList(sid);
-		PageDTO pdto = service.SellergoodsPage(sid,Integer.parseInt(curPage));
+		PageDTO pdto = service.SellergoodsPage(map,Integer.parseInt(curPage));
 		
-		System.out.println(pdto);
 		
 		for (int i = 0; i <= list.size(); i++) {
 			count = i;
@@ -145,10 +149,26 @@ public class SellerController {
 
 		session.setAttribute("list", list);
 		session.setAttribute("pdto", pdto);
+		session.setAttribute("search", search);
+		session.setAttribute("goodsSearch", goodsSearch);
 		session.setAttribute("listcount", count);
 
 		return  "s_register_goods";
 	}
+	
+	@RequestMapping(value = "/registerGoodsPage")
+	public String registerGoodsPage(String curPage,HttpServletRequest request,
+			String search, String goodsSearch) {
+		
+		request.setAttribute("search", search);
+		request.setAttribute("goodsSearch", goodsSearch);
+		request.setAttribute("curPage",curPage);
+		
+		return "forward:registerGoods";
+				
+	}
+	
+	
 	
 	//상품현황 삭제
 	@RequestMapping(value = "/SellerGoodsDelete")

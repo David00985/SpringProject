@@ -8,7 +8,7 @@ public class PageDTO {
 
 	private List<GoodsDTO> list; // 현재 페이지에 들어갈 레코드를 perPage만큼만 저장
 	private int curPage; // 현재 볼페이지
-	private int perPage = 4; // 한페이지에 보여질 목록수 2개레코드
+	private int perPage = 6; // 한페이지에 보여질 목록수 2개레코드
 	private int totalCount; // 전체 레코드 수
 
 	public PageDTO() {

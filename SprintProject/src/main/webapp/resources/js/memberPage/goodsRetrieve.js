@@ -44,6 +44,7 @@ function cloneImg() {
 				var csize = $("#gsize").val();
 				var gcolor = $("#gcolor").val();
 				var cqty =$("#cqty").val();
+				var gsize = $("#gsize").val();
 				
 				console.log(gid +" " + csize+" " + gcolor+" " + cqty);
 				
@@ -55,7 +56,8 @@ function cloneImg() {
 					data: 
 						{gid :gid, 
 						csize :csize, 
-						gcolor :gcolor, 
+						gcolor :gcolor,
+						gsize : gsize,
 						cqty :cqty}
 					,
 					success: function(data, status , xhr  ) {
@@ -86,13 +88,16 @@ function cloneImg() {
 		
 		//3. 색상,사이즈별 재고수량 
 		
-		$(".stockcheck").on("change", function () {
+		$("#gcolor").on("change", function () { // 색상선택시 chacng 이벤트 발생 후 
 			var gsize = $("#gsize").val();
-			var gcolor = $("#gcolor").val();
+			var gcolor = $(this).val();
 			var gid = $("#cart").attr("data-id");
-			if(gsize == "Select Size" || gcolor == "Select Color"){
-				$("#stock").text(" ");
-			}
+			
+			if(gsize == "Select Size" && gcolor != "Select Color"){ //컬러먼 먼저 선택시
+					alert("사이즈를 먼저 선택해주세요");
+					$("#gcolor").val("Select Color").prop("selected", true);
+			}else{
+		
 			$.ajax({
 				
 				url: "goodsRetrieveStockCheck",
@@ -115,8 +120,29 @@ function cloneImg() {
 			}//error end
 
 		})//ajax end
-
+			}
 	})//change end
 
+	
+	
+	$("#gsize").on("change", function () {
+		var gsize = $(this).val();
+		var gcolor = $("#gcolor").val();
+		var gid = $("#cart").attr("data-id");
+		//근데 여기서 제이쿼리로 가져오려하는ㄷ ㅔ그러면 저 전체
+		// 저부분 데이터를 가져와야 할 것 같은데 저거를 어떻게 가져와야하나늦 ㅣ잘몰껬네요
+		console.log(gsize);
+		if(gsize != "Select Size" && gcolor != "Select Color"){
+			$("#gcolor").val("Select Color").prop("selected", true);
+			$("#stock").text(" ");
+		}//if end
+			
+			
+	
+	})// gsize end
+	
+	
+	
+	
 });//end ready
 
