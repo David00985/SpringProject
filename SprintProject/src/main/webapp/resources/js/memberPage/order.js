@@ -112,7 +112,7 @@ $(function(){
 		code = $("#discount-token").val();
 		// 할인쿠폰이 없으면. 
 		if(code ==""){
-			console.log("없다");
+			
 			//원상복구
 			$("#tax").css({"color":"black","text-decoration":"none" });
 			$("#total").text(total);
@@ -124,7 +124,7 @@ $(function(){
 			$("#shippingContent").text("");
 		// 할인쿠폰이 있으면			
 		}else{
-			console.log("있다");
+			
 			var type =  $("#couponDiv").attr("data-type");
 			var discount =  $("#couponDiv").attr("data-discount");
 			var content = $("#couponDiv").attr("data-content");
@@ -199,7 +199,7 @@ $(function(){
 		couponStatus();
 		count();
 		
-		// 1.5 세션에서 쿠폰 제거하기 
+		// 1.5 세션에서 쿠폰 제거하기 -> ajax로 세션 제거하기로 변경
 		
 	});// end 1. 쿠폰 제거하기 
 	
@@ -276,10 +276,170 @@ $(function(){
 	});//end 2. apply 쿠폰버튼
 	
 	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//3. submit시 공백 검사 및  단계별 ajax async await 
+	$("form").on("submit", function() {
+		event.preventDefault();
+		code = $("#couponDiv").attr("data-code");
+		//1. 공백검사. 
+		
+		
+		
+		
+		// 2. promise 비동기 연습  multi ajax 검증 하기.. 
+		// 1. 유저id 검증 
+		
+		
+		
+		//1. 쿠폰없을때 promise체인
+		if(code == "x"){
+			//1. 유저 아이디 검증
+			UserInfoPromise()
+			.then(function(result) {
+				console.log("userInfoPromise.then:" , result);
+			})
+			//3. 제고 검증
+			.then(function(result4) {
+					
+			})
+			.catch(function(err) {
+					alert( err);		
+			})
+			
+			
+			
+		}
+		//2. 쿠폰 있을때 promise체인
+		else{
+			//1. 유저 아이디 검증
+			UserInfoPromise()
+			.then(function(result) {
+				console.log("userInfoPromise.then:" , result);
+				return couponPromise();
+			})
+			//2. 쿠폰 검증 
+			.then(function(result4) {
+				console.log("couponPromise .then:" , result4);	
+			})
+			//3. 제고 검증
+			.catch(function(err) {
+					alert( err);		
+			})
+			
+			
+			
+		}
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	});//end 3. submit시 공백 검사 및  단계별 ajax async await 
+	
+	
+	
+	
+	
+	
+	
+	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	
+	//promise1. 유저아이디 검증 
+	function UserInfoPromise() {
+		return new Promise(function(resolve, reject) { 
+			
+			$.ajax({
+				url:"loginCheck/userInfoAjax",
+				type:"post",
+				datatype:"text",
+				
+				success: function(data, status , xhr  ) {
+						
+					if( data == "success"){
+						resolve(data);
+					}else{
+						reject("없는 id입니다.");
+					}	
+				
+				},
+				error: function(xhr , status , error  ) {
+					console.log("userinfopromise:" +error);
+					
+				}
+			});	//end ajax 	
+			
+		});
+	}//end UserInfoPromise
+	
+	
+	//promise2. 쿠폰 검증
+	function couponPromise() {
+		return new Promise(function(resolve, reject) { 
+			
+		
+			code = $("#couponDiv").attr("data-code");
+			$.ajax({
+				url:"loginCheck/couponPromise",
+				type:"post",
+				datatype:"text",
+				data: 
+					{ code :code}
+				,
+				success: function(data, status , xhr  ) {
+					
+					console.log("userinfoajax:"+data);
+							
+					if( data == "success"){
+						resolve(data);
+					}else if(data == "failed"){
+						reject("사용할수 없는 쿠폰 입니다.");
+					}else if (data == "used"){
+						reject("이미 사용한 쿠폰입니다.")
+					}else{
+						alert("쿠폰프로미스 버그~~");
+					}	
+					
+				},
+				error: function(xhr , status , error  ) {
+					console.log("couponPromise:" +error);
+						
+				}
+			});	//end ajax 	
+		
+			
+			
+			
+		});
+	}// end couponPromise
+	
+	
+	
+	
+	
+	
+	
+	
 	
 });//end ready 
-
-
 
 
 

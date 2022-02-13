@@ -49,22 +49,22 @@
 				<div class="personal_data">
 					<div class="card-number">
                     	<label for="mname"  class="label-default">이름</label>
-                        <input type="text" name="mname"  class="input-default" id="mname" value="<%=mdto.getMname() %>">
+                        <input type="text" name="mname"  class="input-default" id="mname" value="<%=mdto.getMname() %>" required>
                     </div>
                     
 					<div class="card-number">
                         <label for="mphone1"  class="label-default">전화번호</label>
                         <div class="col-3">
-                            <input type="text" name="mphone1"  class="input-default" id="mphone1" value="<%=mdto.getMphone1() %>" >-
-                            <input type="text" name="mphone2"  class="input-default" value="<%=mdto.getMphone2() %>">-
-                            <input type="text" name="mphone3"  class="input-default" value="<%=mdto.getMphone3() %>">
+                            <input type="text" name="mphone1"  class="input-default" id="mphone1" value="<%=mdto.getMphone1() %>" required>-
+                            <input type="text" name="mphone2"  class="input-default" value="<%=mdto.getMphone2() %>" required>-
+                            <input type="text" name="mphone3"  class="input-default" value="<%=mdto.getMphone3() %>" required>
                         </div>  
                     </div>
                     
 					<div class="card-number">
                         <label for="mpost" class="label-default">우편번호</label>
                         <div class="col-2">
-                            <input type="text" name="mpost"  class="input-default" id="mpost" value="<%=mdto.getMpost() %>">
+                            <input type="text" name="mpost"  class="input-default" id="mpost" value="<%=mdto.getMpost() %>" required>
                             <button type="button" class="btn btn-primary" onclick="sample4_execDaumPostcode()">주소찾기</button>
                         </div>
                     </div>
@@ -72,8 +72,8 @@
                     <div class="card-number">
                         <label for="maddress1" class="label-default">상세 주소</label>
                         <div class="col-2">
-                        	<input type="text" name="maddress1" id="maddress1" class="input-default" value="<%=mdto.getMaddress1()%>">
-                        	<input type="text" name="maddress2" id="maddress2" class="input-default" value="<%=mdto.getMaddress2() %>">
+                        	<input type="text" name="maddress1" id="maddress1" class="input-default" value="<%=mdto.getMaddress1()%>" required>
+                        	<input type="text" name="maddress2" id="maddress2" class="input-default" value="<%=mdto.getMaddress2() %>" required>
                         </div>
                     </div>
 				 </div><!--end personal_data -->
