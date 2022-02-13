@@ -1,20 +1,12 @@
-<%@page import="com.dto.CartDTO"%>
-<%@page import="com.dto.GoodsDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="com.dto.CouponDTO"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    
-    <%
-    List<CartDTO> cartlist = (List<CartDTO>)request.getAttribute("cartlist");
-    CouponDTO coupondto = (CouponDTO)request.getAttribute("dccode");
-    System.out.println("order.jsp+" + coupondto);
-    %>
-    
-    
-    
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+3:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic"
+    rel="stylesheet" />      
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="resources/css/main2.css">
+<link rel="stylesheet" href="resources/css/order.css">
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +14,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-order 페이지~~~~~~~~~
 
-<%=cartlist %>
+
+
+<jsp:include page="common/navbar.jsp" flush="true"></jsp:include>
+
+
+<jsp:include page="order/order.jsp" flush="true"></jsp:include>
+
+
+
+ <!-- custom js file link? -->
+    <script src="resources/js/m_event.js"></script>
+ <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
 </html>
