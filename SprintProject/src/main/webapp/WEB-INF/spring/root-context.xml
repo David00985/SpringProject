@@ -52,6 +52,8 @@
 				<value>com.dto.CouponDTO</value>	
 				<value>com.dto.CouponUserDTO</value>	
 				<value>com.dto.OrderDTO</value>	
+				<value>com.dto.CreditCartDTO</value>	
+				<value>com.dto.BankAccountDTO</value>	
 			</list>		
 		</property>
 	</bean>	

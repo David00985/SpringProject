@@ -182,6 +182,8 @@ $(function(){
 	//1. 쿠폰 제거 하기
 	$("#couponOut").on("click", function() {
 		
+		var code = $("#couponDiv").attr("data-code");
+		
 		// 1.1 input 비우기 , readonly 제거하기 
 		$("#discount-token").removeAttr("readonly").val("");
 		// 1.2 couponDiv data값4 개 다 x로 바꾸기
@@ -201,7 +203,18 @@ $(function(){
 		
 		// 1.5 세션에서 쿠폰 제거하기 -> ajax로 세션 제거하기로 변경
 		
+		couponSessionDeletePromise(code)
+		.then(function(result4) {
+				console.log("쿠폰 세션에서 Delete 제거 성공 .then:" , result4);	
+			})
+		.catch(function(err) {
+					alert( err);		
+		})
 	});// end 1. 쿠폰 제거하기 
+	
+	
+	
+	
 	
 	//2. 쿠폰 등록하기 
 	// 쿠폰 정책은 회사내규에 따른것. 여기서는 간단하게 쿠폰은 선착순 으로 쓰면 효력이 정지
@@ -257,7 +270,13 @@ $(function(){
 						count();
 						
 						//5. 세션에 쿠폰 등록하기 
-						
+						couponSessionUpdatePromise(data.code)
+						.then(function(result4) {
+								console.log("쿠폰 세션에서 Update 등록 성공 .then:" , result4);	
+							})
+						.catch(function(err) {
+									alert( err);		
+						})
 						
 						
 					}//end success 분기... 
@@ -286,68 +305,118 @@ $(function(){
 	
 	
 	
-	
-	
 	//3. submit시 공백 검사 및  단계별 ajax async await 
 	$("form").on("submit", function() {
 		event.preventDefault();
 		code = $("#couponDiv").attr("data-code");
+		
+		
 		//1. 공백검사. 
-		
-		
-		
-		
-		// 2. promise 비동기 연습  multi ajax 검증 하기.. 
-		// 1. 유저id 검증 
-		
-		
-		
-		//1. 쿠폰없을때 promise체인
-		if(code == "x"){
-			//1. 유저 아이디 검증
-			UserInfoPromise()
-			.then(function(result) {
-				console.log("userInfoPromise.then:" , result);
-			})
-			//3. 제고 검증
-			.then(function(result4) {
-					
-			})
-			.catch(function(err) {
-					alert( err);		
-			})
+		var multi1 = $(".multi-1").css("display");
+		var multi2 = $(".multi-2").css("display");
+		var account = "";
+		var accountName = "";
+		var bank = "";
+		var cardCompany = "";
+		var cardNumber = "";
+		var cardDay = "";
+		var cardMonth = "";
+		var cvv = $("#cvv").val();
+		var flag = true;
+		var selectpayment = "";
+		// 계좌이체 선택
+		if(multi1 == "none"){
+			console.log("계좌이체 선택");
+			selectpayment = "계좌이체";
+			account = $("#account2").val();
+			accountName = $("#account2name").val();
+			bank = $("#bank").val();
 			
+			if( account == "" || accountName == ""){
+				console.log( "공백있다. " );
+				flag = false;
+			}
 			
+		// 신용카드 선택	
+		}else if(multi2 == "none"){
+			console.log("신용카드 선택");
+			selectpayment = "신용카드";
+			cardCompany = $("#cardCompany").val();
+			cardNumber = $("#card-number").val();
+			cardDay = $("#expire-date").val();
+			cardMonth = $("#expire-month").val();
+			cvv = $("#cvv").val();
 			
+			if(cardCompany=="" || cardNumber =="" || cardDay =="" || cardMonth =="" || cvv ==""   ){
+				console.log( "공백있다. " );
+				flag = false;
+			}
+			
+		}else{
+			console.log("form.submit 카드선택 에러");
 		}
-		//2. 쿠폰 있을때 promise체인
-		else{
-			//1. 유저 아이디 검증
-			UserInfoPromise()
-			.then(function(result) {
-				console.log("userInfoPromise.then:" , result);
-				return couponPromise();
-			})
-			//2. 쿠폰 검증 
-			.then(function(result4) {
-				console.log("couponPromise .then:" , result4);	
-			})
-			//3. 제고 검증
-			.catch(function(err) {
-					alert( err);		
-			})
-			
-			
-			
-		}
-		
 		
 	
-		
-		
-		
-		
-		
+		// 유효성 검사 완료 2. promise 비동기 연습  multi ajax 검증 하기.. 
+		if( flag){
+			
+			//1. 쿠폰없을때 promise체인
+			if(code == "x"){
+					//1. 유저 아이디 검증
+					UserInfoPromise()
+					.then(function(result) {
+						console.log("유저아이디체크Promise.then:" , result);
+						return stockCheckPromise();
+					})
+					//3. 제고 검증
+					.then(function(result3) {
+						console.log("제고확인Promise .then:" , result3);	
+						return PaymentInsertPromise(selectpayment , account , accountName , bank, cardCompany ,cardNumber ,cardDay, cardMonth, cvv);
+					})
+					//4. 계좌 정보 등록
+					.then(function(opayment) {
+						console.log("결제정보Promise .then:" , opayment);
+						
+					})
+					// 5. 
+					.catch(function(err) {
+							alert( err);		
+					})
+					
+			}
+			//2. 쿠폰 있을때 promise체인
+			else{
+					//1. 유저 아이디 검증
+					UserInfoPromise()
+					.then(function(result) {
+						console.log("유저아이디체크Promise.then:" , result);
+						return couponPromise();
+					})
+					//2. 쿠폰 검증 
+					.then(function(result4) {
+						console.log("쿠폰유효성확인Promise .then:" , result4);	
+						return stockCheckPromise();
+					})
+					//3. 제고 검증
+					.then(function(result3) {
+						console.log("제고확인Promise .then:" , result3);	
+						return PaymentInsertPromise(selectpayment , account , accountName , bank, cardCompany ,cardNumber ,cardDay, cardMonth, cvv);
+					})
+					//4. 계좌 정보 등록
+					.then(function(opayment) {
+						console.log("결제정보Promise .then:" , opayment);	
+						
+					})
+					// 5. 
+					.catch(function(err) {
+							alert( err);		
+					})
+					
+					
+					
+					
+			}// 쿠폰 ajax ifelse분기
+		}//end flag 유효성 검사 완료
 		
 		
 		
@@ -375,7 +444,7 @@ $(function(){
 				success: function(data, status , xhr  ) {
 						
 					if( data == "success"){
-						resolve(data);
+						resolve("userid 존재함");
 					}else{
 						reject("없는 id입니다.");
 					}	
@@ -405,11 +474,9 @@ $(function(){
 					{ code :code}
 				,
 				success: function(data, status , xhr  ) {
-					
-					console.log("userinfoajax:"+data);
 							
 					if( data == "success"){
-						resolve(data);
+						resolve("쿠폰 사용가능");
 					}else if(data == "failed"){
 						reject("사용할수 없는 쿠폰 입니다.");
 					}else if (data == "used"){
@@ -430,6 +497,141 @@ $(function(){
 			
 		});
 	}// end couponPromise
+	
+	
+	// promise3. 쿠폰 세션에 등록하기 
+	function couponSessionUpdatePromise(code) {
+		return new Promise(function(resolve, reject) { 
+			
+			$.ajax({
+				url:"loginCheck/couponSessionUpdatePromise",
+				type:"post",
+				datatype:"text",
+				data: 
+					{ code :code}
+				,
+				success: function(data, status , xhr  ) {
+							
+					if( data == "success"){
+						resolve("쿠폰 세션에 등록 성공");
+					}else if(data == "failed"){
+						reject("세션 등록 실패");
+					}else{
+						alert("couponSessionUpdatePromise 버그~~");
+					}	
+					
+				},
+				error: function(xhr , status , error  ) {
+					console.log("couponSessionUpdatePromise:" +error);
+						
+				}
+			});	//end ajax 	
+		
+			
+		});
+	}// end  promise3. 쿠폰 세션에 등록하기 
+	
+	
+	// promise4. 쿠폰 세션에 삭제하기 
+	function couponSessionDeletePromise(code) {
+		return new Promise(function(resolve, reject) { 
+			
+			$.ajax({
+				url:"loginCheck/couponSessionDeletePromise",
+				type:"post",
+				datatype:"text",
+				data: 
+					{ code :code}
+				,
+				success: function(data, status , xhr  ) {
+						
+					if( data == "success"){
+						resolve("쿠폰 세션에 삭제 성공");
+					}else{
+						reject("세션 삭제 실패");
+					}	
+					
+				},
+				error: function(xhr , status , error  ) {
+					console.log("couponSessionDeletePromise:" +error);
+						
+				}
+			});	//end ajax 	
+		
+			
+		});
+	}// end  promise4. 쿠폰 세션에 삭제하기 
+	
+	
+	// promise5. 제고 확인하기 
+	function stockCheckPromise() {
+		return new Promise(function(resolve, reject) { 
+			
+			$.ajax({
+				url:"loginCheck/stockCheckPromise",
+				type:"post",
+				datatype:"text",
+				success: function(data, status , xhr  ) {
+						
+					if( data == "success"){
+						resolve("모든 구매상품 제고 여유분 충분");
+					}else{
+						reject("제고 부족 존재함.\n" + data);
+					}	
+					
+				},
+				error: function(xhr , status , error  ) {
+					console.log("stockCheckPromise:" +error);
+						
+				}
+			});	//end ajax 	
+		
+			
+		});
+	}// end  promise5. 제고 확인하기 
+	
+	
+	
+	// promise6. 결제 정보  등록하기 -> order에 넣을  payment DB의 pk값을 반환.. 
+	function PaymentInsertPromise(selectpayment , account , accountName , bank, cardCompany ,cardNumber ,cardDay, cardMonth, cvv) {
+		return new Promise(function(resolve, reject) { 
+			
+			$.ajax({
+				url:"loginCheck/PaymentInsertPromise",
+				type:"post",
+				datatype:"text",
+				data: 
+					{ company :cardCompany,
+					  cardnumber : cardNumber,
+					  day : cardDay,
+					  month : cardMonth,
+					  cvv : cvv,
+					  accountnumber : account,
+					  accountname : accountName,
+					  bank : bank,
+					  selectpayment : selectpayment
+					}
+				,
+				success: function(data, status , xhr  ) {
+						
+					if( data == "failed"){
+						reject("예상못한 에러. 신용카드 등록실패\n");
+					}else{
+						
+						resolve(data);
+					}	
+					
+				},
+				error: function(xhr , status , error  ) {
+					console.log("PaymentInsertPromise:" +error);
+						
+				}
+			});	//end ajax 	
+		
+			
+		});
+	}// end  promise6.  신용카드 db에  등록하기 
+	
 	
 	
 	

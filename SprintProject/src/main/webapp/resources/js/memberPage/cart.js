@@ -294,6 +294,9 @@ $(function() {
 		$(this).css("display","none");
 		
 		
+		
+		
+		
 	});//end 6.coupon_delete 버튼
 	
 	

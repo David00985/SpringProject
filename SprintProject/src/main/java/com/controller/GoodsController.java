@@ -169,6 +169,7 @@ public class GoodsController {
 						result.setContent(coupondto.getContent());
 						result.setType(coupondto.getType());
 						result.setDiscount(coupondto.getDiscount());
+					
 					}
 				//2.1.2 쿠폰 발급량에 여유가 없다. 	
 				}else {
@@ -185,6 +186,7 @@ public class GoodsController {
 					result.setContent(coupondto.getContent());
 					result.setType(coupondto.getType());
 					result.setDiscount(coupondto.getDiscount());
+				
 				}
 			}//end 2. dc코드 가 이미 등록된경우 if/else	
 		}//end 1. dc코드가 다를때
@@ -197,7 +199,7 @@ public class GoodsController {
 	
 	
 	@RequestMapping(value = "/loginCheck/ordercheck")
-	public String ordercheck(String [] cids, String code , RedirectAttributes attr) {
+	public String ordercheck(String [] cids, String code , RedirectAttributes attr , HttpSession session) {
 		
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		boolean flag = true;
@@ -228,13 +230,15 @@ public class GoodsController {
 				if(cpdto == null) {
 					System.out.println("order select에러");
 				}else {
-					attr.addFlashAttribute("dccode", cpdto);
+					session.setAttribute("dcCode", cpdto);
+					
 				}
 			}
 			//변경하기..... 
 			
 			List<CartDTO> cartlist = cservice.selectAllCartByCids(list);
-			attr.addFlashAttribute("cartlist" , cartlist );
+			session.setAttribute("orderCartlist", cartlist);
+			
 			
 			
 			return "redirect:../order";

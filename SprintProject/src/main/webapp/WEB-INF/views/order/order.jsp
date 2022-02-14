@@ -6,8 +6,8 @@
     pageEncoding="UTF-8"%>
 
  <%
- 	CouponDTO dccode =(CouponDTO) request.getAttribute("dccode");
- 	List<CartDTO> cartlist = (List<CartDTO>) request.getAttribute("cartlist");
+ 	CouponDTO dccode =(CouponDTO) session.getAttribute("dcCode");
+ 	List<CartDTO> cartlist = (List<CartDTO>) session.getAttribute("orderCartlist");
  	MemberDTO mdto = (MemberDTO) session.getAttribute("login_member");
  	System.out.print(dccode);
  	System.out.print(cartlist);
@@ -81,7 +81,7 @@
 				<!-- 1.2신용카드/무통장 폼의 정보가 있는 absolutely 박스   -->
 				<div class="absolutely">
 					<!-- 첫번째 absolute 신용카드 부분 -->
-					<div class="multi-1">
+					<div class="multi-1" >
 						<h2 class="section-heading">결제(신용카드)</h2>
 						
 						<div class="payment-form">
@@ -102,12 +102,12 @@
 							<!-- 1.2.2 카드정보 나열부분  -->
 							<div class="cardholder-name">
                         		<label for="cardCompany" class="label-default">카드 회사</label>
-                        		<input type="text" name="cardCompany" id="cardCompany" class="input-default">
+                        		<input type="text" name="cardCompany" id="cardCompany" class="input-default" >
                       		</div>
                       		
                       		<div class="card-number">
                         		<label for="card-number" class="label-default">카드 번호</label>
-                        		<input type="number" name="card-number" id="card-number" class="input-default">
+                        		<input type="number" name="card-number" id="card-number" class="input-default" >
                       		</div>
                       		<!-- 유효날짜 cvv  -->
                       		<div class="input-flex">
@@ -115,18 +115,18 @@
                       			<div class="expire-date">
                       				<label for="expire-date" class="label-default">유효 날짜</label>
                       				<div class="input-flex">
-                      					<input type="number" name="day" id="expire-date" placeholder="31" min="1" max="31"
-                              			class="input-default">
+                      					<input type="number" name="day" id="expire-date" placeholder="1~31" min="1" max="31"
+                              			class="input-default" >
                             			/
-                            			<input type="number" name="month"  placeholder="12" min="1" max="12"
-                              			class="input-default">
+                            			<input type="number" name="month"  placeholder="1~12" min="1" max="12" id="expire-month"
+                              			class="input-default" >
                       				</div>
                       			</div>
                       			
                       			
                       			<div class="cvv">
                       				<label for="cvv" class="label-default">CVV</label>
-                          			<input type="number" name="cvv" id="cvv" class="input-default">
+                          			<input type="number" name="cvv" id="cvv" class="input-default" >
                       			</div>
 							</div><!-- end input-flex  -->
 						</div><!-- end payment-form -->
@@ -159,23 +159,23 @@
 							<!-- 1.2.2 계좌정보 나열부분  -->
 							<div class="cardholder-name">
                         		<label for="account1" class="label-default">농협 계좌</label>
-                        		<input type="text"  id="account1" class="input-default">
+                        		<input type="text"  id="account1" class="input-default" value="16511-5468-46512" readonly>
                       		</div>
                       		
                       		<div class="card-number">
                        			<label for="account1name" class="label-default">예금주</label>
-                        		<input type="text"  id="account1name" class="input-default">
+                        		<input type="text"  id="account1name" class="input-default" value="에이콘1조 프로젝트" readonly>
                       		</div>
                       		
                       		<div class="cardholder-name">
                         		<label for="account2" class="label-default">입금 계좌</label>
-                        		<input type="text" name="account2" id="account2" class="input-default">
+                        		<input type="text" name="account2" id="account2" class="input-default" >
                       		</div>
 
 							<div class="input-flex input-flex2">
 								<div class="cvv">
                           			<label for="account2name" class="label-default">입금주</label>
-                          			<input type="text" name="account2name" id="account2name" class="input-default">
+                          			<input type="text" name="account2name" id="account2name" class="input-default" >
                         		</div>
                         		
                         		<div class="cvv">
