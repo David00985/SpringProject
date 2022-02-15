@@ -54,6 +54,7 @@
 				<value>com.dto.OrderDTO</value>	
 				<value>com.dto.CreditCartDTO</value>	
 				<value>com.dto.BankAccountDTO</value>	
+				<value>com.dto.OrderProductDetailDTO</value>	
 			</list>		
 		</property>
 	</bean>	

@@ -19,6 +19,7 @@ import com.dto.CreditCartDTO;
 import com.dto.MemberDTO;
 import com.service.CartService;
 import com.service.MemberService;
+import com.service.OrderService;
 import com.service.StockService;
 
 @Controller
@@ -30,6 +31,9 @@ public class AjaxController {
 	CartService cservice;
 	@Autowired
 	StockService stservice;
+	@Autowired
+	OrderService oservice;
+	
 	
 	// 유저 아이디 한번더 검증하기 
 	@RequestMapping(value = "/loginCheck/userInfoAjax")
@@ -191,6 +195,26 @@ public class AjaxController {
 			System.out.println(credit);
 			
 			// 1. creditcard 테이블에 이미 등록됬는지 체크
+			String m = oservice.checkCreditCardByDTO(credit);
+			String creditidx = "";
+			if( m == null) {
+				System.out.println("등록 x");
+			//2.1 없으면 등록하기
+				int n = 0;
+				n = oservice.insertCreditCardByDTO(credit);
+				if( n==0) {
+					System.out.println("insertCreditCardByDTO 에러");
+				}else {
+					// creditcard pk값 가져오기
+					//creditidx = oservice.selectCreditCardIndex();
+				}
+			}else {
+				
+				System.out.println("이미 등록중");
+			//2.2 있으면 creditcard pk값 가져오기
+				
+				
+			}
 			
 			
 			// 2. 없으면 등록하기, 있으면 creditcard pk값 가져오기 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dao.OrderDAO;
+import com.dto.CreditCartDTO;
 import com.dto.OrderDTO;
 
 @Service
@@ -18,6 +19,20 @@ public class OrderService {
 		// TODO Auto-generated method stub
 		List<OrderDTO> list= dao.orderChart(mid);
 		return list;
+	}
+
+	public String checkCreditCardByDTO(CreditCartDTO credit) {
+		// TODO Auto-generated method stub
+		String m=null;
+		m = dao.checkCreditCardByDTO(credit);
+		return m;
+	}
+
+	public int insertCreditCardByDTO(CreditCartDTO credit) {
+		// TODO Auto-generated method stub
+		int m=0;
+		m = dao.insertCreditCardByDTO(credit);
+		return m;
 	}
 
 	

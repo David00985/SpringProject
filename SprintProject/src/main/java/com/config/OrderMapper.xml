@@ -10,5 +10,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where mid = #{mid}
 	</select>
 	
+	
+	
+	
+	<select id="checkCreditCardByDTO" resultType="string" parameterType="CreditCartDTO">
+		select creditid
+		from creditcard
+		where mid = #{mid} and company = #{company} and 
+			  cardnumber = #{cardnumber} and day = #{day}
+			  and month = #{month} and cvv = #{cvv}
+	
+	</select>
+	
+	<insert id="insertCreditCardByDTO" parameterType="CreditCartDTO">
+	insert into creditcard(creditid , mid , company , cardnumber,day,month,cvv)
+	 values('credit' || creditcard_seq.nextval , #{mid} , #{company} , #{cardnumber} , #{day} , #{month} , #{cvv})
+	
+	</insert>
 
 </mapper>
