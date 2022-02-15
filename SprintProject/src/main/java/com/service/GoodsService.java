@@ -2,6 +2,7 @@ package com.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,11 @@ public class GoodsService {
 
 	public int cartStock(StockDTO sdto) {
 		int stock = dao.cartStock(sdto);
+		return stock;
+	}
+
+	public List<StockDTO> goodsRetrieveStock(Map<String, String> map) {
+		List<StockDTO> stock = dao.goodsRetrieveStock(map);
 		return stock;
 	}
 

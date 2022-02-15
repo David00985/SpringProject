@@ -96,31 +96,9 @@ function cloneImg() {
 			if(gsize == "Select Size" && gcolor != "Select Color"){ //컬러먼 먼저 선택시
 					alert("사이즈를 먼저 선택해주세요");
 					$("#gcolor").val("Select Color").prop("selected", true);
-			}else{
-		
-			$.ajax({
-				
-				url: "goodsRetrieveStockCheck",
-				dataType: "text",
-				type : "get",
-				data :{
-					gsize : gsize,
-					gcolor : gcolor,
-					gid : gid
-				},
-			success: function (data, status, xhr) {
-				if (data <= 5) {
-					$("#stock").text("남은 상품수: "+data+"개 (품절임박)");
-				}else{		
-					$("#stock").text("남은 상품수: "+data+"개");
-				}
-			},
-			error: function (xhr, status, error) {
-				console.log(error);
-			}//error end
-
-		})//ajax end
 			}
+		
+
 	})//change end
 
 	
@@ -132,12 +110,47 @@ function cloneImg() {
 		//근데 여기서 제이쿼리로 가져오려하는ㄷ ㅔ그러면 저 전체
 		// 저부분 데이터를 가져와야 할 것 같은데 저거를 어떻게 가져와야하나늦 ㅣ잘몰껬네요
 		console.log(gsize);
+		
 		if(gsize != "Select Size" && gcolor != "Select Color"){
 			$("#gcolor").val("Select Color").prop("selected", true);
 			$("#stock").text(" ");
 		}//if end
+		
+		
+		$.ajax({
+		
+			url: "goodsRetrieveStock",
+			type : "get",
+			dataType: "json",
+			data:{
+				gsize : gsize,
+				gid : gid
+			},
 			
+		success : function (data) {
+			$("#gcolor").empty();
+			$("#gcolor").append("<option>"+"Select Color"+"</option>")
+		$.each(data, function(i, elt) {
+			if (this.gstock >= 1 && this.gstock <= 5) {
+				$("#gcolor").append("<option>"+this.gcolor+"("+this.gstock+"개남음)(품절임박)"+"</option>");
+			}else if (this.gstock == 0){
+				$("#gcolor").append("<option disabled>"+this.gcolor+"("+this.gstock+"개남음)(품절)"+"</option>");
+			}else {
+				$("#gcolor").append("<option>"+this.gcolor+"("+this.gstock+"개남음)"+"</option>");
+			}
+			})// each and
+		},//success end
+		
+		error : function (xhr, status, error) {
+			console.log(error);
+		}//error
 			
+		})//ajax
+		
+		
+		
+		
+		
 	
 	})// gsize end
 	

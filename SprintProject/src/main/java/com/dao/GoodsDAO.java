@@ -2,6 +2,7 @@ package com.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class GoodsDAO {
 
 	public int cartStock(StockDTO sdto) {
 		int stock = session.selectOne("GoodsMapper.cartStock",sdto);
+		return stock;
+	}
+
+	public List<StockDTO> goodsRetrieveStock(Map<String, String> map) {
+		List<StockDTO> stock = session.selectList("GoodsMapper.goodsRetrieveStock",map);
 		return stock;
 	}
 

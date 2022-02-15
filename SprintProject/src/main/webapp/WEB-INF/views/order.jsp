@@ -20,7 +20,7 @@
 <jsp:include page="common/navbar.jsp" flush="true"></jsp:include>
 
 
-<jsp:include page="order/order.jsp" flush="true"></jsp:include>
+<jsp:include page="order/orderChart.jsp" flush="true"></jsp:include>
 
 
 
