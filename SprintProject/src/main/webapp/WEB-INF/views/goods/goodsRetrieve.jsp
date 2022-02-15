@@ -75,27 +75,7 @@
                 <!-- 추가할 부분~~~~~~ stock에 저장된 색깔 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` success-->
               <select name="gcolor" id="gcolor" class="stockcheck">
 	                    <option id="Select Color" >Select Color</option>
-	                    
-	                    	<%
-	                    	String sgid = null;
-	                    	String ssize = null;
-	                    	String scolor = null;
-	                    	int stock = 0;
-	                    	String color2 = null;
-	                    	String ssize2 =null;
-	                 		  for(String color : colorlist){
-	                    			color2 = color;
-	                    	for(StockDTO sdto : sDTO){
-	                    		 sgid = sdto.getGid();
-	                    		 ssize = sdto.getGsize();
-								 scolor = sdto.getGcolor();
-								 stock = sdto.getGstock();
-								if(gid.equals(sgid) && scolor.equals(color)) /* && ssize.equals()) */{
-						%>
-                        <option id = "result" ><%=color%></option>
-                       	<% } //if end
-						   }  // sizelist end
-	                 	   }//colorlist for end%> 
+	                    <option>사이즈를 먼저 선택해주세요!</option>
 	              </select><br>
 	          	 <p id="stock"></p>
               <input type="number" value="1" name="gamount" id="cqty">

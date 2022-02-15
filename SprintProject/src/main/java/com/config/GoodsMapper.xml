@@ -74,7 +74,7 @@ gsize = #{gsize}
 select count(*) from goods
 <where>
 <if test="search == 'gcategory'">
-	sid = #{sid} and gcategory like '%'||#{goodsSearch}||'%'
+	sid = #{sid} and gcategory like lower('%'||#{goodsSearch}||'%')
 </if>
 <if test="search == 'gname'">
 	sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
@@ -86,7 +86,7 @@ select count(*) from goods
 select * from goods 
 <where>
 <if test="search == 'gcategory'">
-	sid = #{sid} and gcategory like '%'||#{goodsSearch}||'%'
+	sid = #{sid} and gcategory like lower('%'||#{goodsSearch}||'%')
 </if>
 <if test="search == 'gname'">
 	sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
@@ -100,5 +100,18 @@ gid = #{gid} and
 gsize = #{gsize} and
 gcolor = #{gcolor}
 </select>
+
+<select id="goodsRetrieveStock" resultType="StockDTO" parameterType="map">
+select gstock, gcolor from stock where gid = #{gid} and gsize = #{gsize}
+
+</select>
+
+
+
+
+
+
+
+
 
 </mapper>

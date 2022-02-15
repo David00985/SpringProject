@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -256,9 +257,10 @@ public class GoodsController {
 	
 	// 현재는 gooddto 2개만 보내지만, 앞으로 게시판, 리뷰정보 등등. 많이 고쳐야한다. 여기 정말 많이 바껴야 한다. 
 	@RequestMapping(value = "/goodsRetrieve")
-	public ModelAndView goodsRetrieve(@RequestParam String gid ,HttpServletRequest request) {		
+	public ModelAndView goodsRetrieve(@RequestParam String gid ,HttpServletRequest request, HttpSession session) {		
 		ModelAndView mav = new ModelAndView();		
 		GoodsDTO dto = service.goodsRetrieve(gid);	
+		
 		
 		//gid에 대한 아이디 재고현황 리스트 뽑기 
 		List<StockDTO> sdto = service.stockRetrieve(gid);
@@ -291,6 +293,16 @@ public class GoodsController {
 			mav.setViewName("goodsRetrieve");
 		}
 		return mav;		
+	}
+	
+	
+	@RequestMapping(value = "/goodsRetrieveStock")
+	@ResponseBody
+	public List<StockDTO> goodsRetrieveStock(@RequestParam Map<String, String> map, HttpServletRequest request) {
+		
+		List<StockDTO> stock = service.goodsRetrieveStock(map);
+		
+		return stock;
 	}
 	
 	// cart화면... 
@@ -338,9 +350,10 @@ public class GoodsController {
 	@ResponseBody
 	public int goodsRetrieveStockCheck(StockDTO dto) {
 		
-		System.out.println(dto);
 		
 		int stock = service.goodsRetrieveStockCheck(dto);
+		
+		System.out.println(dto);
 		
 		return stock;
 				

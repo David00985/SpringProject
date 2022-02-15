@@ -10,7 +10,7 @@ public class StockDTO {
 	String gcolor;
 	int gstock;
 	int num;
-
+	
 	public StockDTO() {
 		super();
 		// TODO Auto-generated constructor stub
