@@ -4,7 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="OrderMapper">
 
-	
+	<select id="orderChart" resultType="OrderDTO">
+	select * 
+	from orders
+	where mid = #{mid}
+	</select>
 	
 
 </mapper>

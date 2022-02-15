@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+.cart-page{
+    margin: 80px auto;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-info{
+    display: flex;
+    flex-wrap: wrap-reverse;
+}
+
+img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+th{
+    text-align: left;
+    padding:  5px;
+    color: #fff;
+    background:  #7003ff;
+    font-weight: normal;
+}
+
+td{
+    padding: 10px 5px;
+    font-size: 10px;
+}
+
+td a{
+    color: #70ff;
+    font-size: 12px;
+}
+
+p{
+    font-size: 15px;
+}

@@ -51,5 +51,16 @@ gcolor = #{gcolor}
 select * from goods where gid LIKE '%'||#{T}||'%'
 </select>
 
+<select id="stockCheckByCartDTO" resultType="int" parameterType="CartDTO">
+
+select gstock
+from stock
+where gid = #{gid} and
+gsize = #{csize} and
+gcolor = #{gcolor}
+
+</select>
+
+
 
 </mapper>
