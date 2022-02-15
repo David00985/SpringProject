@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("CreditCartDTO")
 public class CreditCartDTO {
 
-	private int creditid;
+	private String creditid;
 	private String mid;
 	private String company;
 	private String cardnumber;
@@ -16,7 +16,7 @@ public class CreditCartDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CreditCartDTO(int creditid, String mid, String company, String cardnumber, int day, int month, int cvv) {
+	public CreditCartDTO(String creditid, String mid, String company, String cardnumber, int day, int month, int cvv) {
 		super();
 		this.creditid = creditid;
 		this.mid = mid;
@@ -31,10 +31,10 @@ public class CreditCartDTO {
 		return "CreditCartDTO [creditid=" + creditid + ", mid=" + mid + ", company=" + company + ", cardnumber="
 				+ cardnumber + ", day=" + day + ", month=" + month + ", cvv=" + cvv + "]";
 	}
-	public int getCreditid() {
+	public String getCreditid() {
 		return creditid;
 	}
-	public void setCreditid(int creditid) {
+	public void setCreditid(String creditid) {
 		this.creditid = creditid;
 	}
 	public String getMid() {

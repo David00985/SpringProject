@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("BankAccountDTO")
 public class BankAccountDTO {
 
-	private int bankid;
+	private String bankid;
 	private String mid;
 	private String accountnumber;
 	private String accountname;
@@ -14,7 +14,7 @@ public class BankAccountDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public BankAccountDTO(int bankid, String mid, String accountnumber, String accountname, String bank) {
+	public BankAccountDTO(String bankid, String mid, String accountnumber, String accountname, String bank) {
 		super();
 		this.bankid = bankid;
 		this.mid = mid;
@@ -27,10 +27,10 @@ public class BankAccountDTO {
 		return "BankAccount [bankid=" + bankid + ", mid=" + mid + ", accountnumber=" + accountnumber + ", accountname="
 				+ accountname + ", bank=" + bank + "]";
 	}
-	public int getBankid() {
+	public String getBankid() {
 		return bankid;
 	}
-	public void setBankid(int bankid) {
+	public void setBankid(String bankid) {
 		this.bankid = bankid;
 	}
 	public String getMid() {

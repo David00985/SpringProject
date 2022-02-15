@@ -186,7 +186,7 @@ public class AjaxController {
 		if(selectpayment.equals("신용카드") ) {
 			System.out.println("신용카드");
 			System.out.println("PaymentInsertPromise:" + company + cardnumber + day + month +cvv );
-			CreditCartDTO credit = new CreditCartDTO(0, mid, company, cardnumber, Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(cvv));
+			CreditCartDTO credit = new CreditCartDTO(null, mid, company, cardnumber, Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(cvv));
 			
 			System.out.println(credit);
 			
@@ -202,7 +202,7 @@ public class AjaxController {
 		// 분기2... 계좌이체 선택	
 		}else if(selectpayment.equals("계좌이체")) {
 			System.out.println("계좌이체");
-			BankAccountDTO account = new BankAccountDTO(0, mid, accountnumber, accountname, bank);
+			BankAccountDTO account = new BankAccountDTO(null, mid, accountnumber, accountname, bank);
 			System.out.println(account);
 			
 			// 1. bankaccount 테이블에 이미 등록됬는지 체크
