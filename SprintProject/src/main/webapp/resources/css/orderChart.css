@@ -1,44 +1,59 @@
-@charset "UTF-8";
-
-.cart-page{
-    margin: 80px auto;
+.ordertitle{
+    font-size: 30px;
+    margin-bottom: 2em;
+}
+#container{
+    text-align: center;
 }
 
-table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.cart-info{
-    display: flex;
-    flex-wrap: wrap-reverse;
-}
-
-img{
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin-right: 10px;
-}
-
-th{
-    text-align: left;
-    padding:  5px;
+/* -------------------------------------------------------------------------------------------- */
+.review{
+    display: block;
+    background: #030303;
+    text-decoration: none;
+    text-align: center;
     color: #fff;
-    background:  #7003ff;
-    font-weight: normal;
+    border-radius: 50px;
+    margin-bottom: 5px;
+
+}
+.ordercancel{
+    display: block;
+    background: #030303;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    border-radius: 50px;
+    margin-bottom: 5px;
+}
+.deliver{
+    display: block;
+    background: #030303;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    border-radius: 50px;
+    margin-bottom: 5px;
+
+}
+/* 비고란 버튼 css---------------------------------------------------------------- */
+
+
+.ordertable{
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0,.1);  
+    margin: 25px auto;
+    width: 1800px;
+    height: 170px;
 }
 
-td{
-    padding: 10px 5px;
-    font-size: 10px;
+.ordertable thead tr{
+    border-top: 1px solid grey;
+    border-bottom:  1px solid grey;
+    height: 50px;
 }
 
-td a{
-    color: #70ff;
-    font-size: 12px;
-}
 
-p{
-    font-size: 15px;
-}
+/* 테이블 css----------------------------------------------------------------------- */
