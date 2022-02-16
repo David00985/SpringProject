@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+3:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic"
+    rel="stylesheet" />      
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="resources/css/main2.css">
+<link rel="stylesheet" href="resources/css/order.css">
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +16,12 @@
 <body>
 
 
+
+<jsp:include page="common/navbar.jsp" flush="true"></jsp:include>
+
+
 <jsp:include page="order/orderChart.jsp" flush="true"></jsp:include>
 
-
+ 
 </body>
 </html>

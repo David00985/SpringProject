@@ -35,5 +35,11 @@ public class OrderService {
 		return m;
 	}
 
+	public List<OrderDTO> deliverinfo(int oid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO> list = dao.deliverinfo(oid);
+		return list;
+	}
+
 	
 }
