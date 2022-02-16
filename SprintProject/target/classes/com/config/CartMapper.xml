@@ -31,6 +31,16 @@ end;
     from cart
     where cid = #{cid}
    </delete>
+   
+   <delete id="deleteAllByListDTO" parameterType="arraylist">
+   	delete from cart
+	where cid  IN
+	<foreach item="x1" index="index" collection="list"
+	      open="(" separator="," close=")">
+	        #{x1}
+	  </foreach>
+   
+   </delete>
   
   
   

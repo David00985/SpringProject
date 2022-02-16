@@ -56,8 +56,8 @@
                         <label for="mphone1"  class="label-default">전화번호</label>
                         <div class="col-3">
                             <input type="text" name="mphone1"  class="input-default" id="mphone1" value="<%=mdto.getMphone1() %>" required>-
-                            <input type="text" name="mphone2"  class="input-default" value="<%=mdto.getMphone2() %>" required>-
-                            <input type="text" name="mphone3"  class="input-default" value="<%=mdto.getMphone3() %>" required>
+                            <input type="text" name="mphone2"  class="input-default" id="mphone2" value="<%=mdto.getMphone2() %>" required>-
+                            <input type="text" name="mphone3"  class="input-default" id="mphone3" value="<%=mdto.getMphone3() %>" required>
                         </div>  
                     </div>
                     

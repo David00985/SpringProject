@@ -19,7 +19,7 @@ public class OrderDTO {
 	private String opost;
 	
 	private String paymentid;  // 결제정보가 담긴 payment테이블fk
-	private String opindex;    // 구매한 상품들의 정보가 있는 orderproduct테이블fk
+	private int opindex;    // 구매한 상품들의 정보가 있는 orderproduct테이블fk
 	
 	// 화면에 필요한 정보
 	private String oproductname; // 출력형식은 xxx 상품 외 2개..
@@ -33,7 +33,7 @@ public class OrderDTO {
 		// TODO Auto-generated constructor stub
 	}
 	public OrderDTO(int oid, String mid, String ordate, String oname, String ophone1, String ophone2, String ophone3,
-			String oaddress1, String oaddress2, String opost, String paymentid, String opindex, String oproductname,
+			String oaddress1, String oaddress2, String opost, String paymentid, int opindex, String oproductname,
 			int oprice, String oimage, int opaymentcheck, int odelivery, int oconfirmed) {
 		super();
 		this.oid = oid;
@@ -129,10 +129,10 @@ public class OrderDTO {
 	public void setPaymentid(String paymentid) {
 		this.paymentid = paymentid;
 	}
-	public String getOpindex() {
+	public int getOpindex() {
 		return opindex;
 	}
-	public void setOpindex(String opindex) {
+	public void setOpindex(int opindex) {
 		this.opindex = opindex;
 	}
 	public String getOproductname() {

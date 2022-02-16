@@ -7,7 +7,7 @@ public class OrderProductDetailDTO {
 
 	// OrderProductDetail 테이블에 들어갈 정보.. 
 	private String opdindex; // index값
-	private String opnum;  // fk / orderproduct
+	private int opindex;  // fk / orderproduct
 	private String gid;    // 구매 상품코드
 	private String gname;  // 구매 상품 이름
 	private String gsize;  // 구매 상품 사이즈
@@ -20,11 +20,11 @@ public class OrderProductDetailDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public OrderProductDetailDTO(String opdindex, String opnum, String gid, String gname, String gsize, int gamount,
+	public OrderProductDetailDTO(String opdindex, int opindex, String gid, String gname, String gsize, int gamount,
 			String gcolor, int gprice, String gimage, int confirmed) {
 		super();
 		this.opdindex = opdindex;
-		this.opnum = opnum;
+		this.opindex = opindex;
 		this.gid = gid;
 		this.gname = gname;
 		this.gsize = gsize;
@@ -36,7 +36,7 @@ public class OrderProductDetailDTO {
 	}
 	@Override
 	public String toString() {
-		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opnum=" + opnum + ", gid=" + gid + ", gname=" + gname
+		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opindex=" + opindex + ", gid=" + gid + ", gname=" + gname
 				+ ", gsize=" + gsize + ", gamount=" + gamount + ", gcolor=" + gcolor + ", gprice=" + gprice
 				+ ", gimage=" + gimage + ", confirmed=" + confirmed + "]";
 	}
@@ -46,11 +46,11 @@ public class OrderProductDetailDTO {
 	public void setOpdindex(String opdindex) {
 		this.opdindex = opdindex;
 	}
-	public String getOpnum() {
-		return opnum;
+	public int getOpindex() {
+		return opindex;
 	}
-	public void setOpnum(String opnum) {
-		this.opnum = opnum;
+	public void setOpindex(int opindex) {
+		this.opindex = opindex;
 	}
 	public String getGid() {
 		return gid;
