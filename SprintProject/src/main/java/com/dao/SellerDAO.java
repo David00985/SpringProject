@@ -13,6 +13,8 @@ import com.dto.GoodsDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
+import com.dto.StockDTO2;
+import com.dto.StockPageDTO;
 
 @Service
 public class SellerDAO {
@@ -113,6 +115,24 @@ public class SellerDAO {
 
 	public int totalCount(SqlSessionTemplate session2, HashMap<String, String> map) {
 		return session.selectOne("GoodsMapper.SellergoodsPagetotalcount", map);
+	}
+
+	public StockPageDTO SellerStockPage(HashMap<String, String> map, int curPage) {
+		StockPageDTO pdto = new StockPageDTO();
+		int perPage = pdto.getPerPage();
+		int offset = (curPage - 1) * perPage;
+		List<StockDTO2> list = session.selectList("StockMapper.SellerStockPage", map, new RowBounds(offset, perPage));
+		
+		
+		pdto.setCurPage(curPage);
+		pdto.setList(list);
+		pdto.setTotalCount(totalStockCount(map));
+		
+		return pdto;
+	}
+
+	private int totalStockCount(HashMap<String, String> map) {
+		return session.selectOne("StockMapper.totalStockCount",map);
 	}
 
 }

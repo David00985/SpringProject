@@ -10,36 +10,14 @@ public class StockDTO2 {
 	String gsize;
 	String gname;
 	int num;
-	String gimage;
+	String gimage1;
 
 	public StockDTO2() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
-
-	public String getGimage() {
-		return gimage;
-	}
-
-	public void setGimage(String gimage) {
-		this.gimage = gimage;
-	}
-
-	@Override
-	public String toString() {
-		return "StockDTO2 [gid=" + gid + ", gcolor=" + gcolor + ", gstock=" + gstock + ", gsize=" + gsize + ", gname="
-				+ gname + ", num=" + num + ", gimage=" + gimage + "]";
-	}
-
-	public StockDTO2(String gid, String gcolor, int gstock, String gsize, String gname, int num, String gimage) {
+	public StockDTO2(String gid, String gcolor, int gstock, String gsize, String gname, int num, String gimage1) {
 		super();
 		this.gid = gid;
 		this.gcolor = gcolor;
@@ -47,7 +25,13 @@ public class StockDTO2 {
 		this.gsize = gsize;
 		this.gname = gname;
 		this.num = num;
-		this.gimage = gimage;
+		this.gimage1 = gimage1;
+	}
+
+	@Override
+	public String toString() {
+		return "StockDTO2 [gid=" + gid + ", gcolor=" + gcolor + ", gstock=" + gstock + ", gsize=" + gsize + ", gname="
+				+ gname + ", num=" + num + ", gimage1=" + gimage1 + "]";
 	}
 
 	public String getGid() {
@@ -88,6 +72,22 @@ public class StockDTO2 {
 
 	public void setGname(String gname) {
 		this.gname = gname;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getGimage1() {
+		return gimage1;
+	}
+
+	public void setGimage1(String gimage1) {
+		this.gimage1 = gimage1;
 	}
 
 }
