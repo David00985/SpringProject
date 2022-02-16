@@ -1,3 +1,4 @@
+<%@page import="com.dto.StockPageDTO"%>
 <%@page import="com.dto.PageDTO"%>
 <%@page import="com.dto.StockDTO2"%>
 <%@page import="java.util.Arrays"%>
@@ -16,7 +17,7 @@
 
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <%
-	int count = (int)session.getAttribute("count");
+StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 %>
 <!-- 재고 관리 페이지 -->
 
@@ -24,7 +25,7 @@
 	<div class="card">
 		
 		<div>
-			<div class="numbers"><%=count %></div>
+			<div class="numbers"><%=stockPage.getTotalCount() %></div>
 			<div class="cardName">등록 상품 수</div>
 		</div>
 		<div class="iconBx">
@@ -299,28 +300,34 @@ function reload(){
  <h2><center>재고현황 페이지입니다.</center></h2><br>
  <span id="result"></span>
  <hr>   
-    
-  <table width="100%" cellspacing="0" cellpadding="0">
-
-   <tr>
-      <td>
-         <table align="center" width="1200" cellspacing="0" cellpadding="0"
-            border="0">
-            
-            <tr>
-               <td height="5"></td>
-            </tr>
-            <tr>
-               <td height="1" colspan="8" bgcolor="CECECE"></td>
-            </tr>
-            <tr>
-               <td height="10"></td>
-            </tr>
-
-            <tr>
+<td>
+<form action="" method="get">
+<table border="1" >
+	<tr>
+		<td colspan="6">
+			<form action="stock">
+				<select name="search">
+					<option value="gname">상품이름</option>
+				</select>
+				<input type="text" name="stocksearch" size="50">
+				<input type="submit" value="검색">
+			</form>
+		</td>
+	</tr>
+		 <tr>
+		 	<th>상품이미지</th>
+			<th>상품이름(Gname)</th>
+			<th>상품사이즈(Gsize)</th>
+			<th>상품색상(Gcolor)</th>
+			<th>상품수량(Gstock)</th>
+			<th>수정/삭제</th>
+		</tr>
 <%
-	List<StockDTO2> dto2 = (List<StockDTO2>)session.getAttribute("list");
+ 	List<StockDTO2> dto2 = stockPage.getList();
  	SellerDTO dto = (SellerDTO)session.getAttribute("login_seller");
+ 	String search = (String)session.getAttribute("search");
+ 	String stocksearch = (String)session.getAttribute("stocksearch");
+ 	
 		String gid = "";
 		String gname ="";
 		String gSize ="";
@@ -340,71 +347,44 @@ if(dto != null){
 		gColor = d.getGcolor();
 		gStock = d.getGstock();
 		num = d.getNum();
-		gimage = d.getGimage();
+		gimage = d.getGimage1();
 			 
 %>				
-<td>
-<form action="" method="get">
-<input type="hidden" name="num" id ="num" value="<%=num%>">
-<table border="1" style="padding: 15px" >
-  		<tr>
-  		</tr>
-		 <tr>
-		 	<th rowspan="11"><img alt="" width="160" height="240" src="resources/images/items/<%=gimage %>.gif"></th><!-- 수정구현 필 -->
-			<th>상품이름(Gname)</th>
-		</tr>
 		<tr>
+			<input type="hidden" name="num" id ="num" value="<%=num%>">
+		 	<th><img alt="" width="100" height="180" src="resources/images/items/<%=gimage %>.gif"></th><!-- 수정구현 필 -->
 			 <th><input type="text" name="gname" id="gname<%=num %>"  value="<%=gname%>"></th>
-		<tr>
-		<tr>
-			<th>상품사이즈(Gsize)</th>
-		</tr>
-		<tr>	
 			<th><input type="text" name="gsize" id="gsize<%=num %>" value="<%=gSize %>"></th>
-		</tr>
-		<tr>
-			<th>상품색상(Gcolor)</th>
-		</tr>
-		<tr>	
 			<th><input type="text" name="gcolor" id="gcolor<%=num %>" value="<%=gColor %>"></th>
-		</tr>
-		<tr>
-			<th>상품수량(Gstock)</th>
-		</tr>
-		<tr>
 			<th><input type="text" name="gstock" id="gstock<%=num %>" value="<%if(gStock <= 5 ){ %><%=gStock+" (재고발주 요청!) " %>
 			<%}%><%=gStock%>"></th>
-		</tr>
-		<tr>
 			<td colspan="2">
-		<center><button class="update" data-num="<%=num%>">수정</button>
+			<center><button class="update" data-num="<%=num%>">수정</button>
 			<button class="delete" data-num="<%=num%>">삭제</button></center></td> 
 		</tr>
-
-</table>
-</form>
-</td>
-               <!-- 한줄에 4개씩 보여주기 -->   
-               <%
-                if(i%4==0){//i는 1부터 
-               %>
-                   <tr>
-                    <td height="10">
-                   </tr>
-               <%
-                }//end if
-               %>   
    <%
    } //end for
 	  %>   
-         </table>&nbsp;
-      </td>
-   </tr>
-   
-   <tr>
-      <td height="10">
-   </tr>
-   	
+	  <tr>
+	  	<td colspan="6">
+	  	<%
+	  		int curPage = stockPage.getCurPage();
+		   	int perPage = stockPage.getPerPage();
+		   	int totalCount = stockPage.getTotalCount();
+		   	int totalPage = totalCount/perPage; //총 필요 페이지
+	  		if(totalCount%perPage != 0) totalPage++;
+		   	for(int i = 1;  i<= totalPage; i++){
+		   		if(i== curPage){
+		   			out.print(i+"&nbsp;");
+		   		}else{
+		   			out.print("<a href='stockPage?curPage="+i+"&search="+search+"&stocksearch="+stocksearch+"'>"+i+"</a>&nbsp;");
+
+		   		}
+		   	}
+	  	%>
+	  	</td>
+	  </tr>
+</form>
 </table>	
 <%
    }else{ ////sid,sid equals end 

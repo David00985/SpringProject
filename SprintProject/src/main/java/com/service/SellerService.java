@@ -12,6 +12,7 @@ import com.dto.GoodsDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
+import com.dto.StockPageDTO;
 
 @Service
 public class SellerService {
@@ -100,6 +101,11 @@ public class SellerService {
 	
 	public PageDTO SellergoodsPage(HashMap<String, String> map, int curPage) {
 		PageDTO dto = dao.SellergoodsPage(map, curPage);
+		return dto;
+	}
+
+	public StockPageDTO SellerStockPage(HashMap<String, String> map, int curPage) {
+		StockPageDTO dto = dao.SellerStockPage(map, curPage);
 		return dto;
 	}
 	 

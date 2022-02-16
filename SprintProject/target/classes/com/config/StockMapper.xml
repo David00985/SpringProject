@@ -7,14 +7,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 상품 재고 sql문 입력 -->
 
+<select id="SellerStockPage" resultType="StockDTO2" parameterType="hashmap">
+select g.gname, g.gimage1  ,s.gsize , s.gcolor , s.gstock , num  from goods g join stock s on
+g.gid = s.gid 
 
-<!-- 재고현황 화면 구현  -->
-<select id="selectSellergoods"  parameterType="String" resultType="StockDTO">
-select *
-from stock
-where gid in ( select gid from goods where sid = #{sid} group by gid)
+<where>
+	<if test="search == 'gname'">
+		 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
+	</if>
+</where>
+</select>
+
+
+
+
+<select id="totalStockCount" resultType="int" parameterType="hashmap" >
+select count(*) from stock where gid in (select gid from goods 
+
+<where>
+	<if test="search == 'gname'">
+		 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
+	</if>
+</where>)
 
 </select>
+
+
+
+
 
 <!-- 재고현황 화면 구현2  -->
 <select id="selectgoods" resultType="GoodsDTO">

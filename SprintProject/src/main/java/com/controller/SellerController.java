@@ -19,6 +19,7 @@ import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
 import com.dto.StockDTO2;
+import com.dto.StockPageDTO;
 import com.service.SellerService;
 
 @Controller
@@ -203,58 +204,47 @@ public class SellerController {
 	
 	//재고 관리 화면.. (현황 재고등록 추가)
 	@RequestMapping(value = "/stock")
-	public String stock(HttpSession session) {
+	public String stock(HttpSession session, HttpServletRequest request,
+			String stocksearch, String search ) {
+		
 		
 		SellerDTO seller = (SellerDTO) session.getAttribute("login_seller");
 		String sid = seller.getSid();
 		
-		int count = 0;
+		String curPage = (String)request.getAttribute("curPage");
+		if (curPage == null) {
+			curPage = "1";
+		}
 		
-		List<StockDTO> sDTO = service.SelectStock(sid);//판매자 상품 재고현황 리스트
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("sid", sid);
+		map.put("stocksearch", stocksearch);
+		map.put("search", search);
+		
+		StockPageDTO list = service.SellerStockPage(map , Integer.parseInt(curPage));
 		List<GoodsDTO> gDTO = service.SelectGoods(sid);//로그인 된 판매자의 상품리스 가져오기
 		
-		for (int i = 0; i <= sDTO.size(); i++) {
-			count = i;
-		}
-		List<StockDTO2> list = new ArrayList<StockDTO2>(); //최종 리스트를 넘길 리스트 를 생성 
-		String gid = null; //재고현황의 gid 값
-		String gid2 = null; //상품리스트의 gid 값
-		String gcolor = null; // 상품 색상 값
-		String gsize = null; // 상품 사이즈 값
-		int gstock = 0;  // 상수 수량값
-		String gname = null; // 상품이름 
-		String gimage = null;
-		int num = 0;
-		
-		for (StockDTO s : sDTO) {
-			gid = s.getGid(); //재고의 gid를 가져옴
-			num = s.getNum();
-			
-			for (GoodsDTO g : gDTO) {
-				gid2 = g.getGid(); //상품의 gid를 가져옴
-				
-				if (gid.equals(gid2)) {//재고와 상품의 gid값이 같은것을 변수의 담는다.
-					gid = s.getGid();
-					gcolor = s.getGcolor();
-					gsize = s.getGsize();
-					gstock = s.getGstock();
-					gname = g.getGname();
-					gimage = g.getGimage1();
-					
-			StockDTO2 dto2  = new StockDTO2(gid2, gcolor, gstock, gsize, gname, num, gimage);//for문안에서 객체생성
-			
-			list.add(dto2); //list에 담아준다.
-					
-		}//if문
-		}//goods
-		}//stock
-		
 		session.setAttribute("list", list);
-		session.setAttribute("count",count);	
+		session.setAttribute("stocksearch", stocksearch);
+		session.setAttribute("search", search);
 		session.setAttribute("gDTO",gDTO);	
 		
 		return  "s_stock";
 	}
+	
+	@RequestMapping(value = "/stockPage")
+	public String stockPage(HttpServletRequest request, String curPage
+			, String search, String stocksearch) {
+		
+		request.setAttribute("curPage", curPage);
+		request.setAttribute("search", search);
+		request.setAttribute("stocksearch", stocksearch);
+		
+		return "forward:stock";
+	}
+	
+	
+	
 	
 	//재고현황 수정
 	@RequestMapping(value = "/SellerStockUpdate")
