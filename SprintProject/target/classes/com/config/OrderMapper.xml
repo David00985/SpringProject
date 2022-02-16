@@ -28,4 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	</insert>
 
+	<select id="deliverinfo" resultType="string" parameterType="OrderDTO">
+	select * 
+	from orders
+	where oid = #{oid}
+	</select>
+	
+
 </mapper>

@@ -34,5 +34,11 @@ public class OrderDAO {
 		m = session.insert("OrderMapper.insertCreditCardByDTO" , credit);
 		return m;
 	}
+
+	public List<OrderDTO> deliverinfo(int oid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO> list = session.selectList("OrderMapper.deliverinfo", oid);
+		return list;
+	}
 	
 }
