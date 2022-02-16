@@ -324,6 +324,15 @@ $(function(){
 		var cvv = $("#cvv").val();
 		var flag = true;
 		var selectpayment = "";
+		var mname = $("#mname").val();
+		var mphone1 = $("#mphone1").val();
+		var mphone2 = $("#mphone2").val();
+		var mphone3 = $("#mphone3").val();
+		var mpost = $("#mpost").val();
+		var maddress1 = $("#maddress1").val();
+		var maddress2 = $("#maddress2").val();
+		var oprice = parseInt($("#payAmount3").text());
+		
 		// 계좌이체 선택
 		if(multi1 == "none"){
 			console.log("계좌이체 선택");
@@ -374,9 +383,14 @@ $(function(){
 						return PaymentInsertPromise(selectpayment , account , accountName , bank, cardCompany ,cardNumber ,cardDay, cardMonth, cvv);
 					})
 					//4. 계좌 정보 등록
-					.then(function(opayment) {
-						console.log("결제정보Promise .then:" , opayment);
-						
+					.then(function(paymentid) {
+						console.log("결제정보Promise .then:" , paymentid);
+						return TXCartDelOrderInPromise(mname ,mphone1 , mphone2 ,mphone3 ,mpost ,maddress1 ,maddress2 ,paymentid ,oprice ,selectpayment );
+					})
+					//5. 계좌 정보 등록
+					.then(function(result5) {
+						console.log("TXPromise .then:" , result5);	
+						alert("정상결제되었습니다.\ㅜPromiseChaining :All ok\n1.userid검증 : ok \n2.제고 검증:ok \n3.계좌검증:ok \n4.TX처리:ok ");
 					})
 					// 5. 
 					.catch(function(err) {
@@ -403,9 +417,14 @@ $(function(){
 						return PaymentInsertPromise(selectpayment , account , accountName , bank, cardCompany ,cardNumber ,cardDay, cardMonth, cvv);
 					})
 					//4. 계좌 정보 등록
-					.then(function(opayment) {
-						console.log("결제정보Promise .then:" , opayment);	
-						
+					.then(function(paymentid) {
+						console.log("결제정보Promise .then:" , paymentid);	
+						return TXCartDelOrderInPromise(mname ,mphone1 , mphone2 ,mphone3 ,mpost ,maddress1 ,maddress2 ,paymentid ,oprice ,selectpayment );
+					})
+					//5. 계좌 정보 등록
+					.then(function(result5) {
+						console.log("TXPromise .then:" , result5);	
+						alert("정상결제되었습니다.\ㅜPromiseChaining :All ok\n1.userid검증 : ok \n2.쿠폰 검증:ok \n3.제고 검증:ok \n4.계좌검증:ok \n5.TX처리:ok ");
 					})
 					// 5. 
 					.catch(function(err) {
@@ -633,7 +652,46 @@ $(function(){
 	}// end  promise6.  신용카드 db에  등록하기 
 	
 	
-	
+	// promise7. Tx처리
+	function TXCartDelOrderInPromise(mname ,mphone1 , mphone2 ,mphone3 ,mpost ,maddress1 ,maddress2 ,paymentid ,oprice ,selectpayment ) {
+		return new Promise(function(resolve, reject) { 
+			
+			$.ajax({
+				url:"loginCheck/TXCartDelOrderInPromise",
+				type:"post",
+				datatype:"text",
+				data: 
+					{ oname :mname,
+					ophone1 : mphone1,
+					ophone2 : mphone2,
+					ophone3 : mphone3,
+					opost : mpost,
+					oaddress1 : maddress1,
+					oaddress2 : maddress2,
+					paymentid : paymentid,
+					oprice : oprice,
+					selectpayment : selectpayment
+					}
+				,
+				success: function(data, status , xhr  ) {
+						
+					if( data == "failed"){
+						reject("예상못한 에러. TX실패\n");
+					}else{
+						
+						resolve(data);
+					}	
+					
+				},
+				error: function(xhr , status , error  ) {
+					console.log("TXCartDelOrderInPromise:" +error);
+						
+				}
+			});	//end ajax 	
+		
+			
+		});
+	}// end promise7. Tx처리
 	
 	
 	

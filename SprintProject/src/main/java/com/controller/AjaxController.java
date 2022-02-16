@@ -17,6 +17,7 @@ import com.dto.CouponDTO;
 import com.dto.CouponUserDTO;
 import com.dto.CreditCartDTO;
 import com.dto.MemberDTO;
+import com.dto.OrderDTO;
 import com.service.CartService;
 import com.service.MemberService;
 import com.service.OrderService;
@@ -186,6 +187,8 @@ public class AjaxController {
 		String mid = dto.getMid();
 		String result ="failed";
 		
+		// 원래 제대로 된 카드인지 검증이 필요하지만 지금은 생략.. 
+		
 		// 분기... 신용카드 선택
 		if(selectpayment.equals("신용카드") ) {
 			System.out.println("신용카드");
@@ -195,34 +198,47 @@ public class AjaxController {
 			System.out.println(credit);
 			
 			// 1. creditcard 테이블에 이미 등록됬는지 체크
-			String m = oservice.checkCreditCardByDTO(credit);
-			String creditidx = "";
-			if( m == null) {
-				System.out.println("등록 x");
+			String creditid = oservice.checkCreditCardByDTO(credit);
+			
+			if( creditid == null) {
+				System.out.println("등록 x 신규등록하기.. ");
 			//2.1 없으면 등록하기
 				int n = 0;
 				n = oservice.insertCreditCardByDTO(credit);
-				if( n==0) {
-					System.out.println("insertCreditCardByDTO 에러");
-				}else {
-					// creditcard pk값 가져오기
-					//creditidx = oservice.selectCreditCardIndex();
-				}
-			}else {
+					if( n==0) {
+						System.out.println("insertCreditCardByDTO 등록 에러");
+					}else {
+						// creditcard pk값 가져오기
+						//creditidx = oservice.selectCreditCardIndex();
+						creditid = oservice.checkCreditCardByDTO(credit);
+					}
+			}
+			
+			
+			System.out.println("creditidx:" +creditid);
+	
+			// 2. payment 테이블에 등록하고, payment pk값을 리턴하기.. 
+			
+			//2.1 payment 테이블에 이미 등록되있으면. 아니면.. 
+			String paymentid = oservice.checkPayMentByCreditid(creditid);
+			
+			if ( paymentid == null) {
 				
-				System.out.println("이미 등록중");
-			//2.2 있으면 creditcard pk값 가져오기
+				// 없으면 등록하기
+				int m = oservice.insertPayMentByCreditid(creditid);
+				
+				if( m ==0) {
+					System.out.println("insertPayMentByCreditid 등록 에러");
+				}else {
+					paymentid = oservice.checkPayMentByCreditid(creditid);
+					
+				}
 				
 				
 			}
 			
-			
-			// 2. 없으면 등록하기, 있으면 creditcard pk값 가져오기 
-			
-			
-			// 3. payment 테이블에 등록하고, payment pk값을 리턴하기.. 
-			
-			result = "credit";
+			System.out.println("paymentid:" + paymentid);
+			result = paymentid;
 		// 분기2... 계좌이체 선택	
 		}else if(selectpayment.equals("계좌이체")) {
 			System.out.println("계좌이체");
@@ -230,29 +246,116 @@ public class AjaxController {
 			System.out.println(account);
 			
 			// 1. bankaccount 테이블에 이미 등록됬는지 체크
+			String bankid = oservice.checkBankAccountByDTO(account);
+			
+			if( bankid == null) {
+				System.out.println("등록 x 신규등록하기.. ");
+			//2.1 없으면 등록하기
+				int n = 0;
+				n = oservice.insertBankAccountByDTO(account);
+				if( n==0) {
+					System.out.println("insertBankAccountByDTO 등록 에러");
+				}else {
+					bankid = oservice.checkBankAccountByDTO(account);
+				}
+			}
 			
 			
-			// 2. 없으면 등록하기 , 있으면 bankaccount pk값 가져오기 
-						
-						
-			// 3. payment 테이블에 등록하고, payment pk값을 리턴하기.. 
+			System.out.println("bankid:" +bankid);
+	
+		
 			
-			result = "account";
+			// 2. 없으면 등록하기 , 있으면 paymentid pk값 가져오기 
+			String paymentid = oservice.checkPayMentByBankid(bankid);
+			
+			if ( paymentid == null) {
+				
+				// 없으면 등록하기
+				int m = oservice.insertPayMentByBankid(bankid);
+				
+				if( m ==0) {
+					System.out.println("insertPayMentByBankid 등록 에러");
+				}else {
+					paymentid = oservice.checkPayMentByBankid(bankid);
+					
+				}
+				
+				
+			}
+			
+			System.out.println("paymentid:" + paymentid);
+			result = paymentid;
+			
 		// 이거 나오면 버그..
 		}else {
 			System.out.println("에러.. ");
 		}
 		
-		
-		
-	
-		
 		return result;
 	}
 	
+	// @RequestParam String mname , @RequestParam String mphone1 ,@RequestParam String mphone2 , @RequestParam String mphone3 , @RequestParam String mpost ,@RequestParam String maddress1 ,@RequestParam String maddress2 ,@RequestParam String paymentid
+	@RequestMapping(value = "/loginCheck/TXCartDelOrderInPromise")
+	public @ResponseBody String TXCartDelOrderInPromise(@RequestParam String selectpayment  ,HttpSession session ,OrderDTO odto ) {
+		
+		MemberDTO dto = (MemberDTO) session.getAttribute("login_member");
+		String mid = dto.getMid();
+		odto.setMid(mid);
+		String result = "success";
+		List<CartDTO> orderCartlist =(List<CartDTO> ) session.getAttribute("orderCartlist");
+		CouponDTO dcCode = (CouponDTO) session.getAttribute("dcCode");
+		String code = null;
+		if ( dcCode != null) {
+			code = dcCode.getCode();
+		}
 	
+		
+		// oproductname 이름 및 대표이미지 넣기
+		int size = orderCartlist.size();
+		String oproductname ="";
+		if ( size ==1) {
+			 oproductname = orderCartlist.get(0).getGname();
+		}else {
+			 oproductname = orderCartlist.get(0).getGname() +" 외 " +(size-1) + "개";
+		}
+		String oimage = orderCartlist.get(0).getGimage();
+		odto.setOproductname(oproductname);
+		odto.setOimage(oimage);
+		
+		// 신용카드는 바로결제완료로 하기 
+		if(selectpayment.equals("신용카드") ) {
+			odto.setOpaymentcheck(1);
+		}
+		
+		System.out.println("TXCartDelOrderInPromise" + odto);
+		
+		
+		// 1.아래 3개가 하나의 TX...
+		//1단계 orderProduct 와 orderProductDetail에 등록하고 opindex반환하기
+		//2단계 cart에서 해당 번호 제거하기
+		//3단계 order 테이블에 등록하기 
+		int x =0;
+		
+		try {
+			x = oservice.TXCartDelOrderIn(orderCartlist , code ,odto );
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("오더페이지TX 에러발생해서 롤백 처리." + e);
+			result = "failed";
+		}
+		
 	
+		
+		// 세션에서 코드랑 orderlist비우기
+		session.removeAttribute("dcCode");
+		session.removeAttribute("orderCartlist");
 	
+		
+		
+		return result;
+	}
 	
 	
 	
