@@ -24,7 +24,7 @@
 </script>
 
 
-
+<br><br><br><br><br><br><br><br>
 ${login_member.mname} 님의 주문내역입니다.
 
 <h1>주문상품 내역</h1>
@@ -65,4 +65,4 @@ ${login_member.mname} 님의 주문내역입니다.
 
     </div>
     
-</div>
+</div> 

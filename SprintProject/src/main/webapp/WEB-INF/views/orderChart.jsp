@@ -5,7 +5,6 @@
     rel="stylesheet" />      
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="resources/css/main2.css">
-<link rel="stylesheet" href="resources/css/order.css">
    
 <!DOCTYPE html>
 <html>
@@ -22,6 +21,15 @@
 
 <jsp:include page="order/orderChart.jsp" flush="true"></jsp:include>
 
+ 
+
+ <!-- custom js file link? -->
+    <script src="resources/js/m_event.js"></script>
+ <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
  
 </body>
 </html>

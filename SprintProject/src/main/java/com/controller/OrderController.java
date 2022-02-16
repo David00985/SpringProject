@@ -29,8 +29,15 @@ public class OrderController {
 		List<OrderDTO> list = service.orderChart(mid);
 		System.out.println(list);
 		session.setAttribute("orderChart", list);
+		return "redirect:../orderChart";
+	}
+	
+	@RequestMapping(value = "/orderChart")
+	public String ordercart2() {
 		return "orderChart";
 	}
+	
+	
 	@RequestMapping(value = "/deliver")
 	public String deliver() {
 		return "deliver";
