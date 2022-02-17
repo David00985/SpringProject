@@ -6,10 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%
 
-	OrderDTO dto = (OrderDTO)session.getAttribute("orderChart");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +29,7 @@
 </head>
 <body>
    
-<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
    <div id="deliverly" >
 	
 
@@ -64,37 +61,37 @@
 									<th scope="col">수량</th>
 									<th scope="col">상품 구매금액</th>
 									<th scope="col">배송상태</th>
-									<th scope="col">비고</th>
+									<th scope="col">비고 &nbsp;&nbsp;</th>
 								</tr>
 							</thead>
 							<tbody class="order_info">
 							
 							<c:forEach items="${orderChart}" var="dto" varStatus="status"> 
 								<tr class="order_infolist">
-									<td><label>${orderChart.}</label><br><a href="">${number.count }</a></td>
+									<td><label>${orderChart.image1}</label><br><a href="">${orderChart.oid}</a></td>
 									<td class="thumb">
                               <a href="">
                               <img src=""/>
                            </a>
                            </td>
 									<td class="product">
-                              <a href=""><strong><class="name">${orderlist.pro_name}</strong>
+                              <a href=""><strong><class="name">${orderChart.oname}</strong>
 										<span class="icon"> <img src="" alt="" /> </span></a>
 										<ul
 											class="option">
-											<li class="xans-record-">[옵션: ${orderlist.pro_color }/${orderlist.pro_size }]
+											<li class="xans-record-">[옵션: ${orderChart.ocolor }/${orderChart.osize }]
 											</li>
 										</ul></td>
 									<td>
-                              <label>${orderlist.order_pro_quantity} 개</label>
+                              <label>${orderChart.oquantity} 개</label>
 									</td>
 									<td class="price">
 										<div class="">
-											<strong><fmt:formatNumber value="${orderlist.order_price * orderlist.order_pro_quantity}" type="number"/> 원</strong>
+											<strong><fmt:formatNumber value="${orderChart.oprice * orderChart.oquantity}" type="number"/> 원</strong>
 										</div>
 									</td>
 									<td>
-										<strong>${orderlist.delivery_status }</strong>
+										<strong>${orderChart.delivery_status}</strong>
 									</td>
 									<c:if test="${orderlist.delivery_status eq '배송완료' }">
 									<td class="button">
@@ -104,7 +101,7 @@
                            </td>
 									</c:if>
 								</tr>
-							</c:if>
+						
 								</c:forEach>
 							</tbody>
 						</table>
