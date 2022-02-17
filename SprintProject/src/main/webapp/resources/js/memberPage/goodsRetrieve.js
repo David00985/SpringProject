@@ -132,11 +132,11 @@ function cloneImg() {
 			$("#gcolor").append("<option>"+"Select Color"+"</option>")
 		$.each(data, function(i, elt) {
 			if (this.gstock >= 1 && this.gstock <= 5) {
-				$("#gcolor").append("<option>"+this.gcolor+"("+this.gstock+"개남음)(품절임박)"+"</option>");
+				$("#gcolor").append("<option value='" +this.gcolor + "'>"+this.gcolor+"("+this.gstock+"개남음)(품절임박)"+"</option>");
 			}else if (this.gstock == 0){
 				$("#gcolor").append("<option disabled>"+this.gcolor+"("+this.gstock+"개남음)(품절)"+"</option>");
 			}else {
-				$("#gcolor").append("<option>"+this.gcolor+"("+this.gstock+"개남음)"+"</option>");
+				$("#gcolor").append("<option value='" +this.gcolor + "'>"+this.gcolor+"("+this.gstock+"개남음)"+"</option>");
 			}
 			})// each and
 		},//success end

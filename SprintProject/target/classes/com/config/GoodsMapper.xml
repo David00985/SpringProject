@@ -94,7 +94,7 @@ select * from goods
 </where>
 </select>
 
-<select id="cartStock" resultType="int">
+<select id="cartStock" resultType="int" parameterType="StockDTO">
 select gstock from stock where
 gid = #{gid} and 
 gsize = #{gsize} and

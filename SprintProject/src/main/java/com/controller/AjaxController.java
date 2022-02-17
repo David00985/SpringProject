@@ -353,6 +353,12 @@ public class AjaxController {
 		session.removeAttribute("orderCartlist");
 	
 		
+		if ( x != 0) {
+			result = String.valueOf(x);
+		}else {
+			result = "failed";
+		}
+		
 		
 		return result;
 	}

@@ -390,7 +390,8 @@ $(function(){
 					//5. 계좌 정보 등록
 					.then(function(result5) {
 						console.log("TXPromise .then:" , result5);	
-						alert("정상결제되었습니다.\ㅜPromiseChaining :All ok\n1.userid검증 : ok \n2.제고 검증:ok \n3.계좌검증:ok \n4.TX처리:ok ");
+						alert("정상결제되었습니다. oid="+result5 +"\PromiseChaining :All ok\n1.userid검증 : ok \n2.제고 검증:ok \n3.계좌검증:ok \n4.TX처리:ok ");
+						location.href = "main";
 					})
 					// 5. 
 					.catch(function(err) {
@@ -424,7 +425,8 @@ $(function(){
 					//5. 계좌 정보 등록
 					.then(function(result5) {
 						console.log("TXPromise .then:" , result5);	
-						alert("정상결제되었습니다.\ㅜPromiseChaining :All ok\n1.userid검증 : ok \n2.쿠폰 검증:ok \n3.제고 검증:ok \n4.계좌검증:ok \n5.TX처리:ok ");
+						alert("정상결제되었습니다. oid="+result5 +"\PromiseChaining :All ok\n1.userid검증 : ok \n2.쿠폰 검증:ok \n3.제고 검증:ok \n4.계좌검증:ok \n5.TX처리:ok ");
+						location.href = "main";
 					})
 					// 5. 
 					.catch(function(err) {

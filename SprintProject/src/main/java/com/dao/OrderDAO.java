@@ -113,11 +113,23 @@ public class OrderDAO {
 		//1.1 orderProduct 생성후 opnum 반환하기
 		OrderProductDTO opdto = new OrderProductDTO(0, dcCode, bundle);
 	
+		
+		
 		int x =0;
 		if( dcCode == null) {
 			x = session.insert("OrderMapper.insertOrderProductBynoCode" ,opdto );
 		}else {
+			
 			x = session.insert("OrderMapper.insertOrderProduct" ,opdto );
+			//4. 쿠폰 사용한거면 쿠폰 사용한거로 바꾸기
+			String code = opdto.getCode();
+			String mid = odto.getMid();
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("code", code);
+			map.put("mid" , mid);
+			
+			int u = session.update("CartMapper.updateCouponUserUsedByMap",map);
+			
 		}
 	
 			
@@ -151,6 +163,10 @@ public class OrderDAO {
 			//멀티 insert할라했는데 에러를 못잡겠다 ~~ 
 			int q = session.insert("OrderMapper.insertOrderProductDetailBydto",detaildto);
 			
+
+			//3.1 재고 마이너스 하기
+			int r = session.update("StockMapper.updateStockMinusByDTO", cart);
+			
 		}
 		
 		//2단계 order 테이블에 위의  opindex 추가해서 등록하기 
@@ -158,8 +174,10 @@ public class OrderDAO {
 		
 		int w = session.insert("OrderMapper.insertOrdersByDTO", odto);
 	
+		int oid = session.selectOne("OrderMapper.selectOrdersSequence");
+		System.out.println("orders: 시퀀스:" + oid);
 		
-		//3단계 cart에서 해당 번호 제거하기 /  멀티 delete하기 
+		//3.2 카트에서 제거하기 
 		
 		int y = session.delete("CartMapper.deleteAllByListDTO" , cartcids);
 		
@@ -167,7 +185,8 @@ public class OrderDAO {
 		
 		
 		
-		return m;
+		
+		return oid; // 등록한 orders테이블 oid 리턴하기 
 		
 		
 		

@@ -62,5 +62,17 @@ public class GoodsDAO {
 		return stock;
 	}
 
+	public CartDTO beforeCartAddCheck(CartDTO dto) {
+		// TODO Auto-generated method stub
+		CartDTO stock = session.selectOne("CartMapper.beforeCartAddCheck",dto);
+		return stock;
+	}
+
+	public int updateCartAddCqty(CartDTO checkdto) {
+		// TODO Auto-generated method stub
+		int stock = session.update("CartMapper.updateCartAddCqty",checkdto);
+		return stock;
+	}
+
 	
 }

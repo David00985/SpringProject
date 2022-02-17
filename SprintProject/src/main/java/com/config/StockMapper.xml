@@ -32,7 +32,15 @@ select count(*) from stock where gid in (select gid from goods
 
 </select>
 
+<update id="updateStockMinusByDTO" parameterType="CartDTO">
+update stock set
+gstock = gstock - #{cqty}
+where gid = #{gid} and
+	  gsize = #{csize} and
+	  gcolor = #{gcolor}
 
+
+</update>
 
 
 
