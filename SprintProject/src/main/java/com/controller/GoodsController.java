@@ -56,7 +56,7 @@ public class GoodsController {
 	//ajax goodsRetrieve에서 add to cart로 cart에 추가 담기 
 	// db에 stock 추가해서 이부분도 고쳐야한다~~~~~~~~~~~~~~~~~~~~~~~```<- 수정시 제거하기 
 	@RequestMapping(value = "/cartAdd")
-	public @ResponseBody String cartAdd(CartDTO dto , HttpSession session ,StockDTO sdto) {
+	public @ResponseBody String cartAdd(CartDTO dto , HttpSession session ) {
 		
 		//1. 추가 파싱하기
 		MemberDTO mdto = (MemberDTO) session.getAttribute("login_member");
@@ -69,13 +69,37 @@ public class GoodsController {
 
 		// stock 정보도 받아서 추가하기.. gid와 사이즈와 컬러값 넘겨서 수량 받아오기.. <- 수정시 제거하기 
 		//gid,gcolor,gsize
+		StockDTO sdto = new StockDTO();
+		sdto.setGid(dto.getGid());
+		sdto.setGsize(dto.getCsize());
+		sdto.setGcolor(dto.getGcolor());
+		
+	
+		
 		int stock = service.cartStock(sdto);
 		dto.setStock(stock);
 		
 		
 		//2. cart db에 저장하기
+		
+		// 수정사항.. 있으면 수량만 업데이트 하기 
+		CartDTO checkdto = null;
+		checkdto = service.beforeCartAddCheck(dto);
 		int m =0;
-		m =service.cartAdd(dto);
+		
+		if ( checkdto == null) {
+			//없으면 추가하기
+			m =service.cartAdd(dto);
+		}else {
+			// 있으면 수량만 업데이트하기
+			int cqty = dto.getCqty() + checkdto.getCqty();
+			checkdto.setCqty(cqty);
+			
+			m = service.updateCartAddCqty(checkdto);
+		}
+		
+		
+		
 		
 		if( m ==0) {
 			System.out.println("cartAdd insert실패");

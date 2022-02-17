@@ -100,7 +100,35 @@ end;
 		
 	</insert>
 	
+	<update id="updateCouponUserUsedByMap" parameterType="hashmap">
+		update couponuser
+		set used = 1 , usedtime= sysdate
+		where code = #{code} and
+			  mid = #{mid}
+		
 	
+	</update>
+	
+	
+	<select id="beforeCartAddCheck" resultType="CartDTO" parameterType="CartDTO">
+		select *
+		from cart
+		where mid = #{mid} and
+			  gid = #{gid} and
+			  csize = #{csize} and
+			  gcolor = #{gcolor}
+	
+	
+	</select>
+	
+	<update id="updateCartAddCqty" parameterType="CartDTO">
+		update cart
+		set cqty = #{cqty}
+		where cid = #{cid}
+	
+	
+	
+	</update>
 	
 
 </mapper>

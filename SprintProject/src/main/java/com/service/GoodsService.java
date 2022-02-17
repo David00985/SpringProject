@@ -62,6 +62,18 @@ public class GoodsService {
 		return stock;
 	}
 
+	public CartDTO beforeCartAddCheck(CartDTO dto) {
+		// TODO Auto-generated method stub
+		CartDTO d = dao.beforeCartAddCheck(dto);
+		return d;
+	}
+
+	public int updateCartAddCqty(CartDTO checkdto) {
+		// TODO Auto-generated method stub
+		int stock = dao.updateCartAddCqty(checkdto);
+		return stock;
+	}
+
 
 
 	
