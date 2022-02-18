@@ -1,9 +1,18 @@
 .ordertitle{
-    font-size: 30px;
-    margin-bottom: 2em;
+    font-size: xx-large;
+    margin-bottom: auto;
 }
 #container{
     text-align: center;
+}
+
+td{
+    text-align: center;
+}
+img{
+	height: 100px;
+	width: 100px;
+
 }
 
 /* -------------------------------------------------------------------------------------------- */
@@ -58,3 +67,9 @@
 
 
 /* 테이블 css----------------------------------------------------------------------- */
+
+
+.deliver_list{
+    background-color: grey;
+    color: #fff;
+}

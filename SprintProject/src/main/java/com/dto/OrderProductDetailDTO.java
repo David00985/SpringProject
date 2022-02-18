@@ -36,8 +36,8 @@ public class OrderProductDetailDTO {
 	}
 	@Override
 	public String toString() {
-		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opindex=" + opindex + ", gid=" + gid + ", gname=" + gname
-				+ ", gsize=" + gsize + ", gamount=" + gamount + ", gcolor=" + gcolor + ", gprice=" + gprice
+		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opindex=" + opindex + ", gid=" + gid + ", gname="
+				+ gname + ", gsize=" + gsize + ", gamount=" + gamount + ", gcolor=" + gcolor + ", gprice=" + gprice
 				+ ", gimage=" + gimage + ", confirmed=" + confirmed + "]";
 	}
 	public String getOpdindex() {
@@ -100,8 +100,7 @@ public class OrderProductDetailDTO {
 	public void setConfirmed(int confirmed) {
 		this.confirmed = confirmed;
 	}
-	
-	
+
 	
 	
 	

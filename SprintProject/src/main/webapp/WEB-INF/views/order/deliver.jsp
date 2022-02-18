@@ -11,21 +11,17 @@
 <head>Apid</head>
      <div>배송조회</div>
             <div class="deliver_head">
-                현재 은평에 입고되었습니다.
+                	현재 배송중입니다.
             </div>
-            <table class="deliver_ing">
-                <tr>
-                    <td>발송준비</td>
-                    <td>배송시작</td>
-                    <td>배송중</td>
-                    <td>도착예정</td>
-                </tr>
-            </table>
+            <div>도착예정</div>
+            <div>배송중</div>
+            <div>배송시작</div>
+            <div>배송준비중</div>
 
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="resources/js/memberPage/deliver.js"></script>
+
 
 
 

@@ -1,6 +1,5 @@
 package com.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +21,14 @@ public class OrderDAO {
 	@Autowired
 	SqlSessionTemplate session;
 
-	public List<OrderDTO> orderChart(String mid) {
+	
+	public List<OrderProductDetailDTO> orderChart(String mid) {
 		// TODO Auto-generated method stub
-		List<OrderDTO> list = session.selectList("OrderMapper.orderChart",mid);
+		List<OrderProductDetailDTO> list = session.selectList("OrderMapper.orderChart", mid);
 		return list;
 	}
+
+
 
 	public String checkCreditCardByDTO(CreditCartDTO credit) {
 		// TODO Auto-generated method stub
@@ -192,5 +194,8 @@ public class OrderDAO {
 		
 		
 	}
-	
+
+
+
+
 }
