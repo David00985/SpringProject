@@ -28,8 +28,6 @@ public class OrderController {
 		System.out.println("주문조회 기능");
 		MemberDTO mdto = (MemberDTO)session.getAttribute("login_member");
 		String mid = mdto.getMid();
-		OrderProductDetailDTO dto = new OrderProductDetailDTO();
-		int opindex = dto.getOpindex();
 		List<OrderProductDetailDTO> list = service.orderChart(mid);
 		System.out.println(list);
 		session.setAttribute("orderChart", list);
@@ -44,6 +42,7 @@ public class OrderController {
 	
 	@RequestMapping(value = "/deliver")
 	public String deliver() {
+		System.out.println("배송조회");
 		return "deliver";
 	}
 	
@@ -57,5 +56,15 @@ public class OrderController {
 		session.setAttribute("deliverinfo", list);
 		return "deliverinfo";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

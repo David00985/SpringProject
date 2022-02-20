@@ -324,7 +324,7 @@ public class SellerController {
 		
 		
 	//반품 관리 화면.. 
-		@RequestMapping(value = "/delivery")
+		@RequestMapping(value = "/s_delivery")
 		public String delivery() {
 			
 			return  "s_delivery";

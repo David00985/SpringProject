@@ -18,14 +18,18 @@
 		
 			//배송조회버튼
 	$(".deliver").click(function(e) {
-		e.preventDefault();
-		
-		let popUrl = "/deliver";
-		let popOption = "width = 650px, height=700px, top=300px, left=300px, scrollbars=yes";
-		
-		window.open(popUrl,"배송조회",popOption);
+			e.preventDefault();
+			
+			let popUrl = "deliver";
+			let popOption = "width = 650px, height=700px, top=300px, left=300px, scrollbars=yes";
+			
+			window.open(popUrl,"배송조회",popOption);
 	})//배송조회페이지 end
 		
+	
+	
+	
+	
 	})
 	
 
@@ -77,7 +81,7 @@
 							
 							<c:forEach items="${orderChart}" var="dto" varStatus="status"> 
 								<tr class="order_infolist">
-									<td>${dto.opdindex}</td>
+									<td>${dto.opindex}</td>
 									<td class="thumb">
                               <a href="">
                               <img alt="" src="resources/images/items/${dto.gimage}.gif">
@@ -96,15 +100,15 @@
 									</td>
 									<td class="price">
 										<div class="">
-											<strong><fmt:formatNumber value="${dto.gprice}" type="number"/> 원</strong>
+											<strong>${dto.gprice*dto.gamount} 원</strong>
 										</div>
 									</td>
-									<td>
+									<td class="del">
 										<strong>배송중</strong>
 									</td>
 									<td class="button">
                               			<a href="" class="review">리뷰작성</a>
-										<a href="" class="ordercancel">반품요청</a>
+										<a href="" class="ordercancel">반품요청</a>	
                                			<a href="" class="deliver">배송조회</a>
                            			</td>
 								

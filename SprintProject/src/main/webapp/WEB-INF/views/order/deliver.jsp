@@ -13,17 +13,7 @@
             <div class="deliver_head">
                 	현재 배송중입니다.
             </div>
-            <div>도착예정</div>
-            <div>배송중</div>
-            <div>배송시작</div>
-            <div>배송준비중</div>
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
-
+            
 
 
 
