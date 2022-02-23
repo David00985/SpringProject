@@ -1,20 +1,34 @@
 package com.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.OrderDTO;
+import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
@@ -24,7 +38,8 @@ import com.service.SellerService;
 
 @Controller
 public class SellerController {
-
+	private static final String CURR_IMAGE_REPO_PATH = 
+			"C:\\Users\\Bbangs\\git\\SpringProject\\SprintProject\\src\\main\\webapp\\resources\\images\\items";
 	@Autowired
 	SellerService service;
 	
@@ -90,16 +105,76 @@ public class SellerController {
 		return nextpage;
 	}
 	
-	@RequestMapping(value = "/SellerGoodsAdd")
-	public String SellerGoodsAdd(GoodsDTO dto, HttpSession session) {
-		System.out.println(dto);
-		int num = service.SellerGoodsAdd(dto);
-		
-		System.out.println(num);
-		session.setAttribute("mesg", "상품등록 성공!");
+	
+	
+	@RequestMapping(value = "/SellerGoodsAdd", method=RequestMethod.POST)
+	   public String SellerGoodsAdd(GoodsDTO dto, HttpSession session,MultipartHttpServletRequest multipartRequest,
+	            HttpServletResponse response )throws Exception {
+	      
+	      
+	       multipartRequest.setCharacterEncoding("utf-8");
+	        Map map = new HashMap();
+	        Enumeration enu = multipartRequest.getParameterNames();
 
-		return  "redirect:registerGoods";
-	}
+	        while(enu.hasMoreElements()) {
+	            String name = (String)enu.nextElement();
+	            String value = multipartRequest.getParameter(name);
+	            map.put(name, value);
+	        }
+	        
+	        List<String> fileList = fileProcess(multipartRequest);
+	        
+	        dto.setGimage1(fileList.get(0));
+	        dto.setGimage2(fileList.get(1));
+	        dto.setGimage3(fileList.get(2));
+	        dto.setGimage4(fileList.get(3));
+	        dto.setGimage5(fileList.get(4));
+	        
+	        System.out.println(dto);
+	        
+	        int num = service.SellerGoodsAdd(dto);
+	        
+	        HashMap<String, String> imageselectmap = new HashMap<String, String>();
+	        imageselectmap.put("sid", dto.getSid());
+	        
+	        
+	        map.put("fileList", fileList);
+	        session.setAttribute("mesg", "상품등록 성공!");
+
+	      return  "redirect:registerGoods";
+	   }
+	
+	//----------------파일업로드 구역
+    
+    private List<String> fileProcess(MultipartHttpServletRequest multipartRequest) 
+        throws Exception{
+        List<String> fileList = new ArrayList<String>();
+        Iterator<String> fileNames = multipartRequest.getFileNames();
+        
+        
+        while(fileNames.hasNext()) {
+            String fileName = fileNames.next();
+            MultipartFile mFile = multipartRequest.getFile(fileName);
+            String originalFileName = mFile.getOriginalFilename();
+            fileList.add(originalFileName);
+            File file = new File(CURR_IMAGE_REPO_PATH + "\\" + fileName);
+            if(mFile.getSize() != 0) {
+                if(!file.exists()) {
+                    if(file.getParentFile().mkdir()) {
+                        file.createNewFile();
+                    }
+                }
+                mFile.transferTo(new File(CURR_IMAGE_REPO_PATH + "\\" + originalFileName));
+            }
+        }
+        return fileList;
+    }
+ 
+ 
+
+//----------------파일업로드 구역
+	
+	
 	
 	@RequestMapping(value = "/SellerGoodsIDCheck", produces = "text/plain;charset=utf-8")
 	@ResponseBody
@@ -118,8 +193,75 @@ public class SellerController {
 	
 	//로그인 성공 .. dashBoard 화면.. 
 	@RequestMapping(value = "/dashBoard")
-	public String dashBoard() {
+	public String dashBoard(HttpSession session) {
 		
+	SimpleDateFormat Month = new SimpleDateFormat("MM"); //현재 월 구하기
+	SimpleDateFormat YearMonthDay = new SimpleDateFormat("YYYY-MM-dd"); //현재 월,일구하기
+	Calendar time = Calendar.getInstance();// 날짜 구하기
+	
+	String month = Month.format(time.getTime()); // 월만 따로 뽑기
+	String yearmonthday = YearMonthDay.format(time.getTime());//년, 월, 일 뽑기
+	
+	
+	SellerDTO sellerdto = (SellerDTO)session.getAttribute("login_seller");
+	String sid = sellerdto.getSid();
+	
+	List<OrderDTO> ordto = service.Monthlysales(sid); // 현판매자의 주문 상품들만 뽑기
+	List<OrderProductDetailDTO> ordtodetail = service.TodaySalesQuantity(sid);// 금일 판매수량 뽑기
+	List<CouponUserDTO> sale = service.TodaySaleMoney(sid);
+	
+	int MonthTotal = 0; //월 판매금액 누적 변수생성
+	for (OrderDTO dto : ordto) { // 현재 달에 모든 주문 뽑기 
+		String ordate = dto.getOrdate().substring(5, 7); // 상품주문날짜 월만 뽑기
+	if(ordate.equals(month)) { //현재 월과 주문날의 월이 같은 조건문 
+		MonthTotal += dto.getOprice();// 월 총매출 금액 누적
+	}//if
+	}//for
+	
+	int DayTotal = 0; //당일 판매금액 누적 변수생성
+	for (OrderDTO Daydto : ordto) {
+		String YMDdate = Daydto.getOrdate();//주문 년도,월,일 저장
+		if (YMDdate.substring(0, 10).equals(yearmonthday)){//DB에 등록된 시간,분,초 들어가이썽서 subString으로 년,월,일만 짜른다.
+			DayTotal += Daydto.getOprice();//금일 매출 누적
+		}
+	}
+	
+	int TotalGamount = 0; // 당일 판매수량 누적 변수생성
+	for (OrderProductDetailDTO Quantitiy : ordtodetail) {
+		String date = Quantitiy.getOrdate();//주문날짜 뽑기
+		if (date.substring(0, 10).equals(yearmonthday)) { // 현재날짜와 주문날짜 비교
+			TotalGamount += Quantitiy.getGamount(); //당일 주문수량 누적해서 담기
+		}
+	}
+	int TodaySaleMoney = 0; // 할인금익 누적 
+	for (CouponUserDTO couponDTO : sale) {
+		String date = couponDTO.getUsedtime().substring(0, 10); //금일 주문날 년,월,일 뽑기
+		String coupon = couponDTO.getCode(); // 쿠폰 데이터뽑기
+		int gprice = couponDTO.getGprice(); // 원가 쿠폰이 안들어간 가격
+		gprice += 3000;//배송비로인해 모든 주문상품 +3000
+		if (date.equals(yearmonthday)) { //오늘날이란 주문날짜가 같은것만 
+			if (coupon.equals("T-10")) {
+			 TodaySaleMoney += (gprice - gprice * 0.1)-gprice; // 차액 결제 금액 누적 10%
+		}else if (coupon.equals("T-20")) {
+			 TodaySaleMoney += (gprice - gprice * 0.2)-gprice; // 차액 결제 금액 누적 20%
+		}else if (coupon.equals("T-30")) {
+			 TodaySaleMoney += (gprice - gprice * 0.3)-gprice; // 차액 결제 금액 누적 30%
+		}else if (coupon.equals("D-All")) {
+			 TodaySaleMoney += (gprice - 3000)-gprice; // 차액 결제 금액 누적 -3000 배송비
+		}else if (coupon.equals("T-50")) {
+			 TodaySaleMoney += (gprice - gprice * 0.5)-gprice; // 차액 결제 금액 누적 50%
+		}//else end
+		}//날짜 비교 if문 end
+	}//for문 end
+	
+	
+		session.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
+		session.setAttribute("DayTotal", DayTotal);//금일 매출 금액 담기
+		session.setAttribute("TotalGamount", TotalGamount);//금일 판매수량 담기
+		session.setAttribute("TodaySaleMoney",TodaySaleMoney);//금일 할인 금액 담기
+		session.setAttribute("month",month);// 현재 월 담기
+		session.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
+	
 		return  "main_seller";
 	}
 	
@@ -224,6 +366,8 @@ public class SellerController {
 		StockPageDTO list = service.SellerStockPage(map , Integer.parseInt(curPage));
 		List<GoodsDTO> gDTO = service.SelectGoods(sid);//로그인 된 판매자의 상품리스 가져오기
 		
+		System.out.println(list);
+		
 		session.setAttribute("list", list);
 		session.setAttribute("stocksearch", stocksearch);
 		session.setAttribute("search", search);
@@ -273,7 +417,7 @@ public class SellerController {
 
 	return mesg;
 }
-	
+	// 재고 등록
 	@RequestMapping(value = "/SellerStockAdd")
 	public String SellerStockAdd(StockDTO dto, HttpSession session) {
 		
@@ -286,6 +430,7 @@ public class SellerController {
 		return "redirect:stock";
 	}
 	
+	//재고 아이디체크
 	@RequestMapping(value = "/SellerStockCheck")
 	@ResponseBody
 	public int SellerStockCheck(StockDTO dto) {
@@ -300,6 +445,7 @@ public class SellerController {
 		
 		return alert;
 	}
+	
 	
 	//리뷰 관리 화면.. 
 	@RequestMapping(value = "/review")

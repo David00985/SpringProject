@@ -229,7 +229,7 @@
 				<div class="product-card">
 					<div class="card">	
 						<div class="img-box">
-                      		<img src="resources/images/items/<%=dto.getGimage()%>.gif" alt="" width="80px" class="product-img">
+                      		<img src="resources/images/items/<%=dto.getGimage()%>" alt="" width="80px" class="product-img">
                     	</div>
                     	<div class="detail">
                     		<h4 class="product-name"><%=dto.getGname()%> </h4>

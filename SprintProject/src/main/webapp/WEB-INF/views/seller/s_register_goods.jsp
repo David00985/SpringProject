@@ -61,68 +61,27 @@ int count = (int)session.getAttribute("listcount");
 <%
 	SellerDTO seller = (SellerDTO)session.getAttribute("login_seller");
 %>
-<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
-</script>
-<script type="text/javascript">
-$(function() {
-	
-	$("#gid").on("keyup", function() {
-		var gid = $(this).val();
-		
-		$.ajax({
-			
-			url: "SellerGoodsIDCheck",
-			type: "get",
-			dataType : "text",
-			data: {
-				gid : gid
-			},
-			
-			success: function(data, status, xhr) {
-				$("#result").text(data);
-			},//success
-			error: function(xhr, status, error) {
-				console.log(error);
-			}//error
-			
-		})//ajax
-		
-	})//keyup
-	
-	
-	$("#sub").on("click", function() {
-		var gid = $("#gid").val();
-		var gname = $("#gname").val();
-		var gprice = $("#gprice").val();
-		var gimage = $("#gimage1").val();
-		var gdetail = $("#gdetail").val();
-		
-		if (gid.length == 0 ) {
-			alert("상품의 아이디를 입력해주세요");
-			event.preventDefault();
-		}else if (gname.length == 0 ) {
-			alert("상품의 이름을 입력해주세요");
-			event.preventDefault();
-		}else if (gprice.length == 0 ) {
-			alert("상품의 가격을 입력해주세요");
-			event.preventDefault();
-		}else if (gimage.length == 0) {
-			alert("상품의 이미지를 입력해주세요");
-			event.preventDefault();
-		}else if (gdetail.length == 0) {
-			alert("상품의 설명을 입력해주세요");
-			event.preventDefault();
-		}
-		
-	})//click
-	
-	
-})
 
+<script src = "http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    var cnt = 0;
+    function fn_addFile(){
+       
+       cnt++;
+       for (var i = 0; i <5; i++) {
+        if (i <= 5 ){ 
+        $("#d_file").append("<br>" + "<input type='file' name='file" + i + "' />");
+        }else if(i >= 5){
+           break;
+         alert("최대 5개까지 가능합니다.");
+        }
+       }
+    }
 </script>
+
 <h3>상품등록</h3>
 <hr>
-<form action="SellerGoodsAdd" method="get"><!-- 입력된 상품의 정보 이동   -->
+<form action="SellerGoodsAdd" method="post" enctype="multipart/form-data"><!-- 입력된 상품의 정보 이동   -->
 <table border="1">
 		<tr>	
 			<th>상품아이디(GID)</th> <!-- 상품아이디 첫글자 소문자 등록 유의 O1, T4-->
@@ -148,19 +107,16 @@ $(function() {
 			<td><input type="text" name="gprice" id="gprice" placeholder="상품가격"></td>
 		</tr>
 		<tr>
-			<th>상품이미지1(GIMAGE1)</th>
-			<td><input type="text" name="gimage1" id="gimage1" placeholder="상품이미지1"></td>
-		<tr>
-			
-		<tr>
-			<th>상품이미지2(GIMAGE2)</th>
-			<td><input type="text" name="gimage2" id="gimage2" placeholder="상품이미지2" ></td>
-		<tr>
-			
-		<tr>
-			<th>상품이미지3(GIMAGE3)</th>
-			<td><input type="text" name="gimage3" id="gimage3" placeholder="상품이미지3" ></td>
-		<tr>
+         <th>상품이미지(GIMAGE1)</th>
+         <td>
+            <input type="file" name="image1" value="파일 선택"><br>
+            <input type="file" name="image2" value="파일 선택"><br>
+            <input type="file" name="image3" value="파일 선택"><br>
+            <input type="file" name="image4" value="파일 선택"><br>
+            <input type="file" name="image5" value="파일 선택">
+            </td>
+      </tr>
+		
 		<tr>
 			<th>상품설명(GDETAIL)</th>
 			<td><textarea type="text" name="gdetail" id="gdetail" rows="5" cols="30" placeholder="상품설명" ></textarea></td>
@@ -174,87 +130,6 @@ $(function() {
 <h2><center>총 상품현황</center></h2>
 
 
-<script>
-function reload(){  
-       location.reload();
-}
-</script>
-
-<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
-</script>
-  <script type="text/javascript">
-  
-	$(function() {
-	
-		$(".update").on("click", function() {
-			var gid = $(this).attr("data-num");
-			var gname = $("#gname"+gid).val();
-			var gprice = $("#gprice"+gid).val();
-			var gdetail = $("#gdetail"+gid).val();
-			var gcategory = $("#gcategory"+gid).val();
-			var gprice2 = gprice.replace(",","");
-		
-		$.ajax({
-			
-			url: "SellerGoodsUpdate",
-			type: "get",
-			dateType :"text",
-			data: {
-				gid : gid,
-				gname : gname,
-				gprice : gprice2,
-				gdetail : gdetail,
-				gcategory : gcategory
-				
-			},
-			
-			success: function(data, status, xhr) {
-				console.log(data);
-				if (data = "1") {
-					alert("정보가 수정되었습니다.");
-				}
-				reload();
-			},//success
-			error: function(xhar, status, error) {
-				console.log(error);
-			}//error
-			
-		})//ajax
-		})//update
-		
-		
-		$(".delete").on("click", function() {
-			var gid = $(this).attr("data-num");
-			console.log(gid);
-		$.ajax({
-			
-			url: "SellerGoodsDelete",
-			type: "get",
-			dateType :"text",
-			data: {
-				gid : gid,
-				//key : value (데이터)
-			},
-			
-			success: function(data, status, xhr) {
-				if (data = 1) {
-					alert("삭제되었습니다.")
-				}
-				reload();
-			},//success
-			error: function(xhar, status, error) {
-				console.log(error);
-			}//error
-			
-		})//ajax
-		})//delete
-	
-		
-	})//function
-	
-
- </script>
-   
   
 
 <%
@@ -314,7 +189,7 @@ function reload(){
    
 
 		 <tr>
-		 	<th rowspan=""><img alt="" width="100" height="180" src="resources/images/items/<%=d.getGimage1() %>.gif"></th><!-- 수정구현 필 -->
+		 	<th rowspan=""><img alt="" width="180" height="240" src="resources/images/items/<%=d.getGimage1() %>"></th><!-- 수정구현 필 -->
 			<th><center><input type="text" name="gid" id="gid<%=gid %>" value="<%=gid %>"></center></th>
 			<td><center><input type="text" name="gname" id="gname<%=gid%>" value="<%=gname %>"></center></td>
 			<td><center><input type="text" name="gprice" id="gprice<%=gid%>" value="<%=f.format(gprice) %>"></center></td>
@@ -357,5 +232,7 @@ function reload(){
 	}
    %>
    
-
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
+</script>
+<script src="resources/js/seller/s_register_goods.js"></script>
 

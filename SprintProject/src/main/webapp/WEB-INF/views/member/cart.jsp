@@ -53,7 +53,7 @@ for(int i=0 ; i <list.size() ; i++){
                             <!-- 이미지는 md사이즈 이상은5칸 , 그이하는11칸 / 마진 왼&오는 auto / 배경화면light/ flex로 이미지 가운데 / 그림자 -->
                             <div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
                             	<!-- 클래스 img-fluid: 이것은 max-width: 100%; height: auto; 부모 너비에 맞게 크기가 조정되도록 이미지에 추가 -->
-                            	<img src="resources/images/items/<%=dto.getGimage() %>.gif" class="img-fluid" alt="cart img">
+                            	<img src="resources/images/items/<%=dto.getGimage() %>" class="img-fluid" alt="cart img">
                            	</div><!-- end 1.1  cart images 박스 -->
      					 	
      					 	<!--1.2 cart product details 박스-->

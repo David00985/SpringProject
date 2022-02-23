@@ -21,7 +21,7 @@
 %>
 		 <div class="box">
 			<div class="image">
-				<img alt="" src="resources/images/items/<%=dto.getGimage1() %>.gif">
+				<img alt="" src="resources/images/items/<%=dto.getGimage1() %>">
 			</div>
 			<div class="image-content">
 				<h3><%=dto.getGname() %></h3>		
