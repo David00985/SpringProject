@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.dao.SellerDAO;
 import com.dto.GoodsDTO;
+import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
@@ -107,6 +108,12 @@ public class SellerService {
 	public StockPageDTO SellerStockPage(HashMap<String, String> map, int curPage) {
 		StockPageDTO dto = dao.SellerStockPage(map, curPage);
 		return dto;
+	}
+
+	public 	List<OrderProductDetailDTO>	delivery(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderProductDetailDTO>	list = dao.delivery(mid);
+		return list;
 	}
 	 
 

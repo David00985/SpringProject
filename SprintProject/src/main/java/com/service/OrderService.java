@@ -42,11 +42,6 @@ public class OrderService {
 		return m;
 	}
 
-	public List<OrderDTO> deliverinfo(int oid) {
-		// TODO Auto-generated method stub
-		List<OrderDTO> list = dao.deliverinfo(oid);
-		return list;
-	}
 
 	public String checkPayMentByCreditid(String creditid) {
 		// TODO Auto-generated method stub
@@ -96,6 +91,14 @@ public class OrderService {
 		int m=0;
 		m = dao.TXCartDelOrderIn(orderCartlist ,dcCode ,odto );
 		return m;
+	}
+
+
+
+	public List<OrderDTO> orderChart_info(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO> list = dao.orderChart_info(mid);
+		return list;
 	}
 
 

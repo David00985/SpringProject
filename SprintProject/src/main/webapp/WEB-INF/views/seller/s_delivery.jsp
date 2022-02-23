@@ -1,6 +1,8 @@
 <%@page import="com.dto.SellerDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
   <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
 
@@ -54,10 +56,50 @@
     
     
     <hr>
-<h3>
-할일<br> 
-mvc패턴에 맞게 서블릿거쳐서 오게 수정필요<br>
-이페이지는 어떤 모양이 좋을지 모르겠네요. 
-</h3>
-    
-    
+<h1 class="h2">판매 현황</h1>
+
+
+
+<div class="table-responsive" style="padding: 20px;">
+
+	<table class="table">
+		<thead class="bg-light">
+			<tr>
+				<th>상품명</th>
+				<th>상품가격</th>
+				<th>상품수량</th>
+				<th>상품가격합계</th>
+				<th>배송현황</th>
+			</tr>
+
+		</thead>
+		<tbody>
+		<c:foreach items="${delivery}" var="d" varStatus="status">
+			<tr>
+				<td>${d.gid}</td>
+				<td>${d.gname}</td>
+				<td>${d.gamount}</td>
+				<td>${d.gprice}</td>
+				<td>${d.price*d.gamount}</td>
+				
+				<td><select name="status">
+				<option value="주문 완료">주문 완료</option>
+				<option value="배송 대기">배송 준비중</option>
+				<option value="배송중">배송중</option>
+				<option value="배송 완료">배송 완료</option>
+				<option value="환불중">환불중</option>
+				</select>
+				<button>업데이트</button>
+			</tr>
+		</c:foreach>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="4"></td>
+				<td>총 가격</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+
+

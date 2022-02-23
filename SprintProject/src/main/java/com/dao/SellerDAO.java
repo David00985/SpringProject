@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dto.GoodsDTO;
+import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
@@ -133,6 +134,12 @@ public class SellerDAO {
 
 	private int totalStockCount(HashMap<String, String> map) {
 		return session.selectOne("StockMapper.totalStockCount",map);
+	}
+
+	public List<OrderProductDetailDTO> delivery(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
+		return list;
 	}
 
 }

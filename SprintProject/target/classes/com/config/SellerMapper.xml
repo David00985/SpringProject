@@ -5,6 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="SellerMapper">
 
 
+<select id="deliver" resultType="OrderProductDetailDTO">
+	select m.oid, d.gid, d.gname, d.gsize, d.gamount, d.gcolor, d.gprice, d.gimage, d.confirmed 
+	from orders o join orderproductdetail d on o.opindex = d.opindex 
+	where o.mid = #{mid}
+</select>
+
+
+
+
+
 <insert id="insert" parameterType="SellerDTO">
 	insert into seller( sid,spw,sname,saddress1,saddress2, semail1,semail2 ,spost , sphone1 ,
 	sphone2 , sphone3 , sbirth ) values

@@ -27,8 +27,7 @@
 	})//배송조회페이지 end
 		
 	
-	
-	
+
 	
 	})
 	
@@ -68,7 +67,7 @@
 							</colgroup>
 							<thead>
 							<tr style="text-align: center;">
-									<th scope="col"><label>[주문 번호]</label></th>
+									<th scope="col"><label>주문 번호</label></th>
 									<th scope="col">이미지</th>
 									<th scope="col">상품정보</th>
 									<th scope="col">수량</th>
@@ -88,11 +87,11 @@
                            </a>
                            </td>
 									<td class="product">
-                              <a href=""><strong><class="name">${dto.gname}</strong>
+                              <a href="orderChart_info"><strong><class="name">${dto.gname}</strong>
 										<span class="icon"></span></a>
 										<ul
 											class="option">
-											[옵션: ${dto.gcolor },${dto.gsize }]
+											[옵션: 색상:${dto.gcolor },사이즈:${dto.gsize }]
 											
 										</ul></td>
 									<td>
@@ -121,21 +120,6 @@
 				</div>
 			
 
-		<!-- 		<table class="deliver_list">
-					<tr>
-						<td>결재대기중</td>
-						<td>배송중</td>
-						<td>배송완료</td>
-						<td>반품요청</td>
-					</tr>
-					<tr class="icons">
-						<td><i class="fa-solid fa-file-invoice-dollar fa-4x"></i></td>
-						<td><i class="fa-solid fa-truck-fast fa-4x"></i></td>
-						<td><i class="fa-solid fa-square-check fa-4x"></i></td>
-						<td><i class="fa-solid fa-arrow-rotate-right fa-4x fa-rotate-180"></i></td>
-					</tr>
-		
-				</table> -->
 			</div>
 		</div>
 

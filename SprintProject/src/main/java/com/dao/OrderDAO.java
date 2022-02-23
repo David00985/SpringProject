@@ -44,11 +44,7 @@ public class OrderDAO {
 		return m;
 	}
 
-	public List<OrderDTO> deliverinfo(int oid) {
-		// TODO Auto-generated method stub
-		List<OrderDTO> list = session.selectList("OrderMapper.deliverinfo", oid);
-		return list;
-	}
+
 
 	public String checkPayMentByCreditid(String creditid) {
 		// TODO Auto-generated method stub
@@ -193,6 +189,14 @@ public class OrderDAO {
 		
 		
 		
+	}
+
+
+
+	public List<OrderDTO> orderChart_info(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO>  list = session.selectList("OrderMapper.info", mid);
+		return list;
 	}
 
 
