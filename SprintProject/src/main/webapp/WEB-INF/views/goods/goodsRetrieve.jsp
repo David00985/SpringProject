@@ -36,13 +36,13 @@
  <div class="single-product">
    <div class="row">
    		<div class="col-2">
-   			 <img src="resources/images/items/<%=dto.getGimage1() %>.gif" alt="" width="100%" id="ProductImg">
+   			 <img src="resources/images/items/<%=dto.getGimage1() %>" alt="" width="100%" id="ProductImg">
    			
    			 
    			 <!-- 서브이미지들  -->
    			   <div class="small-img-row">
                         <div class="small-img-col">
-                            <img src="resources/images/items/<%=dto.getGimage1() %>.gif" alt="" width="100%" class="small-img" id="cloneImg1">
+                            <img src="resources/images/items/<%=dto.getGimage1() %>" alt="" width="100%" class="small-img" id="cloneImg1">
                         	 <span id="clone" class="clone"></span>
                         </div>
                         <div class="small-img-col">

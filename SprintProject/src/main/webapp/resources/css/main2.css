@@ -61,7 +61,13 @@ overflow-y : scroll;*/
     align-items: center;
     z-index: 1000;
     justify-content: space-between;
+    transform: translateY(0rem);
 }
+
+.header.hidden {
+    transform: translateY(-20rem);
+}
+
 
 
 .header .logo{
@@ -327,8 +333,8 @@ overflow-y : scroll;*/
 
 
 
-다른페이지 member/main 부분~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+/*  다른페이지 member/main 부분~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
 .container-m{
    

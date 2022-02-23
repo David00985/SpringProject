@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<insert id="SellerGoodsAdd" parameterType="GoodsDTO" >
-insert into goods (gid, sid, gcategory, gname, gprice, gdiscount, gimage1, gimage2, gimage3, gdetail, grdate)
-values (#{gid}, #{sid}, #{gcategory}, #{gname}, #{gprice}, 0, #{gimage1}, #{gimage2}, #{gimage3}, #{gdetail}, sysdate)
+insert into goods (gid, sid, gcategory, gname, gprice, gdiscount, gimage1, gimage2, gimage3, gimage4, gimage5,gdetail, grdate)
+values (#{gid}, #{sid}, #{gcategory}, #{gname}, #{gprice}, 0, #{gimage1}, #{gimage2}, #{gimage3},#{gimage4},#{gimage5}, #{gdetail}, sysdate)
 
 </insert> 
 
@@ -80,6 +80,7 @@ select count(*) from goods
 	sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
 </if>
 </where>
+	where sid = #{sid}
 </select>
 
 <select id="SellergoodsPage" resultType="GoodsDTO" parameterType="hashmap">
@@ -92,6 +93,7 @@ select * from goods
 	sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
 </if>
 </where>
+	where sid = #{sid}
 </select>
 
 <select id="cartStock" resultType="int" parameterType="StockDTO">

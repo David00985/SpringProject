@@ -8,7 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dao.SellerDAO;
+import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+<<<<<<< HEAD
+=======
+import com.dto.OrderDTO;
+>>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
@@ -110,10 +115,26 @@ public class SellerService {
 		return dto;
 	}
 
+<<<<<<< HEAD
 	public 	List<OrderProductDetailDTO>	delivery(String mid) {
 		// TODO Auto-generated method stub
 		List<OrderProductDetailDTO>	list = dao.delivery(mid);
 		return list;
+=======
+	public List<OrderDTO> Monthlysales(String sid) {
+		List<OrderDTO> dto = dao.Monthlysales(sid);
+		return dto;
+	}
+
+	public List<OrderProductDetailDTO> TodaySalesQuantity(String sid) {
+		List<OrderProductDetailDTO> dto = dao.TodaySalesQuantity(sid);
+		return dto;
+	}
+
+	public List<CouponUserDTO> TodaySaleMoney(String sid) {
+		List<CouponUserDTO> dto = dao.TodaySaleMoney(sid);
+		return dto;
+>>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
 	}
 	 
 
