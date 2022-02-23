@@ -3,7 +3,12 @@
     
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+
+<!-- 이미지 슬라이스 라이브러리  -->
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+ 
 <link rel="stylesheet" href="resources/css/main2.css">
+<link rel="stylesheet" href="resources/css/mainpage.css">
     
     <%
     //1.소비자  회원가입 성공 실패 alert출력
