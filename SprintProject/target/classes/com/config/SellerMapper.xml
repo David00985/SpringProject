@@ -28,9 +28,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where sid = #{sid} and spw = #{spw}
 </select>
 	
+<select id="Monthlysales" resultType="OrderDTO" parameterType="String">
+select o.ordate, o.oprice from orders o join orderproductdetail r on o.opindex = r.opindex
+join goods g on g.gid = r.gid where g.sid = #{sid} 
+</select>
 
+<select id="TodaySalesQuantity" resultType="OrderProductDetailDTO" parameterType="String">
+select o.ordate, r.gamount from orders o join orderproductdetail r on o.opindex = r.opindex
+join goods g on g.gid = r.gid where g.sid =#{sid}
+</select>
 
+<select id="TodaySaleMoney" resultType="CouponUserDTO" parameterType="String">
+select o.gprice, r.code, c.usedtime from orderproductdetail o join goods g on o.gid = g.gid join orderproduct r on o.opindex = r.opindex
+join couponuser c on r.code = c.code where g.sid = #{sid}
 
-
+</select>
 
 </mapper>

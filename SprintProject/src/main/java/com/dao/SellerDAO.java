@@ -9,7 +9,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.OrderDTO;
+import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
@@ -134,5 +137,21 @@ public class SellerDAO {
 	private int totalStockCount(HashMap<String, String> map) {
 		return session.selectOne("StockMapper.totalStockCount",map);
 	}
+
+	public List<OrderDTO> Monthlysales(String sid) {
+		List<OrderDTO> dto = session.selectList("SellerMapper.Monthlysales",sid);
+		return dto;
+	}
+
+	public List<OrderProductDetailDTO> TodaySalesQuantity(String sid) {
+		List<OrderProductDetailDTO> dto = session.selectList("SellerMapper.TodaySalesQuantity",sid);
+		return dto;
+	}
+
+	public List<CouponUserDTO> TodaySaleMoney(String sid) {
+		List<CouponUserDTO> dto = session.selectList("SellerMapper.TodaySaleMoney",sid);
+		return dto;
+	}
+
 
 }

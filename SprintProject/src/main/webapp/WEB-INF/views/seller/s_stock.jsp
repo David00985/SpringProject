@@ -12,6 +12,7 @@
     
 
    <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
+	<link rel="stylesheet" href="resources/css/seller/stock.css">
 
   
 
@@ -64,61 +65,6 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 	</div>
 </div>
 <!-- end cardBox -->
-
-<script type="text/javascript">
-function back() {
-	history.back();
-}
-</script>
-
-<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
-<script type="text/javascript">
-$(function() {
-	
-	$("#check").on("click", function() {
-		var gid = $("#gid").val();
-		var gsize = $("#gsize").val();
-		var gcolor = $("#gcolor").val();
-		var gstock = $("#gstock").val();
-		
-		if (gid == "") {
-			alert("아이디를 입력해주세요");
-		}else if (gstock == "") {
-			alert("재고수량을 입력해주세요");
-		}
-		
-		if(gid != "" && gstock != 0){
-		$.ajax({
-			
-			url: "SellerStockCheck",
-			type: "get",
-			dataType : "text",
-			data: {
-				gid : gid,
-				gsize : gsize,
-				gcolor : gcolor
-			},
-		success: function(data, status, xhr) {
-				console.log(data);
-				if (data == 0) {
-					alert("등록 가능한 상품입니다.");
-				}else if(data == 1){
-					alert("중복된 상품입니다.");
-				}
-				
-				
-		},
-		error : function(xhr, status, error) {
-					console.log(error);			
-		}
-		
-			
-		})//ajax
-		}
-	})//keyup
-
-})//function
-</script>
 <hr>
  <h2><center>재고등록 </center></h2><br>
 <hr>
@@ -155,7 +101,7 @@ $(function() {
 </table>
 
 <hr>
-<input type="submit" value="상품등록">
+<input type="submit" id="stockadd" value="상품등록">
 	<input type="reset" value="다시입력">
 </form>
 <!-- 재고아이디 현황 -->
@@ -225,82 +171,56 @@ $(function() {
 </table>
 <hr>
 <!-- 재고현황 페이지  -->
-<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
-</script>
-  <script type="text/javascript">
-  $(function() {
-	  
-function reload(){  
-       location.reload();
-}
-		
- 	 $(".update").on("click", function() {//수정 ajax 처리 
-			var num = $(this).attr("data-num");
-			var gsize = $("#gsize"+num).val();
-			var gcolor = $("#gcolor"+num).val();
-			var	gstock = $("#gstock"+num).val();
- 		 
- 		 $.ajax({
- 		
- 			 url :"SellerStockUpdate",
- 			 type :"get",
- 			 dateType :"text",
- 			 data : {
- 				 num : num,
- 				 gsize : gsize,
- 				 gcolor : gcolor,
- 				 gstock : gstock
- 			 },
- 			 success: function(data, status, xhr) {
-				if (data = 1) {
-					alert("수정되었습니다.");
-				}
- 				 	reload();
- 			 },
-			error: function(xhr, status, error) {
-				console.log(error);
-			}
- 			 
- 		 })//ajax
- 
- 	 })//click
- 	 
- 	 /* ------------------------------------------------- */
- 	 
- 	 $(".delete").on("click", function() {//삭제 ajax 처리 
-			var num = $(this).attr("data-num");
- 		 
- 		 $.ajax({
- 		
- 			 url :"SellerStockDelete",
- 			 type :"get",
- 			 dateType :"text",
- 			 data : {
- 				 num : num,
- 			 },
- 			 success: function(data, status, xhr) {
- 				if (data = 1) {
-					alert("삭제되었습니다.");
-				}
- 				 	reload();
-			},
-			error: function(xhr, status, error) {
-				console.log(error);
-			}
- 			 
- 		 })//ajax
- 	 
- 	 })//click 
-	  
-})//fun
-</script>
-    
  
 <hr>
  <h2><center>재고현황 페이지입니다.</center></h2><br>
- <span id="result"></span>
+
+<body>
+<button class="btn-open">재고등록하기</button>
+
+<div class="modal"> <!-- 정중앙하는 센터링 역활 -->
+	<div class="modal-content"><!-- 모달창이 된다  -->
+		<div class="photo"></div> <!-- 이미지 구현 CSS -->
+		<div class="desc"><!-- 내용구현 -->
+			<div class="desc-header">
+				<h2>- 재고 등록 -</h2><br>
+				<button class="btn-close">&times;</button><!-- x특수기호 -->
+			</div>
+			<div class="desc-content">
+			<form action="SellerStockAdd" method="get">
+				<input type="text" name="gid" id="gid" placeholder="상품아이디를 입력해주세요">
+				<select name="gsize" id="gsize" >
+					<option>XS</option>
+					<option>S</option>
+					<option>M</option>
+					<option>L</option>
+					<option>XL</option>
+				</select>
+				<select name="gcolor" id="gcolor">
+					<option>Black</option>
+					<option>Navy</option>
+					<option>Ivory</option>
+					<option>White</option>
+					<option>Gray</option>
+					<option>Beige</option>
+					<option>Pink</option>
+				</select><br>
+				<input type="text" name="gstock" id="gstock" placeholder="상품수량을 입력해주세요"><br>
+				<button>재고 등록하기</button><br>
+				</form>
+				<h2>재고입력 주의사항</h2>
+				<h3>아이디 중복값 주의!</h3>
+			</div>
+		</div>
+	</div><!-- 모달창이 된다  -->
+</div><!-- 정중앙하는 센터링 역활 -->
+<div class="overlay"></div><!-- 모달창이열리면 바탕화면 어둡게 구현  -->
+</body>
+
+
+
+
  <hr>   
-<td>
 <form action="" method="get">
 <table border="1" >
 	<tr>
@@ -352,7 +272,7 @@ if(dto != null){
 %>				
 		<tr>
 			<input type="hidden" name="num" id ="num" value="<%=num%>">
-		 	<th><img alt="" width="100" height="180" src="resources/images/items/<%=gimage %>.gif"></th><!-- 수정구현 필 -->
+		 	<th><img alt="" width="180" height="240" src="resources/images/items/<%=gimage %>"></th><!-- 수정구현 필 -->
 			 <th><input type="text" name="gname" id="gname<%=num %>"  value="<%=gname%>"></th>
 			<th><input type="text" name="gsize" id="gsize<%=num %>" value="<%=gSize %>"></th>
 			<th><input type="text" name="gcolor" id="gcolor<%=num %>" value="<%=gColor %>"></th>
@@ -398,6 +318,9 @@ if(dto != null){
  %>   
     
   
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
+</script>
+<script src="resources/js/seller/s_stock.js"></script>
    
 
 

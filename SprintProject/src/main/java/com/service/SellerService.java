@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dao.SellerDAO;
+import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.OrderDTO;
+import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
@@ -106,6 +109,21 @@ public class SellerService {
 
 	public StockPageDTO SellerStockPage(HashMap<String, String> map, int curPage) {
 		StockPageDTO dto = dao.SellerStockPage(map, curPage);
+		return dto;
+	}
+
+	public List<OrderDTO> Monthlysales(String sid) {
+		List<OrderDTO> dto = dao.Monthlysales(sid);
+		return dto;
+	}
+
+	public List<OrderProductDetailDTO> TodaySalesQuantity(String sid) {
+		List<OrderProductDetailDTO> dto = dao.TodaySalesQuantity(sid);
+		return dto;
+	}
+
+	public List<CouponUserDTO> TodaySaleMoney(String sid) {
+		List<CouponUserDTO> dto = dao.TodaySaleMoney(sid);
 		return dto;
 	}
 	 

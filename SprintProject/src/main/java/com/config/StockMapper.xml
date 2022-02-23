@@ -16,6 +16,7 @@ g.gid = s.gid
 		 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
 	</if>
 </where>
+	where sid = #{sid}
 </select>
 
 
@@ -28,7 +29,8 @@ select count(*) from stock where gid in (select gid from goods
 	<if test="search == 'gname'">
 		 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
 	</if>
-</where>)
+</where>
+	where sid = #{sid})
 
 </select>
 
@@ -88,7 +90,6 @@ gsize = #{csize} and
 gcolor = #{gcolor}
 
 </select>
-
 
 
 </mapper>
