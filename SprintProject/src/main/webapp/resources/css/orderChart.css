@@ -1,44 +1,75 @@
-@charset "UTF-8";
-
-.cart-page{
-    margin: 80px auto;
+.ordertitle{
+    font-size: xx-large;
+    margin-bottom: auto;
 }
-
-table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.cart-info{
-    display: flex;
-    flex-wrap: wrap-reverse;
-}
-
-img{
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin-right: 10px;
-}
-
-th{
-    text-align: left;
-    padding:  5px;
-    color: #fff;
-    background:  #7003ff;
-    font-weight: normal;
+#container{
+    text-align: center;
 }
 
 td{
-    padding: 10px 5px;
-    font-size: 10px;
+    text-align: center;
+}
+img{
+	height: 100px;
+	width: 100px;
+
 }
 
-td a{
-    color: #70ff;
-    font-size: 12px;
+/* -------------------------------------------------------------------------------------------- */
+.review{
+    display: block;
+    background: #030303;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    border-radius: 50px;
+    margin-bottom: 5px;
+    table-layout: fixed;
+    font-size: smaller;
+}
+.ordercancel{
+    display: block;
+    background: #030303;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    font-size: smaller;
+    border-radius: 50px;
+    margin-bottom: 5px;
+}
+.deliver{
+    display: block;
+    background: #030303;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    border-radius: 50px;
+    font-size: smaller;
+}
+/* 비고란 버튼 css---------------------------------------------------------------- */
+
+
+.ordertable{
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0,.1);  
+    margin: 25px auto;
+    width: 1300px;
+    height: 170px;
 }
 
-p{
-    font-size: 15px;
+.ordertable thead tr{
+    border-top: 1px solid grey;
+    border-bottom:  1px solid grey;
+    height: 50px;
+}
+
+
+/* 테이블 css----------------------------------------------------------------------- */
+
+
+.deliver_list{
+    background-color: grey;
+    color: #fff;
 }

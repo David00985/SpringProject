@@ -1,0 +1,16 @@
+
+
+.d_body{
+ position: relative;
+ left: 150px;
+}
+
+i{
+    margin-bottom: 30px;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    float: left;
+}

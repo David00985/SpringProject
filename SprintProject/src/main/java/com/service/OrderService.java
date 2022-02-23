@@ -12,6 +12,7 @@ import com.dto.BankAccountDTO;
 import com.dto.CartDTO;
 import com.dto.CreditCartDTO;
 import com.dto.OrderDTO;
+import com.dto.OrderProductDetailDTO;
 
 @Service
 public class OrderService {
@@ -19,11 +20,13 @@ public class OrderService {
 	@Autowired
 	OrderDAO dao;
 
-	public List<OrderDTO> orderChart(String mid) {
+	public List<OrderProductDetailDTO> orderChart(String mid) {
 		// TODO Auto-generated method stub
-		List<OrderDTO> list= dao.orderChart(mid);
+		List<OrderProductDetailDTO> list = dao.orderChart(mid);
 		return list;
 	}
+
+
 
 	public String checkCreditCardByDTO(CreditCartDTO credit) {
 		// TODO Auto-generated method stub
@@ -39,11 +42,6 @@ public class OrderService {
 		return m;
 	}
 
-	public List<OrderDTO> deliverinfo(int oid) {
-		// TODO Auto-generated method stub
-		List<OrderDTO> list = dao.deliverinfo(oid);
-		return list;
-	}
 
 	public String checkPayMentByCreditid(String creditid) {
 		// TODO Auto-generated method stub
@@ -94,6 +92,23 @@ public class OrderService {
 		m = dao.TXCartDelOrderIn(orderCartlist ,dcCode ,odto );
 		return m;
 	}
+
+
+
+	public List<OrderDTO> orderChart_info(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO> list = dao.orderChart_info(mid);
+		return list;
+	}
+
+
+
+
+
+
+
+
+
 
 	
 }

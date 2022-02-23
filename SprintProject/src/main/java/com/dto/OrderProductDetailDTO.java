@@ -45,7 +45,11 @@ public class OrderProductDetailDTO {
 	public String toString() {
 		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opindex=" + opindex + ", gid=" + gid + ", gname="
 				+ gname + ", gsize=" + gsize + ", gamount=" + gamount + ", gcolor=" + gcolor + ", gprice=" + gprice
+<<<<<<< HEAD
 				+ ", gimage=" + gimage + ", confirmed=" + confirmed + ", ordate=" + ordate + "]";
+=======
+				+ ", gimage=" + gimage + ", confirmed=" + confirmed + "]";
+>>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 	}
 
 	public String getOpdindex() {
@@ -136,4 +140,12 @@ public class OrderProductDetailDTO {
 		this.confirmed = confirmed;
 	}
 
+<<<<<<< HEAD
+=======
+	
+	
+	
+	
+	
+>>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 }

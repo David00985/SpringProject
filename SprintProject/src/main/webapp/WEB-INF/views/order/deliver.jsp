@@ -8,27 +8,27 @@
 
 
 
-<head>Apid</head>
-     <div>배송조회</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script rel="stylesheet" src="https://kit.fontawesome.com/c83e91760f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+        <div class="container">
+        <hr>
             <div class="deliver_head">
-                현재 은평에 입고되었습니다.
+                	<h2><center>현재 배송중입니다.</center></h2>
             </div>
-            <table class="deliver_ing">
-                <tr>
-                    <td>발송준비</td>
-                    <td>배송시작</td>
-                    <td>배송중</td>
-                    <td>도착예정</td>
-                </tr>
-            </table>
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="resources/js/memberPage/deliver.js"></script>
-
-
-
-
-
- 
+    		
+            <hr>
+            <br>
+                <span class="d_body">
+                    <i class="fa-solid fa-people-carry-box fa-2x"><img src="resources/images/deliver/pngtree-thick-line-png-image_2319160.jpg" alt="">배송완료</i><br>
+                    <i class="fa-solid fa-truck-fast fa-2x"><img src="resources/images/deliver/pngtree-thick-line-png-image_2319160.jpg" alt="">배송중</i><br>
+                    <i class="fa-solid fa-truck-ramp-box fa-2x"><img src="resources/images/deliver/pngtree-thick-line-png-image_2319160.jpg" alt="">배송진행중</i><br>
+                    <i class="fa-solid fa-dolly fa-2x"><img src="resources/images/deliver/pngtree-thick-line-png-image_2319160.jpg" alt="">상품입고</i><br>
+                    <i class="fa-solid fa-box fa-2x"><img src="resources/images/deliver/dsa.jpg" alt="">상품등록</i><br>
+                </span>
+    </div>        
+</body>
+</html>

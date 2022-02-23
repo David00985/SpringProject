@@ -4,13 +4,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="OrderMapper">
 
-	<select id="orderChart" resultType="OrderDTO">
-	select * 
-	from orders
-	where mid = #{mid}
+	 <select id="info" resultType="OrderDTO">
+	 select * 
+	 from orders 
+	 where opindex=#{opindex}
 	</select>
 	
-	
+	<select id="orderChart" resultType="OrderProductDetailDTO">
+	select o.opindex, d.gid, d.gname, d.gsize, d.gamount, d.gcolor, d.gprice, d.gimage, d.confirmed 
+	from orders o join orderproductdetail d on o.opindex = d.opindex where o.mid = #{mid}
+	</select>
+
 	
 	
 	<select id="checkCreditCardByDTO" resultType="string" parameterType="CreditCartDTO">
@@ -97,11 +101,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 
-	<select id="deliverinfo" resultType="string" parameterType="OrderDTO">
-	select * 
-	from orders
-	where oid = #{oid}
-	</select>
 	
 	<select id="checkPayMentByCreditid" resultType="string" parameterType="string">
 	select paymentid

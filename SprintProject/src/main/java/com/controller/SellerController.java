@@ -1,11 +1,14 @@
 package com.controller;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
+=======
+>>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +35,6 @@ import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
-import com.dto.StockDTO2;
 import com.dto.StockPageDTO;
 import com.service.SellerService;
 
@@ -469,13 +471,16 @@ public class SellerController {
 		}
 		
 		
-	//반품 관리 화면.. 
+	//배송 관리 화면.. 
 		@RequestMapping(value = "/delivery")
-		public String delivery() {
-			
+		public String delivery(OrderDTO dto , HttpSession session) {
+			System.out.println("베송관리");
+			String mid = dto.getMid(); 
+			List<OrderProductDetailDTO> list =  service.delivery(mid);
+			System.out.println(list);
+			session.setAttribute("delivery", list);
 			return  "s_delivery";
 		}
-		
-		
-		
+	
+	
 }

@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+<<<<<<< HEAD
 import com.dto.OrderDTO;
+=======
+>>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
@@ -138,6 +141,7 @@ public class SellerDAO {
 		return session.selectOne("StockMapper.totalStockCount",map);
 	}
 
+<<<<<<< HEAD
 	public List<OrderDTO> Monthlysales(String sid) {
 		List<OrderDTO> dto = session.selectList("SellerMapper.Monthlysales",sid);
 		return dto;
@@ -154,4 +158,12 @@ public class SellerDAO {
 	}
 
 
+=======
+	public List<OrderProductDetailDTO> delivery(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
+		return list;
+	}
+
+>>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 }
