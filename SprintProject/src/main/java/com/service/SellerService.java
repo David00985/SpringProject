@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import com.dao.SellerDAO;
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
-<<<<<<< HEAD
 import com.dto.OrderDTO;
-=======
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
@@ -115,7 +112,6 @@ public class SellerService {
 		return dto;
 	}
 
-<<<<<<< HEAD
 	public List<OrderDTO> Monthlysales(String sid) {
 		List<OrderDTO> dto = dao.Monthlysales(sid);
 		return dto;
@@ -129,13 +125,35 @@ public class SellerService {
 	public List<CouponUserDTO> TodaySaleMoney(String sid) {
 		List<CouponUserDTO> dto = dao.TodaySaleMoney(sid);
 		return dto;
-=======
+	}
+	
 	public 	List<OrderProductDetailDTO>	delivery(String mid) {
 		// TODO Auto-generated method stub
 		List<OrderProductDetailDTO>	list = dao.delivery(mid);
 		return list;
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
 	}
+
+	public List<OrderDTO> Recentorderstatus(String sid) {
+		List<OrderDTO> dto = dao.Recentorderstatus(sid);
+		return dto;
+	}
+
+	public int TotalUserCount(String sid) {
+		int num = dao.TotalUserCount(sid);
+		return num;
+	}
+
+	public List<String> BuyerRank(String sid) {
+		List<String> dto =  dao.BuyerRank(sid);
+		return dto;
+	}
+
+	public List<Integer> BuyerRankMoney(String sid) {
+		List<Integer> dto = dao.BuyerRankMoney(sid);
+		return dto;
+	}
+
+
 	 
 
 	
