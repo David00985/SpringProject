@@ -11,16 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import com.dto.OrderDTO;
->>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
-=======
-import com.dto.OrderDTO;
-=======
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
 import com.dto.SellerDTO;
@@ -147,17 +138,13 @@ public class SellerDAO {
 		return session.selectOne("StockMapper.totalStockCount",map);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 	public List<OrderProductDetailDTO> delivery(String mid) {
 		// TODO Auto-generated method stub
 		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
 		return list;
 	}
 
-=======
-=======
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
 	public List<OrderDTO> Monthlysales(String sid) {
 		List<OrderDTO> dto = session.selectList("SellerMapper.Monthlysales",sid);
 		return dto;
@@ -173,17 +160,4 @@ public class SellerDAO {
 		return dto;
 	}
 
-
-<<<<<<< HEAD
->>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
-=======
-=======
-	public List<OrderProductDetailDTO> delivery(String mid) {
-		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
-		return list;
-	}
-
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
 }

@@ -41,22 +41,13 @@ public class OrderProductDetailDTO {
 		this.ordate = ordate;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opindex=" + opindex + ", gid=" + gid + ", gname="
 				+ gname + ", gsize=" + gsize + ", gamount=" + gamount + ", gcolor=" + gcolor + ", gprice=" + gprice
-<<<<<<< HEAD
-<<<<<<< HEAD
-				+ ", gimage=" + gimage + ", confirmed=" + confirmed + "]";
-=======
 				+ ", gimage=" + gimage + ", confirmed=" + confirmed + ", ordate=" + ordate + "]";
->>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
-=======
-				+ ", gimage=" + gimage + ", confirmed=" + confirmed + ", ordate=" + ordate + "]";
-=======
-				+ ", gimage=" + gimage + ", confirmed=" + confirmed + "]";
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
 	}
 
 	public String getOpdindex() {
@@ -147,20 +138,4 @@ public class OrderProductDetailDTO {
 		this.confirmed = confirmed;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
-	
-	
-	
-	
-	
-<<<<<<< HEAD
-=======
->>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
-=======
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
 }
