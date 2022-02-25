@@ -33,7 +33,8 @@ public class OrderDTO {
 	// --------------------//
 	private String opaymentcheckstatus;// 결제상태를 위해 추가
 	// --------------------//
-	
+	private int sum;//가장많이 구매한 금액을 합친 변수 추가 
+	// --------------------//
 	
 	public OrderDTO() {
 		super();
@@ -43,7 +44,7 @@ public class OrderDTO {
 	public OrderDTO(int oid, String mid, String ordate, String oname, String ophone1, String ophone2, String ophone3,
 			String oaddress1, String oaddress2, String opost, String paymentid, int opindex, String oproductname,
 			int oprice, String oimage, int opaymentcheck, int odelivery, int oconfirmed, String deliverystatus,
-			String opaymentcheckstatus) {
+			String opaymentcheckstatus, int sum) {
 		super();
 		this.oid = oid;
 		this.mid = mid;
@@ -65,6 +66,7 @@ public class OrderDTO {
 		this.oconfirmed = oconfirmed;
 		this.deliverystatus = deliverystatus;
 		this.opaymentcheckstatus = opaymentcheckstatus;
+		this.sum = sum;
 	}
 
 	@Override
@@ -74,7 +76,7 @@ public class OrderDTO {
 				+ ", oaddress2=" + oaddress2 + ", opost=" + opost + ", paymentid=" + paymentid + ", opindex=" + opindex
 				+ ", oproductname=" + oproductname + ", oprice=" + oprice + ", oimage=" + oimage + ", opaymentcheck="
 				+ opaymentcheck + ", odelivery=" + odelivery + ", oconfirmed=" + oconfirmed + ", deliverystatus="
-				+ deliverystatus + ", opaymentcheckstatus=" + opaymentcheckstatus + "]";
+				+ deliverystatus + ", opaymentcheckstatus=" + opaymentcheckstatus + ", sum=" + sum +"]";
 	}
 
 	public int getOid() {
@@ -95,6 +97,14 @@ public class OrderDTO {
 
 	public void setOpaymentcheckstatus(String opaymentcheckstatus) {
 		this.opaymentcheckstatus = opaymentcheckstatus;
+	}
+
+	public int getSum() {
+		return sum;
+	}
+
+	public void setSum(int sum) {
+		this.sum = sum;
 	}
 
 	public void setOid(int oid) {

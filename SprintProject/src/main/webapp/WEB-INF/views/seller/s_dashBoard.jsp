@@ -11,19 +11,18 @@
 
 <%
 	DecimalFormat f = new DecimalFormat(",###,###,###");//금액,수량 쉼표표시
-	int MonthTotal = (int)session.getAttribute("MonthTotal"); // 현재 달 매출량
-	int DayTotal = (int)session.getAttribute("DayTotal");// 금일 매출량
-	String Month = (String)session.getAttribute("month"); // 현재 달 표시
-	String yearmonthday = (String)session.getAttribute("yearmonthday");//년도,월,일 데이터
+	int MonthTotal = (int)request.getAttribute("MonthTotal"); // 현재 달 매출량
+	int DayTotal = (int)request.getAttribute("DayTotal");// 금일 매출량
+	String Month = (String)request.getAttribute("month"); // 현재 달 표시
+	String yearmonthday = (String)request.getAttribute("yearmonthday");//년도,월,일 데이터
 	String year = yearmonthday.substring(0, 4);//년도만 자르기
 	String month = yearmonthday.substring(5, 7);//월만 자르기
 	String day = yearmonthday.substring(8, 10);//일만 자르기
-	int TotalGamount = (int)session.getAttribute("TotalGamount");
-	int TodaySaleMoney = (int)session.getAttribute("TodaySaleMoney");	
-	List<OrderDTO> Recentorderstatus = (List<OrderDTO>)session.getAttribute("Recentorderstatus");
-	int TotalUserCount =(int)session.getAttribute("TotalUserCount");
-	List<String> rankuser = (List<String>)session.getAttribute("BuyerRankUser");
-	List<Integer> rankmoney = (List<Integer>)session.getAttribute("BuyerRankMoney");
+	int TotalGamount = (int)request.getAttribute("TotalGamount");
+	int TodaySaleMoney = (int)request.getAttribute("TodaySaleMoney");	
+	List<OrderDTO> Recentorderstatus = (List<OrderDTO>)request.getAttribute("Recentorderstatus");
+	int TotalUserCount =(int)request.getAttribute("TotalUserCount");
+	List<OrderDTO> Rank = (List<OrderDTO>)request.getAttribute("Rank");
 %>
 
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -115,6 +114,7 @@
                         	
                         	String color = "";//조건문에 배송현황에 맞는 상태에 CSS클래스를 적용한거 담을 변수
                         	
+                        	String  prepared = "Product being prepared"; // 상품 준비중 분홍색
                         	String acquisition = "product acquisition"; // 상품인수 초록색
                         	String preparing = "preparing for delivery";//배송준비중 노랑색
                         	String motion = "Product in motion"; //상품 이동중 주황색
@@ -131,6 +131,8 @@
                         		color = shipping;
                         	}else if(delivery.equals("배송완료")){
                         		color = completed;
+                        	}else if (delivery.equals("상품준비중")){
+                        		color = prepared;
                         	}
                         	
                         	%>
@@ -153,39 +155,11 @@
                     </div>
                     <table>
                         <tr>
-                        <%for(String user : rankuser){ 
-	                        	for(int money : rankmoney){	
-                        %>
+                        <%for(OrderDTO ordto : Rank){%>
                             <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img1.jpg" alt=""></div></td>
-                            <td><h4><%= user %><br><span><%=money %></span></h4></td>
+                            <td><h4><%=ordto.getOname() %><br><span>총 <%=f.format(ordto.getSum()) %>원</span></h4></td>
                         </tr>
-                        <% } //user end
-	                 	}//money end %>
-                  <!-- 	      <tr>
-                            <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img2.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img3.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img4.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img5.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img6.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img7.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
-                        </tr>
- -->
+                        <% } %>
                     </table>
 
                 </div><!-- end recentCustomers -->
@@ -203,9 +177,11 @@
 <!-- charts js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 <!-- 그래프 출력  여기서부터-->
+<div id="top">1500</div>
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
 
 <script src="resources/js/my_chart.js"></script>
-
+<script>
 
 
 

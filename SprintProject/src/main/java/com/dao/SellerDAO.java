@@ -168,13 +168,9 @@ public class SellerDAO {
 		return num;
 	}
 
-	public List<String> BuyerRank(String sid) {
-		List<String> dto = session.selectList("SellerMapper.BuyerRank",sid);
-		return dto;
-	}
 
-	public List<Integer> BuyerRankMoney(String sid) {
-		List<Integer> dto = session.selectList("SellerMapper.BuyerRankMoney",sid);
+	public List<OrderDTO> Rank(String sid) {
+		List<OrderDTO> dto = session.selectList("SellerMapper.Rank",sid);
 		return dto;
 	}
 
