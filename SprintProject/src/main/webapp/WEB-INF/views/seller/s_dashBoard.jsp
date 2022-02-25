@@ -1,3 +1,5 @@
+<%@page import="com.dto.OrderDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.dto.SellerDTO"%>
 
@@ -18,6 +20,10 @@
 	String day = yearmonthday.substring(8, 10);//일만 자르기
 	int TotalGamount = (int)session.getAttribute("TotalGamount");
 	int TodaySaleMoney = (int)session.getAttribute("TodaySaleMoney");	
+	List<OrderDTO> Recentorderstatus = (List<OrderDTO>)session.getAttribute("Recentorderstatus");
+	int TotalUserCount =(int)session.getAttribute("TotalUserCount");
+	List<String> rankuser = (List<String>)session.getAttribute("BuyerRankUser");
+	List<Integer> rankmoney = (List<Integer>)session.getAttribute("BuyerRankMoney");
 %>
 
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -89,60 +95,52 @@
                 <div class="recentOrders">
                     <div class="cardHeader">
                         <h2>Recent Orders</h2>
-                        <a href="#" class="btn">View All</a>
+                        <a href="#" class="btn">상품을 구매한 고객의 수 <%=TotalUserCount %>명</a>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <td>Name</td>
-                                <td>Price</td>
-                                <td>payment</td>
-                                <td>status</td>
+                                <td>성함</td>
+                                <td>주문금액</td>
+                                <td>결제현황</td>
+                                <td>배송현황</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td>
-                                <td><span class="status pending">pending</span></td>
-                            </tr>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td><!-- 색깔 배송수정 -->
-                                <td><span class="status pending">pending</span></td>
-                            </tr>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td><!-- 색깔 배송수정 -->
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>paid</td><!-- 색깔 배송수정  2개추 가가능  -->
-                                <td><span class="status pending">pending</span></td>
-                            </tr>
+                        <%for(OrderDTO dto : Recentorderstatus){
+                        	String oname =dto.getOname();//주문자이름
+                        	int oprice = dto.getOprice(); //가격
+                        	String opay = dto.getOpaymentcheckstatus();//결제 상태
+                        	String delivery = dto.getDeliverystatus();//배송상태
+                        	
+                        	String color = "";//조건문에 배송현황에 맞는 상태에 CSS클래스를 적용한거 담을 변수
+                        	
+                        	String acquisition = "product acquisition"; // 상품인수 초록색
+                        	String preparing = "preparing for delivery";//배송준비중 노랑색
+                        	String motion = "Product in motion"; //상품 이동중 주황색
+                        	String shipping = "shipping"; //배송중 하늘색
+                        	String completed = "Delivery completed";//배송완료 빨강색
+                        	
+                        	if(delivery.equals("상품인수")){
+                        		color = acquisition;
+                        	}else if(delivery.equals("배송준비중")){
+                        		color = preparing;
+                        	}else if(delivery.equals("상품이동중")){
+                        		color = motion;
+                        	}else if(delivery.equals("배송중")){
+                        		color = shipping;
+                        	}else if(delivery.equals("배송완료")){
+                        		color = completed;
+                        	}
+                        	
+                        	%>
+                        	<tr>
+                        		<td><%=oname %></td>
+                        		<td><%=f.format(oprice) %></td>
+                        		<td><%=opay %></td>
+                        		<td><span class="<%=color%>"><%=delivery%></span></td>
+                        	</tr>
+                        <%} %>
                         </tbody>
                     </table>
 
@@ -155,10 +153,15 @@
                     </div>
                     <table>
                         <tr>
+                        <%for(String user : rankuser){ 
+	                        	for(int money : rankmoney){	
+                        %>
                             <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img1.jpg" alt=""></div></td>
-                            <td><h4>David<br><span>Italy</span></h4></td>
+                            <td><h4><%= user %><br><span><%=money %></span></h4></td>
                         </tr>
-                        <tr>
+                        <% } //user end
+	                 	}//money end %>
+                  <!-- 	      <tr>
                             <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img2.jpg" alt=""></div></td>
                             <td><h4>David<br><span>Italy</span></h4></td>
                         </tr>
@@ -182,7 +185,7 @@
                             <td width="60px"><div class="imgBx"><img src="resources/images/user_s/img7.jpg" alt=""></div></td>
                             <td><h4>David<br><span>Italy</span></h4></td>
                         </tr>
-
+ -->
                     </table>
 
                 </div><!-- end recentCustomers -->

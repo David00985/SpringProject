@@ -54,4 +54,31 @@ join couponuser c on r.code = c.code where g.sid = #{sid}
 
 </select>
 
+<select id="Recentorderstatus" resultType="OrderDTO" parameterType="String">
+
+select o.oname, o.oprice, d.deliverystatus, c.opaymentcheckstatus from
+orders o join orderdelivery d on
+o.odelivery = d.odelivery join orderpaymentcheck c on 
+o.opaymentcheck = c.opaymentcheck join orderproductdetail r on 
+r.opindex = o.opindex join goods g on 
+r.gid = g.gid where sid = #{sid} order by o.ordate desc
+
+</select>
+
+<select id="TotalUserCount" resultType="int" parameterType="String">
+select  count(DISTINCT o.mid) from orders o join orderproductdetail d on o.opindex = d.opindex 
+join goods g on g.gid = d.gid where g.sid = #{sid}
+</select>
+
+<select id="BuyerRank" resultType="String" parameterType="String">
+select  o.mid  from orders o join orderproductdetail d on o.opindex = d.opindex 
+join goods g on g.gid = d.gid where g.sid = #{sid} group by o.mid order by sum(o.oprice) desc
+</select>
+
+<select id="BuyerRankMoney" resultType="int" parameterType="String">
+select sum(o.oprice) from orders o join orderproductdetail d on o.opindex = d.opindex 
+join goods g on g.gid = d.gid where g.sid = #{sid} group by o.mid order by 1 desc
+</select>
+
+
 </mapper>

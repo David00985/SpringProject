@@ -112,12 +112,15 @@ public class SellerService {
 		return dto;
 	}
 
+<<<<<<< HEAD
 	public 	List<OrderProductDetailDTO>	delivery(String mid) {
 		// TODO Auto-generated method stub
 		List<OrderProductDetailDTO>	list = dao.delivery(mid);
 		return list;
 	}
 	
+=======
+>>>>>>> 18046e06fa2739fe0acbf9c5393d7bdcb65e60cc
 	public List<OrderDTO> Monthlysales(String sid) {
 		List<OrderDTO> dto = dao.Monthlysales(sid);
 		return dto;
@@ -131,7 +134,38 @@ public class SellerService {
 	public List<CouponUserDTO> TodaySaleMoney(String sid) {
 		List<CouponUserDTO> dto = dao.TodaySaleMoney(sid);
 		return dto;
+<<<<<<< HEAD
+=======
 	}
+	
+	public 	List<OrderProductDetailDTO>	delivery(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderProductDetailDTO>	list = dao.delivery(mid);
+		return list;
+>>>>>>> 18046e06fa2739fe0acbf9c5393d7bdcb65e60cc
+	}
+
+	public List<OrderDTO> Recentorderstatus(String sid) {
+		List<OrderDTO> dto = dao.Recentorderstatus(sid);
+		return dto;
+	}
+
+	public int TotalUserCount(String sid) {
+		int num = dao.TotalUserCount(sid);
+		return num;
+	}
+
+	public List<String> BuyerRank(String sid) {
+		List<String> dto =  dao.BuyerRank(sid);
+		return dto;
+	}
+
+	public List<Integer> BuyerRankMoney(String sid) {
+		List<Integer> dto = dao.BuyerRankMoney(sid);
+		return dto;
+	}
+
+
 	 
 
 	

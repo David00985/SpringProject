@@ -165,6 +165,11 @@ public class OrderDAO {
 			//3.1 재고 마이너스 하기
 			int r = session.update("StockMapper.updateStockMinusByDTO", cart);
 			
+			//4. good테이블에서 gsell +하기.. 
+			int t = session.update("GoodsMapper.updateGsell",cart);
+			
+			
+			
 		}
 		
 		//2단계 order 테이블에 위의  opindex 추가해서 등록하기 

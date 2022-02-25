@@ -138,4 +138,11 @@ public class OrderProductDetailDTO {
 		this.confirmed = confirmed;
 	}
 
+<<<<<<< HEAD
+=======
+	
+	
+	
+	
+>>>>>>> 18046e06fa2739fe0acbf9c5393d7bdcb65e60cc
 }

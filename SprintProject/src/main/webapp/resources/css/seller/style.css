@@ -120,7 +120,7 @@
 }
 
 
-.status.delivered{
+.product.acquisition{ /* 초록색 */
 
     padding: 2px 4px;
     background: #8de02c;
@@ -131,9 +131,9 @@
 
 }
 
-.status.pending{
+.preparing.for.delivery{ /* 노랑색 */
     padding: 2px 4px;
-    background: #f00;
+    background: #eeee00;
     color: var(--white);
     border-radius: 4px;
     font-size: 14px;
@@ -141,9 +141,29 @@
 
 }
 
-.status.inProgress{
+.Product.in.motion{/* 주황색 */
     padding: 2px 4px;
-    background: rgb(184, 214, 12);
+    background: #ff8000;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+
+}
+
+.shipping{/* 하늘색 */
+    padding: 2px 4px;
+    background: #8080ff;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+
+}
+
+.Delivery.completed{/* 빨강색 */
+    padding: 2px 4px;
+    background: #ff2626;
     color: var(--white);
     border-radius: 4px;
     font-size: 14px;

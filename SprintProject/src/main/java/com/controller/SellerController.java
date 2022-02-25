@@ -1,6 +1,9 @@
 package com.controller;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 18046e06fa2739fe0acbf9c5393d7bdcb65e60cc
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -206,7 +210,11 @@ public class SellerController {
 	
 	List<OrderDTO> ordto = service.Monthlysales(sid); // 현판매자의 주문 상품들만 뽑기
 	List<OrderProductDetailDTO> ordtodetail = service.TodaySalesQuantity(sid);// 금일 판매수량 뽑기
-	List<CouponUserDTO> sale = service.TodaySaleMoney(sid);
+	List<CouponUserDTO> sale = service.TodaySaleMoney(sid);//할인 금액누적용 뽑기
+	List<OrderDTO>  Recentorderstatus = service.Recentorderstatus(sid);//자신의 상품을 구매한 회원들의 최근주문현황(배송현황)
+	List<String> BuyerRankUser = service.BuyerRank(sid); // 판매자의 상품을 가장많이 구매한 유저
+	List<Integer> BuyerRankMoney = service.BuyerRankMoney(sid); // 판매자의 상품을 가장많이 구매한 유저순의 (금액)
+	int TotalUserCount = service.TotalUserCount(sid); //판매자의 상품을 1개라도 구매한 구매자의 수
 	
 	int MonthTotal = 0; //월 판매금액 누적 변수생성
 	for (OrderDTO dto : ordto) { // 현재 달에 모든 주문 뽑기 
@@ -233,6 +241,7 @@ public class SellerController {
 	}
 	int TodaySaleMoney = 0; // 할인금익 누적 
 	for (CouponUserDTO couponDTO : sale) {
+		if(couponDTO.getUsedtime() != null) {
 		String date = couponDTO.getUsedtime().substring(0, 10); //금일 주문날 년,월,일 뽑기
 		String coupon = couponDTO.getCode(); // 쿠폰 데이터뽑기
 		int gprice = couponDTO.getGprice(); // 원가 쿠폰이 안들어간 가격
@@ -249,14 +258,32 @@ public class SellerController {
 		}else if (coupon.equals("T-50")) {
 			 TodaySaleMoney += (gprice - gprice * 0.5)-gprice; // 차액 결제 금액 누적 50%
 		}//else end
+		}//날짜 null이 아닐시 실행
 		}//날짜 비교 if문 end
 	}//for문 end
 	
-	
+	List<OrderDTO> list = new ArrayList<OrderDTO>();
+		OrderDTO dto = new OrderDTO();
+		for (String user : BuyerRankUser) {
+			dto.setOname(user);
+			}
+	for(int money : BuyerRankMoney) {
+		dto.setOprice(money);
+	}
+		
+	list.add(dto);
+	System.out.println(list);
+		
+		List<OrderDTO> testlist = list.stream().distinct().collect(Collectors.toList());//여러개의 중복사이즈 데이터중 중복된 데이터를 제거
+		
 		session.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
 		session.setAttribute("DayTotal", DayTotal);//금일 매출 금액 담기
 		session.setAttribute("TotalGamount", TotalGamount);//금일 판매수량 담기
 		session.setAttribute("TodaySaleMoney",TodaySaleMoney);//금일 할인 금액 담기
+		session.setAttribute("Recentorderstatus",Recentorderstatus);//최근주문한 상품
+		session.setAttribute("TotalUserCount",TotalUserCount);//판매자의 상품을 1개라도 구매한 고객의 수
+		session.setAttribute("BuyerRankUser",BuyerRankUser);//판매자의 상품을 가장많이 구매한 고객의 이름
+		session.setAttribute("BuyerRankMoney",BuyerRankMoney);//판매자의 상품을 가장많이 구매한 고객의 금액
 		session.setAttribute("month",month);// 현재 월 담기
 		session.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
 	
