@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.MemberDTO;
 import com.dto.OrderDTO;
@@ -26,7 +26,7 @@ public class OrderController {
 		System.out.println("주문조회 기능");
 		MemberDTO mdto = (MemberDTO)session.getAttribute("login_member");
 		String mid = mdto.getMid();
-		List<OrderProductDetailDTO> list = service.orderChart(mid);
+		List<OrderDTO> list = service.orderChart(mid);
 		System.out.println(list);
 		session.setAttribute("orderChart", list);
 		return "redirect:../orderChart";
@@ -45,13 +45,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/orderChart_info")
-	public String orderChart_info(HttpSession session) {
+	public @ResponseBody String orderChart_info(@RequestParam("opindex") int opindex,HttpSession session) {
 		System.out.println("구매자정보조회");
-		
-		MemberDTO dto = (MemberDTO)session.getAttribute("login_member");
-		String mid = dto.getMid();
-		
-		List<OrderDTO> list = service.orderChart_info(mid);
+	
+		List<OrderProductDetailDTO> list = service.orderChart_info(opindex);
 		
 		System.out.println(list);
 		session.setAttribute("info", list);

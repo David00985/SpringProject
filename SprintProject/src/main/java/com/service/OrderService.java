@@ -20,9 +20,9 @@ public class OrderService {
 	@Autowired
 	OrderDAO dao;
 
-	public List<OrderProductDetailDTO> orderChart(String mid) {
+	public List<OrderDTO> orderChart(String mid) {
 		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO> list = dao.orderChart(mid);
+		List<OrderDTO> list = dao.orderChart(mid);
 		return list;
 	}
 
@@ -95,9 +95,9 @@ public class OrderService {
 
 
 
-	public List<OrderDTO> orderChart_info(String mid) {
+	public List<OrderProductDetailDTO> orderChart_info(int opindex) {
 		// TODO Auto-generated method stub
-		List<OrderDTO> list = dao.orderChart_info(mid);
+		List<OrderProductDetailDTO> list = dao.orderChart_info(opindex);
 		return list;
 	}
 

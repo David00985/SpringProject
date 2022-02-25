@@ -22,9 +22,9 @@ public class OrderDAO {
 	SqlSessionTemplate session;
 
 	
-	public List<OrderProductDetailDTO> orderChart(String mid) {
+	public List<OrderDTO> orderChart(String mid) {
 		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO> list = session.selectList("OrderMapper.orderChart", mid);
+		List<OrderDTO> list = session.selectList("OrderMapper.orderChart", mid);
 		return list;
 	}
 
@@ -193,9 +193,9 @@ public class OrderDAO {
 
 
 
-	public List<OrderDTO> orderChart_info(String mid) {
+	public List<OrderProductDetailDTO> orderChart_info(int opindex) {
 		// TODO Auto-generated method stub
-		List<OrderDTO>  list = session.selectList("OrderMapper.info", mid);
+		List<OrderProductDetailDTO>  list = session.selectList("OrderMapper.info", opindex);
 		return list;
 	}
 
