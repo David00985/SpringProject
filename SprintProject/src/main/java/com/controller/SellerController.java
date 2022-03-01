@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
@@ -192,7 +193,8 @@ public class SellerController {
 	
 	//로그인 성공 .. dashBoard 화면.. 
 	@RequestMapping(value = "/dashBoard")
-	public String dashBoard(HttpSession session) {
+	public String dashBoard(HttpSession session, HttpServletRequest request) {
+	
 		
 	SimpleDateFormat Month = new SimpleDateFormat("MM"); //현재 월 구하기
 	SimpleDateFormat YearMonthDay = new SimpleDateFormat("YYYY-MM-dd"); //현재 월,일구하기
@@ -209,9 +211,12 @@ public class SellerController {
 	List<OrderProductDetailDTO> ordtodetail = service.TodaySalesQuantity(sid);// 금일 판매수량 뽑기
 	List<CouponUserDTO> sale = service.TodaySaleMoney(sid);//할인 금액누적용 뽑기
 	List<OrderDTO>  Recentorderstatus = service.Recentorderstatus(sid);//자신의 상품을 구매한 회원들의 최근주문현황(배송현황)
-	List<String> BuyerRankUser = service.BuyerRank(sid); // 판매자의 상품을 가장많이 구매한 유저
-	List<Integer> BuyerRankMoney = service.BuyerRankMoney(sid); // 판매자의 상품을 가장많이 구매한 유저순의 (금액)
+	List<OrderDTO> Rank = service.Rank(sid); //자신의 상품을 가장 많이 구매한 구매자의 순위
+	List<GoodsDTO> Salesbycategory = service.Salesbycategory(sid); //원그래프 카테고리별 판매수량 합계
+	List<OrderDTO> monthlysales = service.monthlysales(sid);// 막대그래프 월별 매출량
 	int TotalUserCount = service.TotalUserCount(sid); //판매자의 상품을 1개라도 구매한 구매자의 수
+	
+	System.out.println(monthlysales);
 	
 	int MonthTotal = 0; //월 판매금액 누적 변수생성
 	for (OrderDTO dto : ordto) { // 현재 달에 모든 주문 뽑기 
@@ -258,32 +263,20 @@ public class SellerController {
 		}//날짜 null이 아닐시 실행
 		}//날짜 비교 if문 end
 	}//for문 end
-	
-	List<OrderDTO> list = new ArrayList<OrderDTO>();
-		OrderDTO dto = new OrderDTO();
-		for (String user : BuyerRankUser) {
-			dto.setOname(user);
-			}
-	for(int money : BuyerRankMoney) {
-		dto.setOprice(money);
-	}
 		
-	list.add(dto);
-	System.out.println(list);
 		
-		List<OrderDTO> testlist = list.stream().distinct().collect(Collectors.toList());//여러개의 중복사이즈 데이터중 중복된 데이터를 제거
+	request.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
+	request.setAttribute("DayTotal", DayTotal);//금일 매출 금액 담기
+	request.setAttribute("TotalGamount", TotalGamount);//금일 판매수량 담기
+	request.setAttribute("TodaySaleMoney",TodaySaleMoney);//금일 할인 금액 담기
+	request.setAttribute("Recentorderstatus",Recentorderstatus);//최근주문한 상품
+	request.setAttribute("TotalUserCount",TotalUserCount);//판매자의 상품을 1개라도 구매한 고객의 수
+	request.setAttribute("Rank",Rank);//판매자의 상품을 가장많이 구매한 고객순위
+	request.setAttribute("Salesbycategory",Salesbycategory);//원그래프 카테고리별 판매량
+	request.setAttribute("monthlysales",monthlysales);//막대그래프 월별 매출량
+	request.setAttribute("month",month);// 현재 월 담기
+	request.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
 		
-		session.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
-		session.setAttribute("DayTotal", DayTotal);//금일 매출 금액 담기
-		session.setAttribute("TotalGamount", TotalGamount);//금일 판매수량 담기
-		session.setAttribute("TodaySaleMoney",TodaySaleMoney);//금일 할인 금액 담기
-		session.setAttribute("Recentorderstatus",Recentorderstatus);//최근주문한 상품
-		session.setAttribute("TotalUserCount",TotalUserCount);//판매자의 상품을 1개라도 구매한 고객의 수
-		session.setAttribute("BuyerRankUser",BuyerRankUser);//판매자의 상품을 가장많이 구매한 고객의 이름
-		session.setAttribute("BuyerRankMoney",BuyerRankMoney);//판매자의 상품을 가장많이 구매한 고객의 금액
-		session.setAttribute("month",month);// 현재 월 담기
-		session.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
-	
 		return  "main_seller";
 	}
 	

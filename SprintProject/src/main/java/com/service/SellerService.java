@@ -146,13 +146,19 @@ public class SellerService {
 		return num;
 	}
 
-	public List<String> BuyerRank(String sid) {
-		List<String> dto =  dao.BuyerRank(sid);
+
+	public List<OrderDTO> Rank(String sid) {
+		List<OrderDTO> dto = dao.Rank(sid);
+	  return dto;
+	}
+
+	public List<GoodsDTO> Salesbycategory(String sid) {
+		List<GoodsDTO> dto = dao.Salesbycategory(sid);
 		return dto;
 	}
 
-	public List<Integer> BuyerRankMoney(String sid) {
-		List<Integer> dto = dao.BuyerRankMoney(sid);
+	public List<OrderDTO> monthlysales(String sid) {
+		List<OrderDTO> dto = dao.monthlysales(sid);
 		return dto;
 	}
 
