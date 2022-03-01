@@ -27,6 +27,7 @@
 			window.open(popUrl,"배송조회",popOption);
 	})//배송조회페이지 end
 		
+	
 
 	
 	})
@@ -81,8 +82,7 @@
                                     </thead>
                                     <tbody class="order_info">
                                     
-                                   <c:set var="total" value="0"/>
-                                	<c:forEach var="odto" items="${info}" varStatus="status">
+                                	<c:forEach var="odto" items="${info}" varStatus="status" >
                                         <tr class="order_infolist">
                                             <td>${odto.opindex}</td>
                                             <td class="thumb">
@@ -91,7 +91,7 @@
                                 
                                    </td>
                                             <td class="product">
-                                      <a href=""><strong><class="name">${odto.oname}</strong>
+                                      <a href=""><strong><class="name">${odto.gname}</strong>
                                                 <span class="icon"></span></a>
                                                 <ul
                                                     class="option">
@@ -102,10 +102,11 @@
                                             </td>
                                             <td class="price">
                                         
+                               					<c:set var="total" value="0"/>
                              					 <div class="">
-                                                    <strong>${odto.gprice} 원</strong>
+                                                    <strong>${odto.gprice * odto.gamount} 원</strong>
                                                 </div>
-				                                <c:set var= "total" value="${total + odto.gprice}" />
+				                               <c:set var= "total" value="${total + odto.gprice}" />
                                             </td>
                                             <td class="del">
                                                 <strong>배송중</strong>
