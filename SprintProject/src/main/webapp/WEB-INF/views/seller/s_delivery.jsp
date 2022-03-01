@@ -74,14 +74,14 @@
 
 		</thead>
 		<tbody>
-		<c:foreach items="${delivery}" var="d" varStatus="status">
 			<tr>
-				<td>${d.gid}</td>
-				<td>${d.gname}</td>
-				<td>${d.gamount}</td>
-				<td>${d.gprice}</td>
-				<td>${d.price*d.gamount}</td>
-				
+			<c:forEach var="info" items="" varStatus="status">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</c:forEach>	
 				<td><select name="status">
 				<option value="주문 완료">주문 완료</option>
 				<option value="배송 대기">배송 준비중</option>
@@ -91,7 +91,7 @@
 				</select>
 				<button>업데이트</button>
 			</tr>
-		</c:foreach>
+
 		</tbody>
 		<tfoot>
 			<tr>

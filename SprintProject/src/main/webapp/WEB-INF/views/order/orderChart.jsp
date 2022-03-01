@@ -24,31 +24,17 @@
 			let popOption = "width = 650px, height=700px, top=300px, left=300px, scrollbars=yes";
 			
 			window.open(popUrl,"배송조회",popOption);
-	})//배송조회페이지 end
+	});//배송조회페이지 end
 		
-	$("#image").click(function () {
-		var opidenx = $(".opindex").val()
-		$.ajax({
-			url:"orderChart_info",
-			type:"get",
-			datatype:"text",
-			data:{
-				opindex : opindex
-			},
-			success:function(data,status,xhr){
-				console.lon(data);
-				opindex.val(data);
-			},
-			error:function(xhr, status, error ){
-				console.log("구매자정보조회 error");
-			};
-		});//ajax end
-		
-		
-		
-	});//주문번호 전송
 	
-
+ 	$(".name").click(function() {
+		
+		var opindex = $(".opindex").val();
+	});//구매자정보 조회
+	
+	
+	
+	
 	
 	})
 	
@@ -61,10 +47,10 @@
 <body>
    
 <br><br><br><br><br><br>
-   <div id="deliverly" >
+
 	
 
-		<div id="container">
+		<form id="container" action="orderChart_info" method="post">
 			<div id="contents">
 
 				<div class="deliver_info">
@@ -107,7 +93,7 @@
                            </a>
                            </td>
 									<td class="product">
-                              <a href="orderChart_info"><strong><class="name">${dto.oproductname}</strong>
+                              <a href="orderChart_info?opindex=${dto.opindex}" class="name" type="submit"><strong>${dto.oproductname}</strong>
                               
 										<span class="icon"></span></a>
 										<ul
@@ -138,10 +124,6 @@
 			
 
 			</div>
-		</div>
-
-
-
-	</div>
+	</form>
 </body>
 </html>

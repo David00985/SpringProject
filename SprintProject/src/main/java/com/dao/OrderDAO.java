@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.dto.BankAccountDTO;
 import com.dto.CartDTO;
 import com.dto.CreditCartDTO;
+import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDTO;
 import com.dto.OrderProductDetailDTO;
@@ -198,11 +199,17 @@ public class OrderDAO {
 
 
 
-	public List<OrderProductDetailDTO> orderChart_info(int opindex) {
+	public List<OrderChartDTO> orderChart_info(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO>  list = session.selectList("OrderMapper.info", opindex);
+		List<OrderChartDTO> list = session.selectList("OrderMapper.info", map);
 		return list;
 	}
+
+
+
+	
+
+
 
 
 

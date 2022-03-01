@@ -1,9 +1,6 @@
 package com.controller;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 18046e06fa2739fe0acbf9c5393d7bdcb65e60cc
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -498,10 +495,7 @@ public class SellerController {
 		@RequestMapping(value = "/delivery")
 		public String delivery(OrderDTO dto , HttpSession session) {
 			System.out.println("베송관리");
-			String mid = dto.getMid(); 
-			List<OrderProductDetailDTO> list =  service.delivery(mid);
-			System.out.println(list);
-			session.setAttribute("delivery", list);
+			System.out.println(dto);
 			return  "s_delivery";
 		}
 	

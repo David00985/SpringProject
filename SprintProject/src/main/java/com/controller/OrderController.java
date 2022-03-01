@@ -1,16 +1,18 @@
 package com.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.MemberDTO;
+import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 import com.service.OrderService;
@@ -44,19 +46,30 @@ public class OrderController {
 		return "deliver";
 	}
 	
+	
+	
+	
+	
 	@RequestMapping(value = "/orderChart_info")
-	public @ResponseBody String orderChart_info(@RequestParam("opindex") int opindex,HttpSession session) {
+	public  ModelAndView orderChart_info(String opindex,HttpSession session) {
 		System.out.println("구매자정보조회");
-	
-		List<OrderProductDetailDTO> list = service.orderChart_info(opindex);
+		MemberDTO mdto = (MemberDTO)session.getAttribute("login_member");
+		String mid = mdto.getMid();
+		System.out.println(opindex);
 		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("mid",mid);
+		map.put("opindex",opindex);
+		List<OrderChartDTO> list = service.orderChart_info(map);
 		System.out.println(list);
-		session.setAttribute("info", list);
 		
-		return "orderChart_info";
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("info", list);
+		mav.setViewName("orderChart_info");
+		
+		return mav;
 	}
-	
-
 	
 	
 	
