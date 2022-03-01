@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: ASUS
 Build-Jdk: 1.8.0_321
-=======
-Built-By: Bbangs
-Build-Jdk: 1.8.0_251
->>>>>>> dd53663585f57cbb7739d9148fce4ed824baefb0
 Created-By: Maven Integration for Eclipse
 
