@@ -174,6 +174,16 @@ public class SellerDAO {
 		return dto;
 	}
 
+	public List<GoodsDTO> Salesbycategory(String sid) {
+		List<GoodsDTO> dto = session.selectList("SellerMapper.Salesbycategory",sid);
+		return dto;
+	}
+
+	public List<OrderDTO> monthlysales(String sid) {
+		List<OrderDTO> dto = session.selectList("SellerMapper.monthlysales",sid);
+		return dto;
+	}
+
 
 
 }

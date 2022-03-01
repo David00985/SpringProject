@@ -149,6 +149,16 @@ public class SellerService {
 	  return dto;
 	}
 
+	public List<GoodsDTO> Salesbycategory(String sid) {
+		List<GoodsDTO> dto = dao.Salesbycategory(sid);
+		return dto;
+	}
+
+	public List<OrderDTO> monthlysales(String sid) {
+		List<OrderDTO> dto = dao.monthlysales(sid);
+		return dto;
+	}
+
 
 	 
 

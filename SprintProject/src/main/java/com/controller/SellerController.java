@@ -213,9 +213,11 @@ public class SellerController {
 	List<CouponUserDTO> sale = service.TodaySaleMoney(sid);//할인 금액누적용 뽑기
 	List<OrderDTO>  Recentorderstatus = service.Recentorderstatus(sid);//자신의 상품을 구매한 회원들의 최근주문현황(배송현황)
 	List<OrderDTO> Rank = service.Rank(sid); //자신의 상품을 가장 많이 구매한 구매자의 순위
+	List<GoodsDTO> Salesbycategory = service.Salesbycategory(sid); //원그래프 카테고리별 판매수량 합계
+	List<OrderDTO> monthlysales = service.monthlysales(sid);// 막대그래프 월별 매출량
 	int TotalUserCount = service.TotalUserCount(sid); //판매자의 상품을 1개라도 구매한 구매자의 수
 	
-	System.out.println(Recentorderstatus);
+	System.out.println(monthlysales);
 	
 	int MonthTotal = 0; //월 판매금액 누적 변수생성
 	for (OrderDTO dto : ordto) { // 현재 달에 모든 주문 뽑기 
@@ -271,6 +273,8 @@ public class SellerController {
 	request.setAttribute("Recentorderstatus",Recentorderstatus);//최근주문한 상품
 	request.setAttribute("TotalUserCount",TotalUserCount);//판매자의 상품을 1개라도 구매한 고객의 수
 	request.setAttribute("Rank",Rank);//판매자의 상품을 가장많이 구매한 고객순위
+	request.setAttribute("Salesbycategory",Salesbycategory);//원그래프 카테고리별 판매량
+	request.setAttribute("monthlysales",monthlysales);//막대그래프 월별 매출량
 	request.setAttribute("month",month);// 현재 월 담기
 	request.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
 		

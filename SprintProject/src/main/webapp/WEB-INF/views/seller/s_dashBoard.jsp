@@ -1,3 +1,4 @@
+<%@page import="com.dto.GoodsDTO"%>
 <%@page import="com.dto.OrderDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.DecimalFormat"%>
@@ -23,6 +24,8 @@
 	List<OrderDTO> Recentorderstatus = (List<OrderDTO>)request.getAttribute("Recentorderstatus");
 	int TotalUserCount =(int)request.getAttribute("TotalUserCount");
 	List<OrderDTO> Rank = (List<OrderDTO>)request.getAttribute("Rank");
+	List<GoodsDTO> Salesbycategory = (List<GoodsDTO>)request.getAttribute("Salesbycategory");
+	List<OrderDTO> monthlysales = (List<OrderDTO>)request.getAttribute("monthlysales");
 %>
 
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -177,11 +180,26 @@
 <!-- charts js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 <!-- 그래프 출력  여기서부터-->
-<div id="top">1500</div>
-<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+<%for(GoodsDTO dto : Salesbycategory){ 
+	String category = dto.getGcategory();
+	int gsell = dto.getGsell();%>
+<div id="<%=category%>"  data-category="<%=category %>"  data-gsell="<%= gsell%>"></div>
+<% }  %>
 
-<script src="resources/js/my_chart.js"></script>
+<%for(OrderDTO dto : monthlysales){
+	String mth = dto.getOrdate();
+	int sum = dto.getSum();
+%>
+<div id="<%=mth %>" data-sum="<%=sum%>"></div>
+<%} %>
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+<script src="resources/js/my_chart.js" ></script>
 <script>
+$(function() {
+	console.log($("#category").text());
+})
+
+</script>
 
 
 
