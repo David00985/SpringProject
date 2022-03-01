@@ -78,27 +78,48 @@ gsize = #{gsize}
 <select id="SellergoodsPagetotalcount" resultType="int" parameterType="hashmap">
 select count(*) from goods
 <where>
-<if test="search == 'gcategory'">
-	sid = #{sid} and gcategory like lower('%'||#{goodsSearch}||'%')
-</if>
-<if test="search == 'gname'">
-	sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
-</if>
+
+	<choose>
+
+		<when test="search == 'gcategory'">
+			sid = #{sid} and gcategory like lower('%'||#{goodsSearch}||'%')
+		</when>
+
+		<when test="search == 'gname'">
+			sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
+		</when>
+
+		<otherwise>
+		    sid = #{sid}
+		</otherwise>
+
+	</choose>
+	
 </where>
-	where sid = #{sid}
 </select>
 
 <select id="SellergoodsPage" resultType="GoodsDTO" parameterType="hashmap">
 select * from goods 
 <where>
-<if test="search == 'gcategory'">
-	sid = #{sid} and gcategory like lower('%'||#{goodsSearch}||'%')
-</if>
-<if test="search == 'gname'">
-	sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
-</if>
+
+	<choose>
+
+		<when test="search == 'gcategory'">
+			sid = #{sid} and gcategory like lower('%'||#{goodsSearch}||'%')
+		</when>
+
+		<when test="search == 'gname'">
+			sid = #{sid} and gname like '%'||#{goodsSearch}||'%'
+		</when>
+
+		<otherwise>
+		    sid = #{sid}
+		</otherwise>
+
+	</choose>
+	
 </where>
-	where sid = #{sid}
+
 </select>
 
 <select id="cartStock" resultType="int" parameterType="StockDTO">

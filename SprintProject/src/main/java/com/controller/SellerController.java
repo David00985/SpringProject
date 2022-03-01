@@ -291,6 +291,8 @@ public class SellerController {
 		
 		String sid = seller.getSid();
 		
+		System.out.println(sid);
+		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("search", search);
 		map.put("goodsSearch", goodsSearch);
@@ -364,6 +366,8 @@ public class SellerController {
 	public String stock(HttpSession session, HttpServletRequest request,
 			String stocksearch, String search ) {
 		
+		System.out.println(stocksearch);
+		System.out.println(search);
 		
 		SellerDTO seller = (SellerDTO) session.getAttribute("login_seller");
 		String sid = seller.getSid();
