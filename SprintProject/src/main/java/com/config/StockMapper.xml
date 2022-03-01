@@ -10,13 +10,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="SellerStockPage" resultType="StockDTO2" parameterType="hashmap">
 select g.gname, g.gimage1  ,s.gsize , s.gcolor , s.gstock , num  from goods g join stock s on
 g.gid = s.gid 
-
 <where>
-	<if test="search == 'gname'">
-		 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
-	</if>
+
+	<choose>
+	
+		<when test="search == 'gname'">
+			 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
+		</when>
+	
+		<otherwise>
+			sid = #{sid}
+		</otherwise>
+		
+	</choose>
+	
 </where>
-	where sid = #{sid}
 </select>
 
 
@@ -26,11 +34,20 @@ g.gid = s.gid
 select count(*) from stock where gid in (select gid from goods 
 
 <where>
-	<if test="search == 'gname'">
-		 sid = #{sid} and gname like '%'||#{stocksearch}||'%'
-	</if>
+
+	<choose>
+	
+		<when test="search == 'gname'">
+			 sid = #{sid} and gname like '%'||#{stocksearch}||'%')
+		</when>
+	
+		<otherwise>
+			sid = #{sid})
+		</otherwise>
+		
+	</choose>
+	
 </where>
-	where sid = #{sid})
 
 </select>
 

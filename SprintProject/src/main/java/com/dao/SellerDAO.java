@@ -106,6 +106,9 @@ public class SellerDAO {
 	
 	public PageDTO SellergoodsPage(HashMap<String, String> map, int curPage) {
 		PageDTO pdto = new PageDTO();
+		
+		System.out.println(map);
+		
 		int perPage = pdto.getPerPage();
 		int offset = (curPage - 1) * perPage;
 		List<GoodsDTO> list = session.selectList("GoodsMapper.SellergoodsPage", map, new RowBounds(offset, perPage));

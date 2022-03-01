@@ -16,7 +16,8 @@
 
   
 
-<!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+-->
 <%
 StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 %>
@@ -171,9 +172,6 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 </table>
 <hr>
 <!-- 재고현황 페이지  -->
- 
-<hr>
- <h2><center>재고현황 페이지입니다.</center></h2><br>
 
 <body>
 <button class="btn-open">재고등록하기</button>
@@ -220,28 +218,55 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 
 
 
- <hr>   
+
+
+<html lang="en">
+<div class="test">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>shopping cart</title>
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<?php include 'header.php'; ?>
+
+<div class="container">
+
+<section class="shopping-cart">
+
+   <h1 class="heading">재고 현황</h1>
 <form action="" method="get">
-<table border="1" >
-	<tr>
-		<td colspan="6">
-			<form action="stock">
-				<select name="search">
+<form action="stock">
+				<select name="search" class="search2">
 					<option value="gname">상품이름</option>
 				</select>
-				<input type="text" name="stocksearch" size="50">
+				<input type="text" name="stocksearch" size="10">
 				<input type="submit" value="검색">
 			</form>
-		</td>
-	</tr>
-		 <tr>
-		 	<th>상품이미지</th>
-			<th>상품이름(Gname)</th>
-			<th>상품사이즈(Gsize)</th>
-			<th>상품색상(Gcolor)</th>
-			<th>상품수량(Gstock)</th>
-			<th>수정/삭제</th>
-		</tr>
+   <table>
+
+      <thead>
+         <th>상품 이미지</th>
+         <th>상품 이름</th>
+         <th>상품 사이즈</th>
+         <th>상품 수량</th>
+         <th>상품 색상</th>
+         <th>비고</th>
+      </thead>
+
+      <tbody>
+
+
+       
 <%
  	List<StockDTO2> dto2 = stockPage.getList();
  	SellerDTO dto = (SellerDTO)session.getAttribute("login_seller");
@@ -269,23 +294,27 @@ if(dto != null){
 		num = d.getNum();
 		gimage = d.getGimage1();
 			 
-%>				
-		<tr>
-			<input type="hidden" name="num" id ="num" value="<%=num%>">
-		 	<th><img alt="" width="180" height="240" src="resources/images/items/<%=gimage %>"></th><!-- 수정구현 필 -->
-			 <th><input type="text" name="gname" id="gname<%=num %>"  value="<%=gname%>"></th>
-			<th><input type="text" name="gsize" id="gsize<%=num %>" value="<%=gSize %>"></th>
-			<th><input type="text" name="gcolor" id="gcolor<%=num %>" value="<%=gColor %>"></th>
-			<th><input type="text" name="gstock" id="gstock<%=num %>" value="<%if(gStock <= 5 ){ %><%=gStock+" (재고발주 요청!) " %>
-			<%}%><%=gStock%>"></th>
-			<td colspan="2">
-			<center><button class="update" data-num="<%=num%>">수정</button>
-			<button class="delete" data-num="<%=num%>">삭제</button></center></td> 
-		</tr>
-   <%
-   } //end for
-	  %>   
-	  <tr>
+%>	
+  <tr>
+  			<input type="hidden" name="sid" id="sid" value="<%=dto.getSid()%>">
+  			<input type="hidden" name="num" id ="num" value="<%=num%>">
+            <td><img src="resources/images/items/<%=gimage %>" height="100" alt=""></td>
+            <td><input type="text" name="gname" id="gname<%=num %>"  value="<%=gname%>"></td>
+            <td><input type="text" name="gsize" id="gsize<%=num %>" value="<%=gSize %>"></td>
+            <td>
+                  <input type="text" name="gstock" id="gstock<%=num %>" value="<%if(gStock <= 5 ){ %><%=gStock+" (재고발주 요청!) " %>
+			<%}%><%=gStock%>">
+                  <input type="submit" class="update" data-num="<%=num%>" value="update">
+            </td>
+            <td><input type="text" name="gcolor" id="gcolor<%=num %>" value="<%=gColor %>"></td>
+             <td><button  class="delete"  data-num="<%=num%>"> <i class="fas fa-trash"></i> remove</button></td>
+         </tr>
+         <tr class="table-bottom">
+         </tr>
+<%}
+	   %>      
+	   
+	     <tr>
 	  	<td colspan="6">
 	  	<%
 	  		int curPage = stockPage.getCurPage();
@@ -305,7 +334,6 @@ if(dto != null){
 	  	</td>
 	  </tr>
 </form>
-</table>	
 <%
    }else{ ////sid,sid equals end 
 %>
@@ -315,8 +343,27 @@ if(dto != null){
     
  <%
 		}
- %>   
-    
+ %>     
+
+      </tbody>
+
+   </table>
+</form>
+
+</section>
+
+</div>
+   
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+
+</body>
+</div>
+</html>
+  
+  
+  
+  
   
 <script type="text/javascript" src="resources/js/jquery-3.5.1.min.js">
 </script>
