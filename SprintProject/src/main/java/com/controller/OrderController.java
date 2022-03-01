@@ -62,6 +62,7 @@ public class OrderController {
 		map.put("opindex",opindex);
 		List<OrderChartDTO> list = service.orderChart_info(map);
 		System.out.println(list);
+
 		
 		ModelAndView mav = new ModelAndView();
 		
