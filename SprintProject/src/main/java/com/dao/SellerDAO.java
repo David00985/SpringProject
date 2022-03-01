@@ -138,6 +138,15 @@ public class SellerDAO {
 		return session.selectOne("StockMapper.totalStockCount",map);
 	}
 
+
+
+	public List<OrderProductDetailDTO> delivery(String mid) {
+		// TODO Auto-generated method stub
+		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
+		return list;
+	}
+
+
 	public List<OrderDTO> Monthlysales(String sid) {
 		List<OrderDTO> dto = session.selectList("SellerMapper.Monthlysales",sid);
 		return dto;
@@ -153,10 +162,6 @@ public class SellerDAO {
 		return dto;
 	}
 
-	public List<OrderProductDetailDTO> delivery(String mid) {
-		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
-		return list;
-	}
 
 	public List<OrderDTO> Recentorderstatus(String sid) {
 		List<OrderDTO> dto = session.selectList("SellerMapper.Recentorderstatus",sid);
@@ -168,16 +173,21 @@ public class SellerDAO {
 		return num;
 	}
 
-	public List<String> BuyerRank(String sid) {
-		List<String> dto = session.selectList("SellerMapper.BuyerRank",sid);
+
+	public List<OrderDTO> Rank(String sid) {
+		List<OrderDTO> dto = session.selectList("SellerMapper.Rank",sid);
 		return dto;
 	}
 
-	public List<Integer> BuyerRankMoney(String sid) {
-		List<Integer> dto = session.selectList("SellerMapper.BuyerRankMoney",sid);
+	public List<GoodsDTO> Salesbycategory(String sid) {
+		List<GoodsDTO> dto = session.selectList("SellerMapper.Salesbycategory",sid);
 		return dto;
 	}
 
+	public List<OrderDTO> monthlysales(String sid) {
+		List<OrderDTO> dto = session.selectList("SellerMapper.monthlysales",sid);
+		return dto;
+	}
 
 
 }

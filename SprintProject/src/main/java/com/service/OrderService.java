@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.dao.OrderDAO;
 import com.dto.BankAccountDTO;
 import com.dto.CartDTO;
 import com.dto.CreditCartDTO;
+import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 
@@ -20,9 +22,9 @@ public class OrderService {
 	@Autowired
 	OrderDAO dao;
 
-	public List<OrderProductDetailDTO> orderChart(String mid) {
+	public List<OrderDTO> orderChart(String mid) {
 		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO> list = dao.orderChart(mid);
+		List<OrderDTO> list = dao.orderChart(mid);
 		return list;
 	}
 
@@ -95,11 +97,18 @@ public class OrderService {
 
 
 
-	public List<OrderDTO> orderChart_info(String mid) {
+	public List<OrderChartDTO> orderChart_info(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
-		List<OrderDTO> list = dao.orderChart_info(mid);
+		List<OrderChartDTO> list = dao.orderChart_info(map);
 		return list;
 	}
+
+
+
+	
+
+
+
 
 
 

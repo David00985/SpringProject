@@ -66,9 +66,9 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 </div>
 <!-- end cardBox -->
 <hr>
- <h2><center>재고등록 </center></h2><br>
-<hr>
-<form action="SellerStockAdd" method="get">
+<!--  <h2><center>재고등록 </center></h2><br>
+<hr> -->
+<!-- <form action="SellerStockAdd" method="get">
 
 <table border="1">
 			<tr>
@@ -103,7 +103,7 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 <hr>
 <input type="submit" id="stockadd" value="상품등록">
 	<input type="reset" value="다시입력">
-</form>
+</form> -->
 <!-- 재고아이디 현황 -->
 <hr>
 <table border="1">

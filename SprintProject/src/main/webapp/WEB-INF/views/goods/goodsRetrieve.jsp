@@ -32,7 +32,7 @@
 %>
 
 
-
+ <body>
  <div class="single-product">
    <div class="row">
    		<div class="col-2">
@@ -59,9 +59,9 @@
    		
    		<div class="col-2 single-product-contents">
    	      <div class="title">
-   			  <h2>Home / <%=dto.getGcategory() %></h2>
+   			  <h3>Home / <%=dto.getGcategory() %></h3>
    		  </div>
-              <h1><%=dto.getGname() %></h1>
+              <h3><%=dto.getGname() %></h3>
               <h4><%=dto.getGprice() %>원</h4>
               <!-- 추가할 부분~~~~~~ stock에 저장된 사이즈 종류가 나오게 바꾸기~~~~~~~~~~~~~~~~~~~~~~`` success-->
               <select name="gsize" id="gsize" class="stockcheck">
@@ -86,7 +86,64 @@
    </div>	<!--end row  -->
  </div>     <!-- end single-product  -->  
 
- 
+
+    <section class="section">
+      <div class="title">
+        <h2>Review Board</h2>
+        <p>
+       		구매자들의 구매 리뷰 게시판
+        </p>
+      </div>
+
+      <div class="about-center section-center">
+        <article class="about-img">
+          <img src="resources/images/background-main2.gif" alt="" />
+        </article>
+        <article class="about">
+          <!-- btn container -->
+          <div class="btn-container">
+            <button class="tab-btn active" data-id="history">Review</button>
+            <button class="tab-btn" data-id="vision">Photo Review</button>
+            <button class="tab-btn" data-id="goals">1:1 Q&A</button>
+          </div>
+          <div class="about-content">
+            <!-- single item -->
+            <div class="content active" id="history">
+              <h4>Review</h4>
+             <!--  <p> -->
+             <!-- 일반리뷰 -->
+			
+				<!-- 일반리뷰 -->
+              <!-- </p> -->
+            </div>
+            <!-- end of single item -->
+            <!-- single item -->
+            <div class="content" id="vision">
+              <h4>Photo Review</h4>
+               <!-- 포토리뷰 -->
+               <div class="photo_board_wrap">
+               </div>
+              <ul>
+                <li>list item</li>
+                <li>list item</li>
+                <li>list item</li>
+              </ul>
+            </div>
+            <!-- end of single item -->
+            <!-- single item -->
+            <div class="content" id="goals">
+              <h4>1:1 문의</h4>
+       			  <div class="qa_board_wrap">
+             	  </div>
+            </div>
+            <!-- end of single item -->
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- javascript -->
+    <script src="app.js"></script>
+  </body>
  
  
  

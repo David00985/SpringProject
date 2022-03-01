@@ -41,6 +41,8 @@ public class OrderProductDetailDTO {
 		this.ordate = ordate;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "OrderProductDetailDTO [opdindex=" + opdindex + ", opindex=" + opindex + ", gid=" + gid + ", gname="
@@ -136,8 +138,5 @@ public class OrderProductDetailDTO {
 		this.confirmed = confirmed;
 	}
 
-	
-	
-	
-	
+
 }

@@ -24,10 +24,17 @@
 			let popOption = "width = 650px, height=700px, top=300px, left=300px, scrollbars=yes";
 			
 			window.open(popUrl,"배송조회",popOption);
-	})//배송조회페이지 end
+	});//배송조회페이지 end
 		
 	
-
+ 	$(".name").click(function() {
+		
+		var opindex = $(".opindex").val();
+	});//구매자정보 조회
+	
+	
+	
+	
 	
 	})
 	
@@ -40,10 +47,10 @@
 <body>
    
 <br><br><br><br><br><br>
-   <div id="deliverly" >
+
 	
 
-		<div id="container">
+		<form id="container" action="orderChart_info" method="post">
 			<div id="contents">
 
 				<div class="deliver_info">
@@ -70,7 +77,6 @@
 									<th scope="col"><label>주문 번호</label></th>
 									<th scope="col">이미지</th>
 									<th scope="col">상품정보</th>
-									<th scope="col">수량</th>
 									<th scope="col">상품 구매금액</th>
 									<th scope="col">배송상태</th>
 									<th scope="col">비고</th>
@@ -80,26 +86,23 @@
 							
 							<c:forEach items="${orderChart}" var="dto" varStatus="status"> 
 								<tr class="order_infolist">
-									<td>${dto.opindex}</td>
+									<td class="opindex" value="${dto.opindex}">${dto.opindex}</td>
 									<td class="thumb">
                               <a href="">
-                              <img alt="" src="resources/images/items/${dto.gimage}.gif">
+                              <img alt="" src="resources/images/items/${dto.oimage}" id = image>
                            </a>
                            </td>
 									<td class="product">
-                              <a href="orderChart_info"><strong><class="name">${dto.gname}</strong>
+                              <a href="orderChart_info?opindex=${dto.opindex}" class="name" type="submit"><strong>${dto.oproductname}</strong>
+                              
 										<span class="icon"></span></a>
 										<ul
 											class="option">
-											[옵션: 색상:${dto.gcolor },사이즈:${dto.gsize }]
 											
 										</ul></td>
-									<td>
-                              <label>${dto.gamount} 개</label>
-									</td>
 									<td class="price">
 										<div class="">
-											<strong>${dto.gprice*dto.gamount} 원</strong>
+											<strong>${dto.oprice} 원</strong>
 										</div>
 									</td>
 									<td class="del">
@@ -121,10 +124,6 @@
 			
 
 			</div>
-		</div>
-
-
-
-	</div>
+	</form>
 </body>
 </html>

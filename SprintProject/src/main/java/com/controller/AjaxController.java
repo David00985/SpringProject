@@ -102,10 +102,10 @@ public class AjaxController {
 		
 		//gid , size , color 에 맞는 제고량확인하기
 		for (CartDTO dto : orderCartlist) {
-			
+			System.out.println(dto);
 			int x = 0;
 			x = stservice.stockCheckByCartDTO(dto);
-			
+		
 			if( x == 0) {
 				System.out.println("제고 0" + dto.getCid());
 				result += dto.getGid() +"_Instock:0 , Your orderCqty:"+ dto.getCqty() +"\n";

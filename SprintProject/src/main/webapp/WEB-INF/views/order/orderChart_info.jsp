@@ -6,10 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%
-	List<OrderDTO> list = (List<OrderDTO>)session.getAttribute("info");
-	System.out.println(list);
-%>
 
 
 <!DOCTYPE html>
@@ -41,17 +37,13 @@
 </script>
 </head>
 <body>
-    <%
-
-		for(OrderDTO odto : list){
-    %>
-    
+<c:forEach var="odto" items="${info}"  begin="0" end="0">
     
     <br><br><br><br><br><br>
    <div class="container">
         <div>주문상세내역</div>
-            <span>[주문날짜 :<%=odto.getOrdate() %>]</span>
-
+            <span>[주문날짜 :${odto.ordate}]</span>
+</c:forEach>
             <hr>
             <div id="deliverly" >
 	
@@ -89,28 +81,31 @@
                                     </thead>
                                     <tbody class="order_info">
                                     
-                                    <c:forEach items="${orderChart}" var="dto" varStatus="status"> 
+                                   <c:set var="total" value="0"/>
+                                	<c:forEach var="odto" items="${info}" varStatus="status">
                                         <tr class="order_infolist">
-                                            <td>${dto.opindex}</td>
+                                            <td>${odto.opindex}</td>
                                             <td class="thumb">
-                                      <a href="goodsRetrieve?gid=${dto.gid}">
-                                      <img alt="" src="resources/images/items/${dto.gimage}.gif">
-                                   </a>
+                                
+                                      <img alt="" src="resources/images/items/${odto.gimage}">
+                                
                                    </td>
                                             <td class="product">
-                                      <a href="goodsRetrieve?gid=${dto.gid}"><strong><class="name">${dto.gname}</strong>
+                                      <a href=""><strong><class="name">${odto.oname}</strong>
                                                 <span class="icon"></span></a>
                                                 <ul
                                                     class="option">
-                                                    [옵션: 색상:${dto.gcolor },사이즈:${dto.gsize }]
+                                                    [옵션: 색상:${odto.gcolor},사이즈:${odto.gsize}]
                                                 </ul></td>
                                             <td>
-                                      <label>${dto.gamount} 개</label>
+                                      <label>${odto.gamount} 개</label>
                                             </td>
                                             <td class="price">
-                                                <div class="">
-                                                    <strong>${dto.gprice} 원</strong>
+                                        
+                             					 <div class="">
+                                                    <strong>${odto.gprice} 원</strong>
                                                 </div>
+				                                <c:set var= "total" value="${total + odto.gprice}" />
                                             </td>
                                             <td class="del">
                                                 <strong>배송중</strong>
@@ -122,8 +117,8 @@
                                                </td>
                                         
                                         </tr>
+                                	</c:forEach>
                                 
-                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -134,71 +129,90 @@
                 </div>
         
         <!-- orderChart -->
-        
+   
             </div>
                 <div>
                     <div class="infomation_delivery">                        
                         <div class="info_deli">배송지정보</div>
                         <table class="info_table" border="0" width="400">
+                           <c:forEach var="odto" items="${info}"   begin="0" end="0">
                             <tr>
                             
                                 <th>이름</th>
                                	
-                                <td><%=odto.getOname() %></td>
+                                <td>${odto.oname}</td>
                             </tr>
                             <tr>
                                 <th>연락처</th>
-                                <td><%=odto.getOphone1()%>-<%=odto.getOphone2()%>-<%=odto.getOphone3()%></td>
+                                <td>${odto.ophone1}-${odto.ophone2}-${odto.ophone3}</td>
                             </tr>
                             <tr>
                                 <th>배송지 주소</th>
-                                <td><%=odto.getOaddress1()%></td>
+                                <td>${odto.oaddress1}</td>
                             </tr>
+                            </c:forEach>
                         </table>
                     </div>
+         
                     <!-- 배송지정보 -->
                     <div class="information_cuopon">
                         <div class="info_coupon">쿠폰정보</div>
                         <table class="coupon_table" border="0" width="400">
+                             <c:forEach var="odto" items="${info}"   begin="0" end="0">
                             <tr>
                                 <th>쿠폰코드</th>
-                                <td>T-10</td>
+                                <td>${odto.code}</td>
                             </tr>
                             <tr>
                                 <th>할인율</th>
-                                <td>10%</td>
+                                <td>${odto.discount}%</td>
                             </tr>
                             <tr>
                                 <th>할인금액</th>
-                                <td>5000원</td>
+                                <td><c:out value="${total - odto.oprice}"/>원</td>
                             </tr>
+                              </c:forEach>
                         </table>
                     </div>
                     <!-- 쿠폰정보 -->
                     <div class="information_sign">
                         <div class="info_sign">결재수단</div>
                         <table class="sign_table" border="0" width="400">
+                           <c:forEach var="odto" items="${info}"   begin="0" end="0"> 
                             <tr>
                                 <th>상품합계</th>
-                                <td>8000원</td>
+                                <td><c:out value="${total}"/>원</td>
                             </tr>
                             <tr>
                                 <th>할인금액</th>
-                                <td>5000원</td>
+                                <td><c:out value="${total - odto.oprice}"/>원</td>
                             </tr>
                             <tr>
                                 <th>최종결재금액</th>
-                                <td>3000원</td>
+                                <td>${odto.oprice}원</td>
                             </tr>
+                            <c:if test="${!empty odto.used}">
                             <tr>
                                 <th>결재수단</th>
                                 <td>카드결재</td>
                             </tr>
+                            </c:if>
+                            <c:if test="${empty odto.used}">
+                            <tr>
+                                <th>결재수단</th>
+                                <td>계좌이체</td>
+                            </tr>
+                            <tr>
+                                <th>계좌번호</th>
+                                <td>농협 16511-5468-46512(예금주: 에이콘 1조 프로젝트)</td>
+                            </tr>
+                            </c:if>
+                            </c:forEach>
                         </table>
                     </div>
                     <!-- 결재정보 -->
                 </div>
    </div>
-<%} %>
+
 </body>
 </html>
