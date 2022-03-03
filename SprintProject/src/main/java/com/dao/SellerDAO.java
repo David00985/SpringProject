@@ -143,11 +143,6 @@ public class SellerDAO {
 
 
 
-	public List<OrderProductDetailDTO> delivery(String mid) {
-		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO> list = session.selectList("SellerMapper.deliver", mid);
-		return list;
-	}
 
 
 	public List<OrderDTO> Monthlysales(String sid) {
@@ -190,6 +185,12 @@ public class SellerDAO {
 	public List<OrderDTO> monthlysales(String sid) {
 		List<OrderDTO> dto = session.selectList("SellerMapper.monthlysales",sid);
 		return dto;
+	}
+
+	public List<OrderDTO> delivery(String sid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO> list = session.selectList("SellerMapper.del", sid);
+		return list;
 	}
 
 

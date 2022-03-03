@@ -113,11 +113,6 @@ public class SellerService {
 	}
 
 
-	public 	List<OrderProductDetailDTO>	delivery(String mid) {
-		// TODO Auto-generated method stub
-		List<OrderProductDetailDTO>	list = dao.delivery(mid);
-		return list;
-	}
 	
 
 	public List<OrderDTO> Monthlysales(String sid) {
@@ -160,6 +155,12 @@ public class SellerService {
 	public List<OrderDTO> monthlysales(String sid) {
 		List<OrderDTO> dto = dao.monthlysales(sid);
 		return dto;
+	}
+
+	public List<OrderDTO> delivery(String sid) {
+		// TODO Auto-generated method stub
+		List<OrderDTO> list = dao.delivery(sid);
+		return list;
 	}
 
 

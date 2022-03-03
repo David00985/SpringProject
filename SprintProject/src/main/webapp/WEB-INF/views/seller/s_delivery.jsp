@@ -7,54 +7,45 @@
   <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
 
 
-<!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 
-<div class="cardBox">
-	<div class="card">
-		
-		<div>
-			<div class="numbers">1,504</div>
-			<div class="cardName">금일 판매물량</div>
-		</div>
-		<div class="iconBx">
-			<ion-icon name="eye-outline"></ion-icon>
-		</div>
-	</div>
-	<div class="card">
-		<div>
-			<div class="numbers">80</div>
-			<div class="cardName">배송 준비중</div>
-		</div>
-		<div class="iconBx">
-			<ion-icon name="basket-outline"></ion-icon>
-		</div>
-		
-	</div>
-	<div class="card">
-		<div>
-			<div class="numbers">284</div>
-			<div class="cardName">배송중</div>
-		</div>
-		<div class="iconBx">
-			<ion-icon name="chatbubbles-outline"></ion-icon>
-		</div>
-		
-	</div>
-	<div class="card">
+$(function() {
 	
-		<div>
-			<div class="numbers">$7,842</div>
-			<div class="cardName">배송완료</div>
-		</div>
-		<div class="iconBx">
-			<ion-icon name="cash-outline"></ion-icon>
-		</div>
-	</div>
-</div>
-<!-- end cardBox -->
+	
+	//배송현황 업데이트
+	$(".del_submit").click(function () {
+		
+		var status = $("select[name=status]").val();
 
-    
-    
+		$ajax({
+			type:"POST",
+			url:"delivery_update",
+			data:{
+				status:status
+			},
+			dataType:"json",
+			success: function (data,status,xhr) {
+				console.log(data);
+				alert("배송현황이 수정되었습니다.");
+			},
+			error: function (xhr,status,error) {
+				console.log(error);
+			}
+			
+			
+		})//ajax end
+		
+		
+	});//업데이트 end
+	
+				
+})//update end
+	
+
+
+</script>
+
+<!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <hr>
 <h1 class="h2">판매 현황</h1>
 
@@ -65,40 +56,38 @@
 	<table class="table">
 		<thead class="bg-light">
 			<tr>
+				<th>주문번호</th>
 				<th>상품명</th>
-				<th>상품가격</th>
-				<th>상품수량</th>
-				<th>상품가격합계</th>
+				<th>주문가격</th>
 				<th>배송현황</th>
 			</tr>
 
 		</thead>
 		<tbody>
+			<c:forEach var="del" items="${del}" varStatus="status">
 			<tr>
-			<c:forEach var="info" items="" varStatus="status">
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</c:forEach>	
-				<td><select name="status">
+				<td>${del.opindex}</td>
+				<td>${del.oproductname}</td>
+				<td>${del.oprice}</td>
+				<c:choose>
+					<c:when test="${del.odelivery != 0 }"><td>${del.deliverystatus}</td></c:when>					
+					
+						<c:when test="${del.opaymentcheck == 1}"><td>결재 완료</td></c:when>
+						<c:when test="${del.opaymentcheck == 0}"><td>결재 진행중</td></c:when>
+				
+				</c:choose>
+				<td><select name="status" class="status" >
 				<option value="주문 완료">주문 완료</option>
 				<option value="배송 대기">배송 준비중</option>
 				<option value="배송중">배송중</option>
 				<option value="배송 완료">배송 완료</option>
 				<option value="환불중">환불중</option>
 				</select>
-				<button>업데이트</button>
+				<input type="submit" name="submit" class="del_submit" value="수정">
 			</tr>
+			</c:forEach>	
 
 		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="4"></td>
-				<td>총 가격</td>
-			</tr>
-		</tfoot>
 	</table>
 </div>
 
