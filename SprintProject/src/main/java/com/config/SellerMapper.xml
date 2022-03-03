@@ -4,13 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SellerMapper">
 
-
-<select id="deliver" resultType="OrderProductDetailDTO">
-	select m.oid, d.gid, d.gname, d.gsize, d.gamount, d.gcolor, d.gprice, d.gimage, d.confirmed from orders o 
-		join orderproductdetail d on o.opindex = d.opindex 
-			where o.mid = #{mid}
+<select id="del" resultType="OrderDTO">
+select DISTINCT
+    p.oid,p.mid,p.ordate,p.oproductname,p.oname,p.ophone1,p.ophone2,p.ophone3,
+    p.oaddress1,p.oaddress2,p.opindex,p.oprice,p.oimage,p.opaymentcheck,
+    p.oconfirmed,y.deliverystatus,p.odelivery
+		from seller s
+		    join goods g
+		        on s.sid = g.sid
+                    join orderproductdetail o
+		                on g.gid = o.gid
+                         join orders p
+		                    on o.opindex = p.opindex
+		                    left join orderdelivery y
+		                        on p.odelivery=y.odelivery
+		            				where s.sid = #{sid}
+		            					 order by p.oid
+		            				
 </select>
-
 
 
 

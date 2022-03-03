@@ -18,7 +18,13 @@ $("#gid").on("keyup", function() {
 			},
 			
 			success: function(data, status, xhr) {
+				if(data=="상품아이디 중복"){
+				$(".idCheck").addClass("active");
+				}else{
+				$(".idCheck").removeClass("active");
+				}
 				$("#result").text(data);
+
 			},//success
 			error: function(xhr, status, error) {
 				console.log(error);
@@ -124,5 +130,13 @@ $(".update").on("click", function() {
 		})//ajax
 		})//delete
 			//상품 삭제 끝
-
+		
+	//팝업(모달창) 띄위기 
+		$(".btn-open").on("click", function () {
+			$(".modal, .overlay").addClass('active');
+		})
+	//팝업(모달창) 닫기 
+			$(".btn-close, .overlay").on("click", function () {
+			$(".modal, .overlay").removeClass('active');
+		})
 	

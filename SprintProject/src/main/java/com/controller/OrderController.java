@@ -2,6 +2,7 @@ package com.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dto.CouponUserDTO;
 import com.dto.MemberDTO;
 import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
@@ -61,12 +63,25 @@ public class OrderController {
 		map.put("mid",mid);
 		map.put("opindex",opindex);
 		List<OrderChartDTO> list = service.orderChart_info(map);
+<<<<<<< HEAD
+		
+		List<OrderChartDTO> orderlist = list.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
+	
+		System.out.println(orderlist);
+=======
+	
 		System.out.println(list);
+>>>>>>> bd7ebf81c5cd92829d30a49d2eb7db97cf2ba678
 
 		
 		ModelAndView mav = new ModelAndView();
 		
+<<<<<<< HEAD
+		mav.addObject("info", orderlist);
+=======
 		mav.addObject("info", list);
+
+>>>>>>> bd7ebf81c5cd92829d30a49d2eb7db97cf2ba678
 		mav.setViewName("orderChart_info");
 		
 		return mav;

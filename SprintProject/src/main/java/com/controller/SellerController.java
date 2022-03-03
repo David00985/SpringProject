@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.MemberDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
@@ -265,9 +266,9 @@ public class SellerController {
 	}//for문 end
 		
 		
-	request.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
-	request.setAttribute("DayTotal", DayTotal);//금일 매출 금액 담기
-	request.setAttribute("TotalGamount", TotalGamount);//금일 판매수량 담기
+	session.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
+	session.setAttribute("DayTotal", DayTotal);//금일 매출 금액 담기
+	session.setAttribute("TotalGamount", TotalGamount);//금일 판매수량 담기
 	request.setAttribute("TodaySaleMoney",TodaySaleMoney);//금일 할인 금액 담기
 	request.setAttribute("Recentorderstatus",Recentorderstatus);//최근주문한 상품
 	request.setAttribute("TotalUserCount",TotalUserCount);//판매자의 상품을 1개라도 구매한 고객의 수
@@ -275,7 +276,7 @@ public class SellerController {
 	request.setAttribute("Salesbycategory",Salesbycategory);//원그래프 카테고리별 판매량
 	request.setAttribute("monthlysales",monthlysales);//막대그래프 월별 매출량
 	request.setAttribute("month",month);// 현재 월 담기
-	request.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
+	session.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
 		
 		return  "main_seller";
 	}
@@ -490,11 +491,30 @@ public class SellerController {
 		
 	//배송 관리 화면.. 
 		@RequestMapping(value = "/delivery")
-		public String delivery(OrderDTO dto , HttpSession session) {
+		public String delivery(HttpSession session) {
 			System.out.println("베송관리");
-			System.out.println(dto);
+			SellerDTO dto = (SellerDTO) session.getAttribute("login_seller");
+			String sid = dto.getSid();
+			
+			List<OrderDTO> list = service.delivery(sid);
+			System.out.println(list);
+			
+			
+			
+			session.setAttribute("del", list);
+			
+			
 			return  "s_delivery";
 		}
-	
+		
+		@RequestMapping(value = "/delivery_update")
+		@ResponseBody
+		public String SellerStockAdd(String deliverystatus, HttpSession session) {
+			System.out.println("배송현황 수정");
+			System.out.println(deliverystatus);
+			
+			
+			return "redirect:delivery";
+		}
 	
 }

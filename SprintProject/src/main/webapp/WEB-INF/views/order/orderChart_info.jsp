@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.dto.OrderDTO" %>
+<%@page import="com.dto.OrderChartDTO" %>
 <%@page import="com.dto.MemberDTO"%>
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -32,7 +33,6 @@
 	
 	})
 	
-
 
 
 </script>
@@ -82,6 +82,7 @@
                                     </thead>
                                     <tbody class="order_info">
                                     
+                               					<c:set var="total" value="0"/>
                                 	<c:forEach var="odto" items="${info}" varStatus="status" >
                                         <tr class="order_infolist">
                                             <td>${odto.opindex}</td>
@@ -102,11 +103,10 @@
                                             </td>
                                             <td class="price">
                                         
-                               					<c:set var="total" value="0"/>
                              					 <div class="">
                                                     <strong>${odto.gprice * odto.gamount} 원</strong>
                                                 </div>
-				                               <c:set var= "total" value="${total + odto.gprice}" />
+				                               <c:set var= "total" value="${total + (odto.gprice * odto.gamount)}" />
                                             </td>
                                             <td class="del">
                                                 <strong>배송중</strong>
@@ -159,7 +159,8 @@
                     <div class="information_cuopon">
                         <div class="info_coupon">쿠폰정보</div>
                         <table class="coupon_table" border="0" width="400">
-                             <c:forEach var="odto" items="${info}"   begin="0" end="0">
+                            <c:forEach var="odto" items="${info}"   begin="0" end="0">
+                           
                             <tr>
                                 <th>쿠폰코드</th>
                                 <td>${odto.code}</td>
@@ -168,9 +169,11 @@
                                 <th>할인율</th>
                                 <td>${odto.discount}%</td>
                             </tr>
+                            </c:forEach>
+                             <c:forEach var="odto" items="${info}"   begin="0" end="0">
                             <tr>
                                 <th>할인금액</th>
-                                <td><c:out value="${total - odto.oprice}"/>원</td>
+                                <td>${total - odto.oprice }원</td>
                             </tr>
                               </c:forEach>
                         </table>
@@ -180,9 +183,9 @@
                         <div class="info_sign">결재수단</div>
                         <table class="sign_table" border="0" width="400">
                            <c:forEach var="odto" items="${info}"   begin="0" end="0"> 
-                            <tr>
+                           	 <tr>
                                 <th>상품합계</th>
-                                <td><c:out value="${total}"/>원</td>
+                                <td>${total} 원</td>
                             </tr>
                             <tr>
                                 <th>할인금액</th>
