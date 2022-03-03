@@ -41,7 +41,8 @@
 .details .recentOrders{
     position: relative;
     width: 100%;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     min-height: 500px;
     background: var(--white);
     padding: 20px;
@@ -184,7 +185,8 @@
 
 .recentCustomers{
     position: relative;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     min-height: 500px;
     padding: 20px;
     background: var(--white);
