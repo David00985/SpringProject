@@ -2,6 +2,7 @@ package com.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -61,12 +62,15 @@ public class OrderController {
 		map.put("mid",mid);
 		map.put("opindex",opindex);
 		List<OrderChartDTO> list = service.orderChart_info(map);
-		System.out.println(list);
+		
+		List<OrderChartDTO> orderlist = list.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
+	
+		System.out.println(orderlist);
 
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("info", list);
+		mav.addObject("info", orderlist);
 		mav.setViewName("orderChart_info");
 		
 		return mav;

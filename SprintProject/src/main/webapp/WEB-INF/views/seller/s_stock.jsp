@@ -67,48 +67,16 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 </div>
 <!-- end cardBox -->
 <hr>
-<!--  <h2><center>재고등록 </center></h2><br>
-<hr> -->
-<!-- <form action="SellerStockAdd" method="get">
-
-<table border="1">
-			<tr>
-				<th>상품번호</th>
-				<th>상품사이즈</th>
-				<th>상품색상</th>
-				<th>상품 재고수량</th>
-			</tr>
-			<tr>
-				<td><input type="text" name="gid" id="gid" placeholder="상품번호"></td>
-				<td><select name="gsize" id="gsize" >
-					<option>XS</option>
-					<option>S</option>
-					<option>M</option>
-					<option>L</option>
-					<option>XL</option>
-				</select></td>
-				<td><select name="gcolor" id="gcolor">
-					<option>Black</option>
-					<option>Navy</option>
-					<option>Ivory</option>
-					<option>White</option>
-					<option>Gray</option>
-					<option>Beige</option>
-					<option>Pink</option>
-				</select></td>
-				<td><input type="text" name="gstock" id="gstock">
-				<input type="button" name="check" id="check" value="중복확인" ></td>					
-			</tr>
-</table>
 
 <hr>
-<input type="submit" id="stockadd" value="상품등록">
-	<input type="reset" value="다시입력">
-</form> -->
-<!-- 재고아이디 현황 -->
-<hr>
-<table border="1">
-	<caption>재고아이디 현황</caption>
+<table  class="type07">
+	<thead>
+	<tr>
+		<td class="category">카테고리</td>
+		<td colspan="100" class="category">아이디 분류</td>
+	</tr>
+	</thead>
+	<tbody>
 	<tr>
 		<th>Top</th>
 	<%
@@ -169,12 +137,12 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 	}
 	%>
 	</tr>
+	</tbody>
 </table>
 <hr>
 <!-- 재고현황 페이지  -->
 
 <body>
-<button class="btn-open">재고등록하기</button>
 
 <div class="modal"> <!-- 정중앙하는 센터링 역활 -->
 	<div class="modal-content"><!-- 모달창이 된다  -->
@@ -187,6 +155,7 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 			<div class="desc-content">
 			<form action="SellerStockAdd" method="get">
 				<input type="text" name="gid" id="gid" placeholder="상품아이디를 입력해주세요">
+				<input type="button" name="check" id="check" value="중복확인" size="10" >
 				<select name="gsize" id="gsize" >
 					<option>XS</option>
 					<option>S</option>
@@ -222,22 +191,9 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 
 <html lang="en">
 <div class="test">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>shopping cart</title>
 
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-   <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
-
-</head>
 <body>
 
-<?php include 'header.php'; ?>
 
 <div class="container">
 
@@ -249,9 +205,13 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 				<select name="search" class="search2">
 					<option value="gname">상품이름</option>
 				</select>
-				<input type="text" name="stocksearch" size="10">
+				<input type="text" name="stocksearch" size="20">
 				<input type="submit" value="검색">
 			</form>
+				<button class="btn-open">재고등록하기</button>
+			<div class="btn-open2">
+			</div>
+			
    <table>
 
       <thead>
@@ -301,10 +261,10 @@ if(dto != null){
             <td><img src="resources/images/items/<%=gimage %>" height="100" alt=""></td>
             <td><input type="text" name="gname" id="gname<%=num %>"  value="<%=gname%>"></td>
             <td><input type="text" name="gsize" id="gsize<%=num %>" value="<%=gSize %>"></td>
-            <td>
-                  <input type="text" name="gstock" id="gstock<%=num %>" value="<%if(gStock <= 5 ){ %><%=gStock+" (재고발주 요청!) " %>
+            <td class="btn-by">
+                  <input type="text" name="gstock" class="btn-stock" id="gstock<%=num %>" value="<%if(gStock <= 5 ){ %><%=gStock+" (재고발주 요청!) " %>
 			<%}%><%=gStock%>">
-                  <input type="submit" class="update" data-num="<%=num%>" value="update">
+                  <input type="submit" class="update btn-stock" data-num="<%=num%>" value="update">
             </td>
             <td><input type="text" name="gcolor" id="gcolor<%=num %>" value="<%=gColor %>"></td>
              <td><button  class="delete"  data-num="<%=num%>"> <i class="fas fa-trash"></i> remove</button></td>

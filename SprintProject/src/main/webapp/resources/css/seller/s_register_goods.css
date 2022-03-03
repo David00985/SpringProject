@@ -15,7 +15,7 @@ body { /* 폰트구현   */
 
 .modal { /* 팝업창 중앙응로 변경  */
 	position: fixed;
-	top: 40%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%) scale(0.7);
 	/* (-50%, -80%) 위에서 천천히 나온다*/
@@ -33,8 +33,8 @@ body { /* 폰트구현   */
 
 .modal-content { /* 팝업창 크기 화면 */
 	/* border: 1px solid #000; */
-	width: 900px;
-	height: 450px;
+	width: 1300px;
+	height: 760px;
 	background-color: #fff;
 	border-radius: 5px;
 	overflow: hidden;
@@ -102,11 +102,12 @@ body { /* 폰트구현   */
 }
 
 .desc-content select {
-	width: 30%;
+	width: 40%;
     text-align: center;
     padding: 10px;
-    margin-right: 10px;
     margin-bottom: 10px;
+    margin-top: 1px;
+    margin-right: 13px;
     font-size: 20px;
 }
 
@@ -121,7 +122,7 @@ body { /* 폰트구현   */
 	opacity: 0;
 }
 
-.desc-content button { /* dispaly해도 width 100퍼가안된다 */
+.desc-content btn-style{ /* dispaly해도 width 100퍼가안된다 */
 	display: block;
 	width: 100%;
 	border: none;
@@ -135,20 +136,31 @@ body { /* 폰트구현   */
 	
 }
 
-.btn-open{
-	text-align: center;
-	background-color: #2eaf16;
-	color: #fff;
-	width:14%;
-	padding: 5px 20px;
-	font-size:15px;
-	border-radius: 5px;
+.btn-style{
+
+	display: block;
+    width: 100%;
+    border: none;
+    background-color: #287bff;
+    color: #fff;
+    cursor: pointer;
+    padding: 14px;
+    outline: none;
+    font-size: 20px;
+    border-radius: 5px;
 	
 }
 
-
-
-
+.btn-open{
+	stext-align: center;
+    background-color: #2eaf16;
+    color: #fff;
+    width: 10%;
+    font-size: 15px;
+    border-radius: 5px;
+    height: 4rem;
+	
+}
 
 /* 리스트  */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
@@ -168,12 +180,18 @@ html{
    overflow-x: hidden;
 }
 .test{
-   font-family: 'Poppins', sans-serif;
-   margin:0; padding:0;
-   box-sizing: border-box;
-   outline: none; border:none;
-   text-decoration: none;
-   text-transform: capitalize;
+
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    margin-right: 100px;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    top: 50%;
+    left: 50%;
 }
 /* -------------------------- */
 
@@ -204,7 +222,7 @@ section{
    background-color: var(--blue);
    color:var(--white);
    font-size: 1.7rem;
-   padding:1.2rem 1rem;
+   padding:1.2rem 2rem;
    border-radius: .5rem;
    cursor: pointer;
    margin-top: 1rem;
@@ -669,61 +687,32 @@ a{
     align-items: center;
     height: 100%;
 }
-
-#check{
-    padding: 5px;
-    margin-right: 40px;
-    border-radius: 5px;
-    outline: none;
-    font-size: 16px;
-    width: 100px;
-    height: 40px;
-    background-color: #287bff;
-    color: white;
-    border: none;
+.fileselect{
+	width: 30%;
+    font-size: 22px;
+   
 }
-
-/* 아이디리스트 CSS */
-
-table.type07 {
-  border-collapse: collapse;
-  text-align: left;
-  line-height: 1.5;
-  border: 1px solid #ccc;
-  margin: 20px 10px;
+#gdetail{
+	font-size: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 12px;
 }
-table.type07 thead {
-  border-right: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  background: #287bff;
+#gdetail ::placeholder{
+color: #bbb;
+	transition: 0.3s;
+	font-size: 20px;
 }
-table.type07 thead th {
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  color: #fff;
+.idCheck{
+	font-size:2rem;
+	color:blue;
 }
-table.type07 tbody th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-  background: #ccdfff;
-}
-table.type07 td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-}
-.category{
-	color: white;
-	text-align: center;
+.idCheck.active{
+	font-size:2rem;
+	color:red;
 }
 
 
-Resources1× 0.5× 0.25×Rerun
 /* media queries  */
 
 @media (max-width:1200px){
@@ -810,15 +799,7 @@ Resources1× 0.5× 0.25×Rerun
 
 
 /*  리스트  */
-@media ( max-width : 768px) { /* 화면을 줄였을 경우  */
-	.modal-content {
-		flex-direction: column;
-		width: 100%;
-	}
-	.modal-content>div {
-		width: 350px; /* 아이폰 기준 */
-	}
-	.photo {
-		flex-basis: 250px;
-	}
-}
+
+
+
+

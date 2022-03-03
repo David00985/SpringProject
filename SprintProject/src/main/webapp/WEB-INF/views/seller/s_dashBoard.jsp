@@ -12,14 +12,14 @@
 
 <%
 	DecimalFormat f = new DecimalFormat(",###,###,###");//금액,수량 쉼표표시
-	int MonthTotal = (int)request.getAttribute("MonthTotal"); // 현재 달 매출량
-	int DayTotal = (int)request.getAttribute("DayTotal");// 금일 매출량
+	int MonthTotal = (int)session.getAttribute("MonthTotal"); // 현재 달 매출량
+	int DayTotal = (int)session.getAttribute("DayTotal");// 금일 매출량
 	String Month = (String)request.getAttribute("month"); // 현재 달 표시
-	String yearmonthday = (String)request.getAttribute("yearmonthday");//년도,월,일 데이터
+	String yearmonthday = (String)session.getAttribute("yearmonthday");//년도,월,일 데이터
 	String year = yearmonthday.substring(0, 4);//년도만 자르기
 	String month = yearmonthday.substring(5, 7);//월만 자르기
 	String day = yearmonthday.substring(8, 10);//일만 자르기
-	int TotalGamount = (int)request.getAttribute("TotalGamount");
+	int TotalGamount = (int)session.getAttribute("TotalGamount");
 	int TodaySaleMoney = (int)request.getAttribute("TodaySaleMoney");	
 	List<OrderDTO> Recentorderstatus = (List<OrderDTO>)request.getAttribute("Recentorderstatus");
 	int TotalUserCount =(int)request.getAttribute("TotalUserCount");
