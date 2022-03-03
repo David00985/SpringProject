@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.MemberDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
@@ -490,11 +491,30 @@ public class SellerController {
 		
 	//배송 관리 화면.. 
 		@RequestMapping(value = "/delivery")
-		public String delivery(OrderDTO dto , HttpSession session) {
+		public String delivery(HttpSession session) {
 			System.out.println("베송관리");
-			System.out.println(dto);
+			SellerDTO dto = (SellerDTO) session.getAttribute("login_seller");
+			String sid = dto.getSid();
+			
+			List<OrderDTO> list = service.delivery(sid);
+			System.out.println(list);
+			
+			
+			
+			session.setAttribute("del", list);
+			
+			
 			return  "s_delivery";
 		}
-	
+		
+		@RequestMapping(value = "/delivery_update")
+		@ResponseBody
+		public String SellerStockAdd(String deliverystatus, HttpSession session) {
+			System.out.println("배송현황 수정");
+			System.out.println(deliverystatus);
+			
+			
+			return "redirect:delivery";
+		}
 	
 }

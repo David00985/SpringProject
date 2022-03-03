@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dto.CouponUserDTO;
 import com.dto.MemberDTO;
 import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
@@ -61,12 +62,14 @@ public class OrderController {
 		map.put("mid",mid);
 		map.put("opindex",opindex);
 		List<OrderChartDTO> list = service.orderChart_info(map);
+	
 		System.out.println(list);
 
 		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("info", list);
+
 		mav.setViewName("orderChart_info");
 		
 		return mav;
