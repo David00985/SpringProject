@@ -20,7 +20,7 @@ const myChart = new Chart(ctx, {
     type: 'polarArea',
     data: {
         // 이게 나오는 이름
-        labels: [gcategorytop,gcategorybottom,gcategorydress,gcategoryouter ],
+        labels: ["top","bottom","dress","outer" ],
         datasets: [{
             label: 'Traffic Source',
             // 이부분이 labels의 수치

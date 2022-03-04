@@ -193,5 +193,15 @@ public class SellerDAO {
 		return list;
 	}
 
+	public int Outofstockproduct(String sid) {
+		int num = session.selectOne("SellerMapper.Outofstockproduct",sid);
+		return num;
+	}
+
+	public List<Integer> totalinventory(String sid) {
+		List<Integer> list = session.selectList("SellerMapper.totalinventory",sid);
+		return list;
+	}
+
 
 }
