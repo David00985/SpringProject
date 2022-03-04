@@ -109,7 +109,13 @@
 				                               <c:set var= "total" value="${total + (odto.gprice * odto.gamount)}" />
                                             </td>
                                             <td class="del">
-                                                <strong>배송중</strong>
+                                                <strong><c:choose>
+													<c:when test="${odto.odelivery != 0 }"><span>${odto.deliverystatus}</span></c:when>					
+													
+														<c:when test="${odto.opaymentcheck == 1}"><span>결재 완료</span></c:when>
+														<c:when test="${odto.opaymentcheck == 0}"><span>결재 진행중</span></c:when>
+												
+													</c:choose></strong>
                                             </td>
                                             <td class="button">
                                                   <a href="" class="review">리뷰작성</a>

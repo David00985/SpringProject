@@ -106,7 +106,13 @@
 										</div>
 									</td>
 									<td class="del">
-										<strong>배송중</strong>
+										<c:choose>
+													<c:when test="${dto.odelivery != 0 }"><span>${dto.deliverystatus}</span></c:when>					
+													
+													<c:when test="${dto.opaymentcheck == 1}"><span>결재 완료</span></c:when>
+													<c:when test="${dto.opaymentcheck == 0}"><span>결재 진행중</span></c:when>
+												
+										</c:choose>
 									</td>
 									<td class="button">
                               			<a href="" class="review">리뷰작성</a>

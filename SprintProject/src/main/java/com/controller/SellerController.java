@@ -507,14 +507,14 @@ public class SellerController {
 			return  "s_delivery";
 		}
 		
-		@RequestMapping(value = "/delivery_update")
+		@RequestMapping(value = "/deliveryupdate")
 		@ResponseBody
-		public String SellerStockAdd(String deliverystatus, HttpSession session) {
+		public String deliveryupdate(@RequestParam String deliverystatus, HttpSession session) {
 			System.out.println("배송현황 수정");
 			System.out.println(deliverystatus);
+
 			
-			
-			return "redirect:delivery";
+			return "return:delivery";
 		}
 	
 }
