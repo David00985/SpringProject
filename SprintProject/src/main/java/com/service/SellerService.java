@@ -163,6 +163,16 @@ public class SellerService {
 		return list;
 	}
 
+	public int Outofstockproduct(String sid) {
+		int num = dao.Outofstockproduct(sid);
+		return num;
+	}
+
+	public List<Integer> totalinventory(String sid) {
+		List<Integer> list = dao.totalinventory(sid);
+		return list;
+	}
+
 
 	 
 
