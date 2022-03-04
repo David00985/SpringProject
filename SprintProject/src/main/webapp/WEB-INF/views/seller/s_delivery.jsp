@@ -7,18 +7,19 @@
   <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
 $(function() {
 	
 	
 	//배송현황 업데이트
 	$(".del_submit").on("click",function () {
-		
-		var deliverystatus = $("#status_del option:selected").val();
-		var opindex = $(".opindex").text();
+		var num = $(this).attr("data-num");
+		var deliverystatus = $("#status_del").val();
+		var opindex = $(".opindex"+num).val();
 		console.log(deliverystatus,opindex);
-		 $ajax({
+		 
+		$ajax({
 			type:"POST",
 			url:"deliveryupdate",
 			data:{
@@ -35,7 +36,7 @@ $(function() {
 			}
 			
 			
-		})//ajax end
+		});//ajax end
 		 
 		
 	});//업데이트 end
@@ -44,8 +45,8 @@ $(function() {
 })//update end
 	
 
-
 </script>
+
 
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <hr>
@@ -68,7 +69,7 @@ $(function() {
 		<tbody>
 			<c:forEach var="del" items="${del}" varStatus="status">
 			<tr>
-				<td class="opindex">${del.opindex}</td>
+				<td class="opindex+${del.opindex}">${del.opindex}</td>
 				<td>${del.oproductname}</td>
 				<td>${del.oprice}</td>
 				<c:choose>
@@ -78,14 +79,15 @@ $(function() {
 						<c:when test="${del.opaymentcheck == 0}"><td>결재 진행중</td></c:when>
 				
 				</c:choose>
-				<td><select name="status" class="status" id="status_del" >
-				<option value="주문 완료">주문 완료</option>
-				<option value="배송 대기">배송 준비중</option>
+				<td>
+				<select name="status" class="status" id="status_del" >
+				<option value="주문완료">주문 완료</option>
+				<option value="배송준비중">배송 준비중</option>
 				<option value="배송중">배송중</option>
-				<option value="배송 완료">배송 완료</option>
+				<option value="배송완료">배송 완료</option>
 				<option value="환불중">환불중</option>
 				</select>
-				 <input type="submit" class="del_submit" value="update">
+				 <input type="submit" class="del_submit" value="update" data-num="${del.opindex}">
 				</td>
 			</tr>
 			</c:forEach>	
