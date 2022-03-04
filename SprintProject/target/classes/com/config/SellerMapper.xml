@@ -119,5 +119,23 @@ select EXTRACT (month from ordate) as ordate , sum(o.oprice) sum from orders o
     				order by ordate asc
 </select>
 
+<select id="Outofstockproduct" resultType="int" parameterType="String">
+select
+  count(*)
+ from stock s 
+ join goods g on g.gid = s.gid 
+where g.sid = #{sid} 
+  and s.gstock<![CDATA[<]]> =5
+</select>
+
+<select id="totalinventory" resultType="int" parameterType="String">
+select
+    gstock
+ from stock s 
+ join goods g on g.gid = s.gid 
+where g.sid = #{sid} 
+  
+</select>
+
 
 </mapper>

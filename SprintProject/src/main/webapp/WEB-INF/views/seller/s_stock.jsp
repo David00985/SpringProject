@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.dto.StockPageDTO"%>
 <%@page import="com.dto.PageDTO"%>
 <%@page import="com.dto.StockDTO2"%>
@@ -19,7 +20,15 @@
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 -->
 <%
-StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
+DecimalFormat f = new DecimalFormat(",###,###,###");//금액,수량 쉼표표시
+StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list"); // 등록 상품수
+int Outofstockproduct = (int)session.getAttribute("Outofstockproduct"); // 재고부족한상품수 5개이하인
+int totalinventorys = (int)session.getAttribute("totalinventorys");// 총재고수 
+String yearmonthday = (String)session.getAttribute("yearmonthday");//년도,월,일 데이터
+String year = yearmonthday.substring(0, 4);//년도만 자르기
+String month = yearmonthday.substring(5, 7);//월만 자르기
+String day = yearmonthday.substring(8, 10);//일만 자르기
+int DayTotal = (int)session.getAttribute("DayTotal");// 금일 매출량
 %>
 <!-- 재고 관리 페이지 -->
 
@@ -27,7 +36,7 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 	<div class="card">
 		
 		<div>
-			<div class="numbers"><%=stockPage.getTotalCount() %></div>
+			<div class="numbers"><%=stockPage.getTotalCount()%>개</div>
 			<div class="cardName">등록 상품 수</div>
 		</div>
 		<div class="iconBx">
@@ -36,7 +45,7 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 	</div>
 	<div class="card">
 		<div>
-			<div class="numbers">80</div>
+			<div class="numbers"><%=Outofstockproduct %>개</div>
 			<div class="cardName">재고 부족 상품</div>
 		</div>
 		<div class="iconBx">
@@ -46,8 +55,8 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 	</div>
 	<div class="card">
 		<div>
-			<div class="numbers">284</div>
-			<div class="cardName">악성 재고 상품</div>
+			<div class="numbers"><%=f.format(DayTotal)%>원</div>
+			<div class="cardName"><%=month %>월 <%=day %>일 매출</div>
 		</div>
 		<div class="iconBx">
 			<ion-icon name="chatbubbles-outline"></ion-icon>
@@ -57,7 +66,7 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 	<div class="card">
 	
 		<div>
-			<div class="numbers">$7,842</div>
+			<div class="numbers"><%=totalinventorys %>개</div>
 			<div class="cardName">총 재고량</div>
 		</div>
 		<div class="iconBx">
@@ -173,7 +182,7 @@ StockPageDTO stockPage = (StockPageDTO)session.getAttribute("list");
 					<option>Pink</option>
 				</select><br>
 				<input type="text" name="gstock" id="gstock" placeholder="상품수량을 입력해주세요"><br>
-				<button>재고 등록하기</button><br>
+				<button id="stockadd">재고 등록하기</button><br>
 				</form>
 				<h2>재고입력 주의사항</h2>
 				<h3>아이디 중복값 주의!</h3>

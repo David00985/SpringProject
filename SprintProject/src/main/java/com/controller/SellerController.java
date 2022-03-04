@@ -216,8 +216,11 @@ public class SellerController {
 	List<GoodsDTO> Salesbycategory = service.Salesbycategory(sid); //원그래프 카테고리별 판매수량 합계
 	List<OrderDTO> monthlysales = service.monthlysales(sid);// 막대그래프 월별 매출량
 	int TotalUserCount = service.TotalUserCount(sid); //판매자의 상품을 1개라도 구매한 구매자의 수
+	int Outofstockproduct = service.Outofstockproduct(sid);// 재고가 5개 이하인 재품들
+	List<Integer> totalinventory = service.totalinventory(sid); // 총재고량
 	
-	System.out.println(monthlysales);
+	
+	
 	
 	int MonthTotal = 0; //월 판매금액 누적 변수생성
 	for (OrderDTO dto : ordto) { // 현재 달에 모든 주문 뽑기 
@@ -264,6 +267,11 @@ public class SellerController {
 		}//날짜 null이 아닐시 실행
 		}//날짜 비교 if문 end
 	}//for문 end
+	
+	int totalinventorys = 0; // 총재고량을 담음 변수
+	for (Integer integer : totalinventory) {
+		totalinventorys += integer; // 총재고수량을 누적 
+	}
 		
 		
 	session.setAttribute("MonthTotal", MonthTotal);//월 매출 금액 담기
@@ -277,7 +285,9 @@ public class SellerController {
 	request.setAttribute("monthlysales",monthlysales);//막대그래프 월별 매출량
 	request.setAttribute("month",month);// 현재 월 담기
 	session.setAttribute("yearmonthday", yearmonthday); //현재 년,월,일 담기
-		
+	session.setAttribute("Outofstockproduct",Outofstockproduct);// 재고가 5개이하인제품들 수
+	session.setAttribute("totalinventorys", totalinventorys); // 총재고량 누적 수 
+	
 		return  "main_seller";
 	}
 	
