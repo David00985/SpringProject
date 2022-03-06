@@ -1,3 +1,4 @@
+<%@page import="com.dto.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -216,11 +217,38 @@
 
 
 
-  <!-- Back to Top -->
-   <a href="#" class="btn back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+
+
+
+<%
+	MemberDTO login_member = (MemberDTO )session.getAttribute("login_member");
+	String sess = "x";
+	if( login_member != null){
+		sess = login_member.getMid();
+};%>
+
+
+<!-- 채팅 -->
+<a href="#" class="btn chatting" id="chatting" data-sess="<%=sess%>" >
+	<span>채팅</span>
+	<ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+</a>
+
+<%if( login_member != null){ %>
+
+<script>
+document.querySelector('.chatting').style.display = "block";
+</script>
+
+<%}; %>
+
+
+
+ <!-- Back to Top -->
+ <a href="#" class="btn back-to-top"><i class="fa fa-angle-double-up"></i></a>
  
-
-
 
 
 
@@ -235,6 +263,7 @@
 
 // 스크롤 내리면 바로 header가 나온다. 
 document.querySelector('.header').classList.add('hidden');
+document.querySelector('.back-to-top').classList.add('hidden');
 	window.onscroll = function() {
 		// 네비바 나오게 하기 
 		if(window.scrollY > 0){
@@ -275,8 +304,9 @@ document.querySelector('.header').classList.add('hidden');
 	
 	
 	
-// fashion 	
+// event product~~~~~~~~~~~~~~~~~~~~~~~~~~~ 	
 	
+	// 상품 이름 이미지 설명 부분 여기만 고치면 된다. ~~~~
 	const productData = [
     {
         index: '01',
@@ -333,7 +363,7 @@ nxtBtn.addEventListener('click', function () {
     backdropImg.classList.add('fade');
     productDetail.classList.add('fade');
     
-    setTimeout(() => {
+    setTimeout(function() {
         productName.innerHTML = productData[currentPrduct].name;
         productDes.innerHTML = productData[currentPrduct].des;
         smImg.src = 'resources/images/' + productData[currentPrduct].image;
@@ -344,7 +374,7 @@ nxtBtn.addEventListener('click', function () {
     }, 500);
 
 
-    setTimeout(() => {
+    setTimeout(function() {
         smImgContainer.classList.remove('slide');
         productImgContainer.classList.remove('slide');
         backdropImg.classList.remove('fade');
@@ -355,12 +385,31 @@ nxtBtn.addEventListener('click', function () {
 });
 
 
+// end event product~~~~~~~~~~~~~~~~~~~~~~~~~~~ 	
 
 
 
 
 
 
+// 채팅버튼
+
+document.querySelector("#chatting").addEventListener("click", function(event) {
+	event.preventDefault();
+	
+	// 만들어 놓은 사용자 속성에서 data-sess 값 가져오기. 
+	const sess = this.dataset.sess;
+	var no = <%= sess %>;
+	console.log("스크립트에서 접근하기. "+no)
+	
+	
+
+	let popUrl = "chat?mid="+sess;
+	let popOption = "width = 450px, height=700px, top=100px, left=100px ";
+	
+	window.open(popUrl,"배송조회",popOption);
+
+});
 
 
 

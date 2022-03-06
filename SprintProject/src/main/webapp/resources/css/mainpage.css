@@ -562,6 +562,43 @@ section {
 .back-to-top.hidden{
 	display:none;
 } 
+
+a#chatting {
+   
+    text-align: center;
+    color: royalblue;
+    
+}
+a#chatting span{
+	display: block;
+}
+
+.chatting{
+   position: fixed;
+   border-radius: 5px;
+   border: none;
+   right: 35px;
+   bottom: 135px;
+   z-index: 11;
+   padding: 0 0;
+   animation: action 1s infinite alternate;
+   display: none;
+   
+}
+
+.chatting ion-icon {
+    font-size: 25px;
+    /* width: 51%; */
+    width: 60px;
+    height: 41px;
+}
+
+.chatting:hover{
+	color:white;
+	
+}
+
+
  
  @keyframes action {
    0% {
