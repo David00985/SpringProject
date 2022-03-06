@@ -24,7 +24,7 @@ public class OrderController {
 
 	@Autowired
 	OrderService service;
-	
+	//주문조회
 	@RequestMapping(value = "/loginCheck/orderChart")
 	public String orderChart(HttpSession session){
 		System.out.println("주문조회 기능");
@@ -41,17 +41,23 @@ public class OrderController {
 		return "orderChart";
 	}
 	
-	
+	//배송조회
 	@RequestMapping(value = "/deliver")
 	public String deliver() {
 		System.out.println("배송조회");
 		return "deliver";
 	}
 	
+	@RequestMapping(value = "/return_goods")
+	public String return_goods() {
+		System.out.println("반품완료");
+		
+		return "success";
+	}
 	
 	
 	
-	
+	//주문상세조회
 	@RequestMapping(value = "/orderChart_info")
 	public  ModelAndView orderChart_info(String opindex,HttpSession session) {
 		System.out.println("구매자정보조회");

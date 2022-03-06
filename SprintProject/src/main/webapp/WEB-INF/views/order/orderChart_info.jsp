@@ -28,10 +28,31 @@
 			window.open(popUrl,"배송조회",popOption);
 	})//배송조회페이지 end
 		
+	//환불요청페이지
+	$(".ordercancel").click(function () {
+		
+			var oid = $(this).attr("data-num");
+			console.log(oid);
+		$.ajax({
+			type:"POST",
+			url:"return_goods",
+			data:{
+				oid:oid
+			},
+			dataType:"text",
+			success: function (data,status,xhr) {
+				console.log(success);
+				alert("환불요청이 완료되었습니다");
+			},
+			error: function(xhr,status,error) {
+				console.log(error);
+			}
+		})//ajax end
 	
+	});//환불요청 end
 
 	
-	})
+	});//ready end
 	
 
 
@@ -119,8 +140,9 @@
                                             </td>
                                             <td class="button">
                                                   <a href="" class="review">리뷰작성</a>
-                                                <a href="" class="ordercancel">반품요청</a>	
-                                                   <a href="" class="deliver">배송조회</a>
+                                                  <%-- <a href="" class="ordercancel" data-num="${odto.gid}">반품요청</a>
+                                                   --%><button class="ordercancel" data-num="${odto.gid}">반품요청</button>
+                                                  <a href="" class="deliver">배송조회</a>
                                                </td>
                                         
                                         </tr>

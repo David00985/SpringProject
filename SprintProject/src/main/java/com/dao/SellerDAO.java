@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
+import com.dto.ReturnDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
 import com.dto.StockDTO2;
@@ -203,5 +205,19 @@ public class SellerDAO {
 		return list;
 	}
 
+	public int deliveryupdate(OrderDTO dto) {
+		// TODO Auto-generated method stub
+		int num = session.update("SellerMapper.deliveryupdate",dto);
+		return num;
+	}
+
+	public List<ReturnDTO> s_return(String sid) {
+		// TODO Auto-generated method stub
+		List<ReturnDTO> list = session.selectList("SellerMapper.return", sid);
+		return list;
+	}
+
+
+	
 
 }

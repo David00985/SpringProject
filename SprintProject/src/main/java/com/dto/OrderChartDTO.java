@@ -6,6 +6,7 @@ import org.apache.ibatis.type.Alias;
 public class OrderChartDTO {
 
 	
+	private String sid;
 	private String mid;
 	private String ordate;
 	private String oname;
@@ -30,6 +31,7 @@ public class OrderChartDTO {
 	private String code;
 	private String discount;
 	private String content;
+	private int oconfirmed;
 //	--------------------------------쿠폰정보
 	private String company;
 	private String cardnumber;
@@ -42,12 +44,13 @@ public class OrderChartDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public OrderChartDTO(String mid, String ordate, String oname, String ophone1, String ophone2, String ophone3,
-			String oaddress1, int opindex, String gid, int oprice, String gname, String gimage, String oimage,
-			String gcolor, String gsize, int gamount, int gprice, String oproductname, String opaymentcheckstatus,
-			String code, String discount, String content, String company, String cardnumber, int opaymentcheck,
-			int used, String odelivery, String deliverystatus) {
+	public OrderChartDTO(String sid, String mid, String ordate, String oname, String ophone1, String ophone2,
+			String ophone3, String oaddress1, int opindex, String gid, int oprice, String gname, String gimage,
+			String oimage, String gcolor, String gsize, int gamount, int gprice, String oproductname,
+			String opaymentcheckstatus, String code, String discount, String content, int oconfirmed, String company,
+			String cardnumber, int opaymentcheck, int used, String odelivery, String deliverystatus) {
 		super();
+		this.sid = sid;
 		this.mid = mid;
 		this.ordate = ordate;
 		this.oname = oname;
@@ -70,6 +73,7 @@ public class OrderChartDTO {
 		this.code = code;
 		this.discount = discount;
 		this.content = content;
+		this.oconfirmed = oconfirmed;
 		this.company = company;
 		this.cardnumber = cardnumber;
 		this.opaymentcheck = opaymentcheck;
@@ -79,14 +83,21 @@ public class OrderChartDTO {
 	}
 	@Override
 	public String toString() {
-		return "OrderChartDTO [mid=" + mid + ", ordate=" + ordate + ", oname=" + oname + ", ophone1=" + ophone1
-				+ ", ophone2=" + ophone2 + ", ophone3=" + ophone3 + ", oaddress1=" + oaddress1 + ", opindex=" + opindex
-				+ ", gid=" + gid + ", oprice=" + oprice + ", gname=" + gname + ", gimage=" + gimage + ", oimage="
-				+ oimage + ", gcolor=" + gcolor + ", gsize=" + gsize + ", gamount=" + gamount + ", gprice=" + gprice
-				+ ", oproductname=" + oproductname + ", opaymentcheckstatus=" + opaymentcheckstatus + ", code=" + code
-				+ ", discount=" + discount + ", content=" + content + ", company=" + company + ", cardnumber="
-				+ cardnumber + ", opaymentcheck=" + opaymentcheck + ", used=" + used + ", odelivery=" + odelivery
+		return "OrderChartDTO [sid=" + sid + ", mid=" + mid + ", ordate=" + ordate + ", oname=" + oname + ", ophone1="
+				+ ophone1 + ", ophone2=" + ophone2 + ", ophone3=" + ophone3 + ", oaddress1=" + oaddress1 + ", opindex="
+				+ opindex + ", gid=" + gid + ", oprice=" + oprice + ", gname=" + gname + ", gimage=" + gimage
+				+ ", oimage=" + oimage + ", gcolor=" + gcolor + ", gsize=" + gsize + ", gamount=" + gamount
+				+ ", gprice=" + gprice + ", oproductname=" + oproductname + ", opaymentcheckstatus="
+				+ opaymentcheckstatus + ", code=" + code + ", discount=" + discount + ", content=" + content
+				+ ", oconfirmed=" + oconfirmed + ", company=" + company + ", cardnumber=" + cardnumber
+				+ ", opaymentcheck=" + opaymentcheck + ", used=" + used + ", odelivery=" + odelivery
 				+ ", deliverystatus=" + deliverystatus + "]";
+	}
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
 	}
 	public String getMid() {
 		return mid;
@@ -220,6 +231,12 @@ public class OrderChartDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getOconfirmed() {
+		return oconfirmed;
+	}
+	public void setOconfirmed(int oconfirmed) {
+		this.oconfirmed = oconfirmed;
+	}
 	public String getCompany() {
 		return company;
 	}
@@ -256,6 +273,7 @@ public class OrderChartDTO {
 	public void setDeliverystatus(String deliverystatus) {
 		this.deliverystatus = deliverystatus;
 	}
+	
 	
 	
 	
