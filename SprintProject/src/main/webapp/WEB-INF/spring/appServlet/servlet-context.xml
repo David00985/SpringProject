@@ -4,7 +4,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.1.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
@@ -26,6 +28,33 @@
 		 <ref bean="loginCheckInterceptor"/>
 	</mvc:interceptor>
 </mvc:interceptors>
+
+
+
+  <!-- websocket handler -->
+    <bean id="websocketHandler" class="com.websocket.websocketHandler" />
+
+    <websocket:handlers>
+        <websocket:mapping handler="websocketHandler" path="/websocket" />
+        <websocket:handshake-interceptors>
+            <bean
+                class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+
+  <!--tetris websocket handler -->
+    <bean id="tetrisSoketHandler" class="com.websocket.tetrisSoketHandler" />
+
+    <websocket:handlers>
+        <websocket:mapping handler="tetrisSoketHandler" path="/tetrisSocket" />
+        <websocket:handshake-interceptors>
+            <bean
+                class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+
+	
+
 
 
 <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
