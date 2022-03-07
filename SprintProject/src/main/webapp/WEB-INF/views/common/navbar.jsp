@@ -89,6 +89,8 @@
 	        <a href="loginCheck/cart">장바구니</a>
 	        <a href="loginCheck/mypage">마이페이지</a>
 	        <a href="loginCheck/orderChart">주문확인</a>
+	        <a href="singleTetris">테트리스(싱글)</a>
+	        <a href="multiTetris">테트리스(멀티)</a>	        
 	        <a href="loginCheck/logout">로그아웃</a>
 	    </nav>
 	
