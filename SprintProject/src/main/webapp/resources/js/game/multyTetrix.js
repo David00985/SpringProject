@@ -58,6 +58,13 @@ const METRIX_PX = 25;  // 메트릭스의 사이즈 크기는 25*25px이다
 const GAME_START = 1;
 const GAME_STOP = 2;
 const GAME_OVER = 3;
+const GAME_WAIT = 4;
+
+// game status variables
+let gamestatus = 0;   // 현재 게임 상태
+let muityon = 0;	  // 멀티 게임 상태. 
+let gamestatus_player2 = 0; // 현재 게임 상태 
+let firstkeyboardevent = 0; // 언제 nextblocks의 통신을 보낼지 결정하는 상태정보변수
 
 
 // variables PLAYER1
@@ -65,14 +72,6 @@ let score = 0;        // 점수
 let duration = 500;   // 내려가는 속도 , 인터벌 시간간격변수
 let downInterval;     // 인터벌 저장 변수 ,시간간격으로 자동으로 함수반복실행
 let nextBlockType;    // 다음 블록
-let gamestatus = 0;   // 현재 게임 상태
-
-// variables PLAYER2
-let score_player2 = 0;      // 점수
-let downInterval_player2;   // 인터벌 저장변수
-let nextBlockType_player2;  // 다음 블록 <- 얘는 랜덤이 아니다!!!
-let gamestatus_player2 = 0; // 현재 게임 상태 
-let firstkeyboardevent = 0;
 
 let tempMovingItem ={
 		type:"",           //모양의 종류
@@ -81,6 +80,21 @@ let tempMovingItem ={
 		left:0,            // 좌우이동에 사용하는 
 };
 
+const movingItem = {
+		
+		type:"tree",           //모양의 종류
+		direction: 0,      //입력받은 키보드값
+		top:0,             // 점점 아래로 내려가는걸
+		left:0,            // 좌우이동에 사용하는 
+		
+};
+
+// variables PLAYER2
+let score_player2 = 0;      // 점수
+let downInterval_player2;   // 인터벌 저장변수
+let nextBlockType_player2;  // 다음 블록 <- 얘는 랜덤이 아니다!!!
+
+
 let tempMovingItem_player2 ={
 		type:"",           //모양의 종류
 		direction: 0,      //입력받은 키보드값
@@ -88,14 +102,6 @@ let tempMovingItem_player2 ={
 		left:0,            // 좌우이동에 사용하는 
 };
 
-const movingItem = {
-
-    type:"tree",           //모양의 종류
-    direction: 0,      //입력받은 키보드값
-    top:0,             // 점점 아래로 내려가는걸
-    left:0,            // 좌우이동에 사용하는 
-
-};
 
 const movingItem_player2 = {
 
@@ -112,23 +118,7 @@ const movingItem_player2 = {
 var socket = null;
 
 
-
-function displayAllNone(){
-	
-    gamewait.style.display = "none";
-	gameover.style.display = "none";
-	gamestop.style.display = "none";
-	gamewin.style.display = "none";
-	gamestart.style.display = "none";
-	
-	gamewait_player2.style.display = "none";
-	gameover_lose_player2.style.display = "none";
-	gamestop_player2.style.display = "none";
-	gamewin_player2.style.display = "none";
-	gamestart_player2.style.display ="none";
-}
-
-
+//소켓 통신.. 서버는 로직이 없고 단순히 통로역할 
 function connect() {
 	
 	// http대신에 ws를 해야 되더라... 
@@ -147,62 +137,55 @@ function connect() {
 		let data = event.data;
 		// 3명 이상 접속시 접속제한하기.. 
 		
+		// nextbolck은 첫블럭 랜더링후 처음 키보드 조작시 전송, 키보드 조작 안하면 바닥에닿을때(seized)전송
+		// 본인꺼는 랜덤. 상대방거는 상대방 랜던값이랑 맞춘다. 
 		if(data.split(",")[0] == "type"){
 			nextBlockType_player2 = data.split(",")[1];
 		}
 		
 		switch (data) {
-		case "over":
+		//게임접속과 관련된..
+		case "over": //지금은 3명이상 접속제한.. 
 			alert("접속제한..")
 			history.back();
-			break;
-		case "out":
+			break;			
+		case "out": // 한명이 게임을 나감
 			displayAllNone();
-			console.log("player2: 게임오버")
+			console.log("out player2: 게임오버")
 			clearInterval(downInterval_player2);
 			gamestop_player2.style.display = "none";		
 			showGameoverText_player2();
 			showGameWinText_player1();
 			gamestatus = GAME_OVER;
 			gamestatus_player2 = GAME_OVER;
+			muityon =GAME_OVER;
 			break;
-		case "connect":
+		case "connect"://2명 게임접속 완료, 게임상태 전부리셋
 			console.log("connection받음")
-			displayAllNone();
-			gamerestart_player1();
-			gamerestart_player2();
-			gamestatus = GAME_OVER;
-			gamestatus_player2 = GAME_OVER;
+			resetGameStatus(); // 게임상태 전부 리셋.. 
 			break;
+		//게임 시작과 관련된	
 		case "gamestart":
 			gamestart_player2.style.display = "none";
 			gamestatus_player2 = GAME_START;
+			muityon =GAME_WAIT;
 			//게임실행
 			gamewaitfunction();
 			break;
 		case "gamewait":
 			gamewait_player2.style.display = "none";
 		    gamestatus_player2 = GAME_OVER;
+		    muityon =GAME_OVER;
 		    gamerestart_player2();
 			break;
+		//게임 일시정지와 관련된	
 		case "stop":
 			showGamestopText_player2();
 			break;
 		case "stop_to_restart":
 			startGame_player2();
 			break;
-		case "lose":
-			gameover_lose_player2.style.display = "none";
-			gamerestart_player2();	
-		    gamestatus = GAME_OVER;
-		    gamestatus_player2 = GAME_OVER;
-			break;
-		case "win":
-			gamewin_player2.style.display = "none";
-			gamerestart_player2();
-		    gamestatus = GAME_OVER;
-		    gamestatus_player2 = GAME_OVER;
-			break;
+		//게임 조작
 		case "right":
 			moveBlock_player2("left",1 );
 			break;
@@ -253,12 +236,11 @@ function connect() {
 // 게임 시작하는 함수 , 플레이어 2명의 gamestatus 가 게임시작이면 시작
 function gamewaitfunction(){
 
-    if(gamestatus == GAME_START && gamestatus_player2 == GAME_START){
+    if(gamestatus == GAME_START && gamestatus_player2 == GAME_START && muityon == GAME_WAIT){
         console.log("게임 시작~~")
         
         nextBlockType ="";
         nextBlockType_player2="";
-        
         const blockObject = Object.entries(BLOCKS);
         const randomBlocksIndex = Math.floor(Math.random()*blockObject.length);
         nextBlockType = blockObject[randomBlocksIndex][0];
@@ -288,6 +270,8 @@ function gamewaitfunction(){
             
             gamenow.style.display = "none"
             gamenow_player2.style.display = "none"
+            firstkeyboardevent =0;
+            muityon =GAME_START;
             generateNewBlock()
             generateNewBlock_player2()
         }, 3000);
@@ -861,12 +845,12 @@ function  displayComboMessage_player2(offtop  , combo ){
 function generateNewBlock(){
 
     //인터벌 주기
-
-    clearInterval(downInterval);
-    downInterval = setInterval(() => {
-        moveBlock("top",1)
-    }, duration);
-
+	if(gamestatus ==  GAME_START  && muityon == GAME_START){
+	    clearInterval(downInterval);
+	    downInterval = setInterval(() => {
+	        moveBlock("top",1)
+	    }, duration);
+	}
 
     // 초기화하기 
     movingItem.type = nextBlockType;
@@ -915,12 +899,12 @@ function generateNewBlock(){
 // 새로운 블럭꺼내는 함수2
 function generateNewBlock_player2(){
     //인터벌 주기
-
-    clearInterval(downInterval_player2);
-    downInterval_player2 = setInterval(() => {
-        moveBlock_player2("top",1)
-    }, duration);
-
+	if(gamestatus_player2 ==  GAME_START  && muityon == GAME_START){
+	    clearInterval(downInterval_player2);
+	    downInterval_player2 = setInterval(() => {
+	        moveBlock_player2("top",1)
+	    }, duration);
+	}
 
     // 초기화하기 
     movingItem_player2.type = nextBlockType_player2;
@@ -1131,7 +1115,7 @@ function isavailableBlock_player2() {
 
 // 스페이스누르면 빨라지는
 function dropBlocks(){
-    if(gamestatus ==  GAME_START){
+    if(gamestatus ==  GAME_START  && muityon == GAME_START){
         clearInterval(downInterval);
         downInterval = setInterval(() => {
             moveBlock("top",1)
@@ -1141,7 +1125,7 @@ function dropBlocks(){
 
 // 스페이스누르면 빨라지는2
 function dropBlocks_player2(){
-    if(gamestatus_player2 ==  GAME_START){
+    if(gamestatus_player2 ==  GAME_START  && muityon == GAME_START){
         clearInterval(downInterval_player2);
         downInterval_player2 = setInterval(() => {
             moveBlock_player2("top",1)
@@ -1151,7 +1135,7 @@ function dropBlocks_player2(){
 
 //게임 지면 보여주는 함수
 function showGameoverText(){
-    if(gamestatus == GAME_START){
+    if(gamestatus == GAME_START  && muityon == GAME_START){
         gameover.style.display = "flex";
         gamestatus = GAME_OVER;
     }
@@ -1159,10 +1143,10 @@ function showGameoverText(){
 
 //게임 지면 보여주는 함수2
 function showGameoverText_player2(){
-
-        gameover_lose_player2.style.display = "flex";
-        gamestatus_player2 = GAME_OVER;
-
+	  if(gamestatus_player2 ==  GAME_START  && muityon == GAME_START){
+	       gameover_lose_player2.style.display = "flex";
+	       gamestatus_player2 = GAME_OVER;
+	  }
 } 
 
 
@@ -1182,7 +1166,7 @@ document.addEventListener("keydown", (e)=>{
 	}
 	
     // 게임중일때만 키보드 이벤트?
- //   if( gamestatus == GAME_START){
+    if( gamestatus == GAME_START   && muityon == GAME_START){
 
         switch (e.keyCode) {
             case 39: // 오른쪽 키
@@ -1211,7 +1195,7 @@ document.addEventListener("keydown", (e)=>{
             default:
                 break;
         }
- //   }
+      }
 
 
 })
@@ -1221,28 +1205,24 @@ function sendTypetoPlayer2(){
 }
 
 
+
 // player1 button event ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//game-start button
-restartButton.addEventListener("click", ()=>{
-    gameover.style.display = "none";
-    gamerestart_player1();
-    socket.send("lose");
-})
+//게임 패배시 game-lose button
+restartButton.addEventListener("click", sendConnect);
 
-//game-wait button
-gamewinbutton.addEventListener("click", function () {
-    gamewin.style.display = "none";
-    gamerestart_player1();
-    socket.send("win");
-})
+//게임 승리시 game-win button
+gamewinbutton.addEventListener("click", sendConnect);
 
-//
+//일시정지와 관련된
 stopbutton.addEventListener("click", startGame)
-
+//일시정지와 관련된
 gamestop2.addEventListener("click",showGamestopText)
 
 
+
+
+// 맨처음나오는 게임시작버튼
 gamestartbutton.addEventListener("click", function () {
     gamestart.style.display = "none";
     gamestatus = GAME_START;
@@ -1253,9 +1233,11 @@ gamestartbutton.addEventListener("click", function () {
 
 });
 
+//맨처음나오는 게임시작버튼 취소하기
 gamewaitbutton.addEventListener("click", function () {
     gamewait.style.display = "none";
     gamestatus = GAME_OVER;
+    muityon =GAME_OVER;
     gamerestart_player1();
     socket.send("gamewait");
 })
@@ -1271,24 +1253,28 @@ gamewaitbutton.addEventListener("click", function () {
 // 이벤트에 쓰이는 보조 함수들... ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function startGame(){
-    downInterval = setInterval(() => {
-        moveBlock("top",1)
-    }, duration);
-    gamestatus = GAME_START;
-    gamestop.style.display = "none";
-    socket.send("stop_to_restart");
+	if(gamestatus == GAME_STOP && muityon == GAME_START){
+	    downInterval = setInterval(() => {
+	        moveBlock("top",1)
+	    }, duration);
+	    gamestatus = GAME_START;
+	    gamestop.style.display = "none";
+	    socket.send("stop_to_restart");
+	}
 }
 
 function startGame_player2(){
-    downInterval_player2 = setInterval(() => {
-        moveBlock_player2("top",1)
-    }, duration);
-    gamestatus_player2 = GAME_START;
-    gamestop_player2.style.display = "none";
+	if(gamestatus_player2 == GAME_STOP && muityon == GAME_START){
+	    downInterval_player2 = setInterval(() => {
+	        moveBlock_player2("top",1)
+	    }, duration);
+	    gamestatus_player2 = GAME_START;
+	    gamestop_player2.style.display = "none";
+	}
 }
 
 function showGamestopText(){
-    if(gamestatus ==  GAME_START){
+    if(gamestatus ==  GAME_START && muityon == GAME_START ){
         clearInterval(downInterval);
         gamestatus = GAME_STOP;
         gamestop.style.display = "flex";
@@ -1298,7 +1284,7 @@ function showGamestopText(){
 
 
 function showGamestopText_player2(){
-    if(gamestatus_player2 ==  GAME_START){
+    if(gamestatus_player2 ==  GAME_START && muityon == GAME_START){
         clearInterval(downInterval_player2);
         gamestatus_player2 = GAME_STOP;
         gamestop_player2.style.display = "flex";
@@ -1326,12 +1312,37 @@ function gamerestart_player1(){
 }
 
 
+function sendConnect(){
+	resetGameStatus();
+    socket.send("connect");
+}
+
+function resetGameStatus(){
+	displayAllNone();
+	gamerestart_player1();
+	gamerestart_player2();
+	gamestatus = GAME_OVER;
+	gamestatus_player2 = GAME_OVER;
+	muityon =GAME_WAIT;
+}
 
 
 
-
-
-
+//보조함수.. 모든 게임상태 디스플레이 none
+function displayAllNone(){
+	
+gamewait.style.display = "none";
+	gameover.style.display = "none";
+	gamestop.style.display = "none";
+	gamewin.style.display = "none";
+	gamestart.style.display = "none";
+	
+	gamewait_player2.style.display = "none";
+	gameover_lose_player2.style.display = "none";
+	gamestop_player2.style.display = "none";
+	gamewin_player2.style.display = "none";
+	gamestart_player2.style.display ="none";
+}
 
 
 
