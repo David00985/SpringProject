@@ -81,6 +81,7 @@ $(function() {
 					</c:otherwise>
 				</c:choose>
 				<td>
+			
 				<select name="status" class="status" id="status_del">
 				<option value="none" selected>==선택==</option>
 				<option value="1">상품인수</option>

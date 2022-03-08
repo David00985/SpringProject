@@ -9,8 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <select id="return" resultType="ReturnDTO" parameterType="String">
-select 
-       s.sid,
+select DISTINCT 
 	   o.oid,
        o.oproductname,
        o.oprice,
@@ -25,8 +24,8 @@ select
     on g.gid= t.gid
   join orders o
     on o.opindex = t.opindex
- where s.sid=#{sid} 
-
+ where s.sid=#{sid}
+ order by o.oid 
 
 
 </select>

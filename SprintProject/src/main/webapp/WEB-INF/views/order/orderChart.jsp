@@ -32,29 +32,30 @@
 		var opindex = $(".opindex").val();
 	});//구매자정보 조회
 	
-	
-	//환불요청페이지
-	$(".ordercancel").click(function () {
+	//환불요청
+	$(".ordercancel2").click(function () {
 		
-			var oid = $(this).attr("data-num");
-			console.log(oid);
-		$.ajax({
-			type:"POST",
-			url:"return_goods",
-			data:{
-				oid:oid
-			},
-			dataType:"text",
-			success: function (data,status,xhr) {
-				console.log(success);
-				alert("환불요청이 완료되었습니다");
-			},
-			error: function(xhr,status,error) {
-				console.log(error);
-			}
-		})//ajax end
-	
-	});//환불요청 end
+		var opindex = $(this).attr("data-num");
+		var confirmed = $(".ordercancel").val();
+		console.log(gid,confirmed);
+	$.ajax({
+		type:"POST",
+		url:"return_goods",
+		data:{
+			opindex:opindex,
+			confirmed:confirmed
+		},
+		dataType:"text",
+		success: function (data,status,xhr) {
+			
+			alert("환불요청이 완료되었습니다");
+		},
+		error: function(xhr,status,error) {
+			console.log(error);
+		}
+	})//ajax end
+
+});//환불요청 end
 	
 	
 	})
@@ -137,8 +138,7 @@
 									</td>
 									<td class="button">
                               			<a href="" class="review">리뷰작성</a>
-										<!-- <a href="" class="ordercancel">반품요청</a> -->
-										<button class="ordercancel" data-num="${dto.opindex}">반품요청</button>	
+                              			<button class="ordercancel2" data-num="${dto.opindex}" value="2">반품요청</button>
                                			<a href="" class="deliver">배송조회</a>
                            			</td>
 								

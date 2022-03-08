@@ -208,6 +208,22 @@ public class OrderDAO {
 
 
 
+	public int return_goods(OrderProductDetailDTO dto) {
+		// TODO Auto-generated method stub
+		int num = session.update("OrderMapper.ret", dto);
+		return num;
+	}
+
+
+
+	public int return_goods2(OrderDTO dto) {
+		// TODO Auto-generated method stub\
+		int num = session.update("OrderMapper.ref2", dto);
+		return num;
+	}
+
+
+
 
 	
 

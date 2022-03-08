@@ -31,17 +31,19 @@
 	//환불요청페이지
 	$(".ordercancel").click(function () {
 		
-			var oid = $(this).attr("data-num");
-			console.log(oid);
+			var gid = $(this).attr("data-num");
+			var confirmed = $(".ordercancel").val();
+			console.log(gid,confirmed);
 		$.ajax({
 			type:"POST",
 			url:"return_goods",
 			data:{
-				oid:oid
+				gid:gid,
+				confirmed:confirmed
 			},
 			dataType:"text",
 			success: function (data,status,xhr) {
-				console.log(success);
+				
 				alert("환불요청이 완료되었습니다");
 			},
 			error: function(xhr,status,error) {
@@ -140,8 +142,7 @@
                                             </td>
                                             <td class="button">
                                                   <a href="" class="review">리뷰작성</a>
-                                                  <%-- <a href="" class="ordercancel" data-num="${odto.gid}">반품요청</a>
-                                                   --%><button class="ordercancel" data-num="${odto.gid}">반품요청</button>
+                                               	  <button class="ordercancel" data-num="${odto.gid}" value="1">반품요청</button>
                                                   <a href="" class="deliver">배송조회</a>
                                                </td>
                                         

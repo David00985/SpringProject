@@ -106,6 +106,33 @@ public class OrderService {
 
 
 
+	public int return_goods(OrderProductDetailDTO dto) {
+		// TODO Auto-generated method stub
+		int num = dao.return_goods(dto);
+		return num;
+	}
+
+
+
+	public int return_goods2(OrderDTO dto) {
+		// TODO Auto-generated method stub
+		
+		int num = dao.return_goods2(dto);
+		return num;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.CouponUserDTO;
@@ -47,13 +48,43 @@ public class OrderController {
 		System.out.println("배송조회");
 		return "deliver";
 	}
-	
+	//개별반품처리
 	@RequestMapping(value = "/return_goods")
-	public String return_goods() {
+	@ResponseBody
+	public String return_goods(String gid,OrderProductDetailDTO dto,
+			String confirmed) {
 		System.out.println("반품완료");
+		
+		dto.setConfirmed(Integer.parseInt(confirmed));
+		dto.setGid(gid);
+		
+		int num = service.return_goods(dto);
+		System.out.println(num);
+		
+
+	
 		
 		return "success";
 	}
+	//묶음 반품
+	@RequestMapping(value = "return_goods2")
+	@ResponseBody
+	public String return_goods2(OrderDTO dto,String oconfirmed,String opindex) {
+		
+		System.out.println("묶음 반품");
+		
+		dto.setOconfirmed(Integer.parseInt(oconfirmed));
+		dto.setOpindex(Integer.parseInt(opindex));
+		
+		int num = service.return_goods2(dto);
+		System.out.println(num);
+		
+		
+		
+		
+		return "success";
+	}
+	
 	
 	
 	
