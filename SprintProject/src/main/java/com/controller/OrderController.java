@@ -66,6 +66,8 @@ public class OrderController {
 		
 		return "success";
 	}
+	
+	
 	//묶음 반품
 	@RequestMapping(value = "return_goods2")
 	@ResponseBody
@@ -77,11 +79,8 @@ public class OrderController {
 		dto.setOpindex(Integer.parseInt(opindex));
 		
 		int num = service.return_goods2(dto);
-		System.out.println(num);
-		
-		
-		
-		
+		System.out.println(num);		
+	
 		return "success";
 	}
 	

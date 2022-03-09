@@ -36,14 +36,14 @@
 	$(".ordercancel2").click(function () {
 		
 		var opindex = $(this).attr("data-num");
-		var confirmed = $(".ordercancel").val();
-		console.log(gid,confirmed);
+		var oconfirmed = $(".ordercancel2").val();
+		console.log(opindex,oconfirmed);
 	$.ajax({
 		type:"POST",
-		url:"return_goods",
+		url:"return_goods2",
 		data:{
 			opindex:opindex,
-			confirmed:confirmed
+			oconfirmed:oconfirmed
 		},
 		dataType:"text",
 		success: function (data,status,xhr) {
