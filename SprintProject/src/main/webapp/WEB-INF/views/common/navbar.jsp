@@ -10,7 +10,27 @@
 	
 %>
 
+<script type="text/javascript" src="resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
 
+	$(function() {
+		
+		$(".passwd-selectM").on("click", function() {//소비자용
+			
+			window.open("passwdselect", 
+						"passwdselect",
+						"width=476px height=315px"); //비밀번호 찾기위해 새로운창 열림 
+		})
+		$(".passwd-selectS").on("click", function() {//판매자용
+			
+			window.open("sellerpasswdselect", 
+						"sellerpasswdselect",
+						"width=400px height=250px"); //비밀번호 찾기위해 새로운창 열림 
+		})
+	
+	})//end ready
+	
+</script>
 <!-- header section starts -->
 <div class="nav-container">
 
@@ -58,7 +78,7 @@
 	            <input type="password" name="mpw" placeholder="enter your password" class="login-box">
 	            <div class="flex">
 	                <a href="memberForm">회원가입</a>
-	                <a href="#">비번찾기</a>
+	                <a href="#" class="passwd-selectM">비번찾기</a>
 	            </div>
 	            <input type="submit" value="login now" class="btn-main">
 	        </form>
@@ -69,7 +89,7 @@
 	            <input type="text" name="spw" placeholder="enter your password" class="login-box">
 	            <div class="flex">
 	                <a href="memberForm">회원가입</a>
-	                <a href="#">비번찾기</a>
+	                <a href="#" class="passwd-selectS">비번찾기</a>
 	            </div>
 	            <input type="submit" value="login now" class="btn-main">
 	        </form>

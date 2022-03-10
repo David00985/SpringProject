@@ -23,7 +23,19 @@
 <script type="text/javascript">
 
 	$(function() {
-	
+		
+		$(".passwd-selectM").on("click", function() {//소비자용
+			
+			window.open("passwdselect", 
+						"passwdselect",
+						"width=476px height=315px"); //비밀번호 찾기위해 새로운창 열림 
+		})
+		$(".passwd-selectS").on("click", function() {//판매자용
+			
+			window.open("sellerpasswdselect", 
+						"sellerpasswdselect",
+						"width=400px height=250px"); //비밀번호 찾기위해 새로운창 열림 
+		})
 	
 	})//end ready
 	
@@ -46,7 +58,7 @@
 				</div>
 				<div class="input-text">
 					<a href="memberForm">회원가입</a> <!-- 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-					<a href="#">비번찾기</a>
+					 <a href="" class="passwd-selectM">비번찾기</a>
 				</div>
 				<input type="submit" value="Login Now" class="btn-loginForm solid1">
 
@@ -79,7 +91,7 @@
 				</div>
 				<div class="input-text">
 					<a href="memberForm">회원가입</a> <!-- 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-					<a href="#">비번찾기</a>
+					<a href="" class="passwd-selectS">비번찾기</a>
 				</div>
 				<input type="submit" value="Login Now" class="btn-loginForm ">
 

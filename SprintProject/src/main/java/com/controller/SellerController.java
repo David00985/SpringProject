@@ -173,6 +173,10 @@ public class SellerController {
 
 //----------------파일업로드 구역
 	
+	@RequestMapping(value = "/selectpasswdS" , method = RequestMethod.GET)
+	public void mailTest(@RequestParam SellerDTO dto ) {
+		System.out.println("1234");
+	}
 	
 	
 	@RequestMapping(value = "/SellerGoodsIDCheck", produces = "text/plain;charset=utf-8")
@@ -473,6 +477,8 @@ public class SellerController {
 		
 		return alert;
 	}
+	
+	
 	
 	
 	//리뷰 관리 화면.. 

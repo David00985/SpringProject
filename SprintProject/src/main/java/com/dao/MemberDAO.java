@@ -43,4 +43,9 @@ public class MemberDAO {
 		int m = session.update("MemberMapper.memberUpdate", dto);
 		return m;
 	}
+
+	public MemberDTO selectpasswdM(MemberDTO dto) {
+		MemberDTO member = session.selectOne("MemberMapper.selectpasswdM",dto);
+		return member;
+	}
 }

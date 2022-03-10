@@ -51,7 +51,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where mid = #{mid}
    </update>
 	
-	
+<select id="selectpasswdM" resultType="MemberDTO" parameterType="MemberDTO">
+	select
+			memail1, <!--  아이디 메일주소  -->
+			memail2, <!--  도메인 주소  -->
+			mpw, <!-- 회원의 비밀번호   -->
+			mname <!-- 회원의 이름 -->
+ 	  from member 
+  	 where 
+  	   mid = #{mid} 
+  	   and 
+  	 mname = #{mname} 
+  	   and 
+   mphone1 = #{mphone1}
+       and 
+   mphone2 = #{mphone2}
+       and 
+   mphone3 = #{mphone3}
+</select>
 
 
 
