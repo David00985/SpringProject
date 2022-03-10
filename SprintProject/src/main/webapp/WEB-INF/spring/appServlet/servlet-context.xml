@@ -13,9 +13,11 @@
 <mvc:annotation-driven></mvc:annotation-driven>
 
 <mvc:view-controller path="/" view-name="main"/><!--  /요청   main.JSP  -->
-<mvc:view-controller path="/main" view-name="main"/><!--  /요청   main.JSP  -->
 <mvc:view-controller path="/loginForm" view-name="loginForm"/><!--  /요청   loginForm.JSP  -->
+<mvc:view-controller path="/main" view-name="main"/><!--  /요청   main.JSP  -->
 <mvc:view-controller path="/memberForm" view-name="memberForm"/><!--  /요청   memberForm.JSP  -->
+<mvc:view-controller path="/passwdselect" view-name="passwdselect"/><!--  /요청   memberForm.JSP  -->
+<mvc:view-controller path="/sellerpasswdselect" view-name="sellerpasswdselect"/><!--  /요청   memberForm.JSP  -->
 
 
 
@@ -63,7 +65,23 @@
     <property name="defaultEncoding" value="utf-8" />
 </bean>
 
-
+<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.naver.com" />
+	<property name="port" value="465" />
+	<property name="username" value="qwerkpjh@naver.com" /> <!-- 보내는 사람의 메일아이디 -->
+	<property name="password" value="bang1082**" /> <!-- 보내는사람의 메일 비밀번호   -->
+	<property name="defaultEncoding" value="utf-8" />
+	<property name="javaMailProperties">
+		<props>
+			<prop key="mail.debug">true</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+			<prop key="mail.smtp.auth">true</prop>
+			<prop key="mail.smtps.ssl.trust">*</prop>
+			<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+		</props>
+	</property>
+</bean>
 
 
 

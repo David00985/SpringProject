@@ -44,6 +44,11 @@ public class MemberService {
 		int m = dao.memberUpdate(dto);
 		return m;
 	}
+
+	public MemberDTO selectpasswdM(MemberDTO dto) {
+		MemberDTO member = dao.selectpasswdM(dto);
+		return member;
+	}
 	
 	
 	

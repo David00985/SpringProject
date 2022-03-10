@@ -2,24 +2,30 @@ package com.controller;
 
 import java.util.HashMap;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dto.MemberDTO;
+import com.dto.SellerDTO;
 import com.service.MemberService;
+
 
 @Controller
 public class MemberController {
 
 	@Autowired
 	MemberService mservice;
+	@Autowired//메일 전송을위해 추가한 함수
+	JavaMailSenderImpl mailSender;
 	
 	//로그인
 	@RequestMapping(value = "/loginM")
@@ -135,6 +141,46 @@ public class MemberController {
 		}
 		return nextpage;
 	}
+	
+	//비밀번호 메일 전송을 위한 함수
+	@RequestMapping(value = "/selectpasswdM")
+	public @ResponseBody String mailTest(MemberDTO dto) {
+			
+		MemberDTO member = mservice.selectpasswdM(dto);
+		
+		 
+        String subject = member.getMname()+"님의 비밀번호 입니다."; // 메일제목
+        String content = "비밀번호 :"+member.getMpw(); // 메일 내용 
+        String from = "qwerkpjh@naver.com"; //보내는 사람의 이메일 주소 
+        String to = member.getMemail1()+"@"+member.getMemail2(); // 받는 사람의 이메일 주소 
+        
+        try {
+            MimeMessage mail = mailSender.createMimeMessage();
+            MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8"); // 한글화 
+            // true는 멀티파트 메세지를 사용하겠다는 의미
+        
+            
+            mailHelper.setFrom(from);
+            // 빈에 아이디 설정한 것은 단순히 smtp 인증을 받기 위해 사용 따라서 보내는이(setFrom())반드시 필요
+            mailHelper.setTo(to);
+            mailHelper.setSubject(subject);
+            mailHelper.setText(content, true);
+            // true는 html을 사용하겠다는 의미입니다.
+     
+            
+            mailSender.send(mail);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "성공";
+	}
+	
+
+	
+	
+	
 	
 	
 }

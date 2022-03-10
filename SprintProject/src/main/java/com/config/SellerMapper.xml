@@ -73,17 +73,18 @@ select o.gprice, r.code, c.usedtime from orderproductdetail o
 </select>
 
 <select id="Recentorderstatus" resultType="OrderDTO" parameterType="String" >
-select o.oname, o.oprice, d.deliverystatus, c.opaymentcheckstatus,o.ordate 
+select o.oname, o.oprice, d.deliverystatus, c.opaymentcheckstatus,o.ordate
  from orders o 
 		join orderdelivery d on o.odelivery = d.odelivery 
         join orderpaymentcheck c on o.opaymentcheck = c.opaymentcheck 
         join goods r on r.gimage1 = o.oimage 
-            where r.sid = #{sid} and o.ordate in 
-            	(select ordate 
+        join orderproductdetail  g on g.opindex = o.opindex
+            where r.sid = #{sid} and o.opindex in 
+            	(select opindex 
             	   from 
-            	   	(select ordate , ROW_NUMBER() over (order by ordate desc) r from orders)
-                      where r between 1 and 10) 
-        order by o.ordate desc   
+            	   	(select opindex , ROW_NUMBER() over (order by opindex desc) r from orders)
+                      where r between 1 and 18) 
+        order by o.opindex desc
 </select>
 
 <select id="TotalUserCount" resultType="int" parameterType="String">
