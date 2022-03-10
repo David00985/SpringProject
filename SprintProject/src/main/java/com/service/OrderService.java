@@ -101,6 +101,7 @@ public class OrderService {
 	public List<OrderChartDTO> orderChart_info(OrderChartDTO dto) {
 		// TODO Auto-generated method stub
 		List<OrderChartDTO> list = dao.orderChart_info(dto);
+		System.out.println("service");
 		return list;
 	}
 

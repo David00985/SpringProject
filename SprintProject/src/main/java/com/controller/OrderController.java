@@ -103,9 +103,9 @@ public class OrderController {
 
 		
 		
-		List<OrderChartDTO> orderlist = list.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
+		//List<OrderChartDTO> orderlist = list.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
 	
-		System.out.println(orderlist);
+		//System.out.println(orderlist);
 
 	
 		System.out.println(list);
@@ -115,7 +115,7 @@ public class OrderController {
 		ModelAndView mav = new ModelAndView();
 		
 
-		mav.addObject("info", orderlist);
+		//mav.addObject("info", orderlist);
 
 		mav.addObject("info", list);
 
