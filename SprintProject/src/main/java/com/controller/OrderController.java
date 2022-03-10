@@ -86,18 +86,22 @@ public class OrderController {
 	
 	//주문상세조회
 	@RequestMapping(value = "/orderChart_info")
-	public  ModelAndView orderChart_info(int opindex,HttpSession session) {
+	public  ModelAndView orderChart_info(int oid,HttpSession session) {
 		System.out.println("구매자정보조회");
 		
 		MemberDTO mdto = (MemberDTO)session.getAttribute("login_member");
 		String mid = mdto.getMid();
 		
-		System.out.println(opindex);
+		System.out.println(oid);
 		System.out.println(mid);
 		
 		OrderChartDTO dto = new OrderChartDTO();
 		dto.setMid(mid);
-		dto.setOid(opindex);
+		dto.setOid(oid);
+		
+//		HashMap<String, String> map = new HashMap<String, String>();
+//		map.put("mid", mid);
+//		map.put("oid", oid);
 		
 		List<OrderChartDTO> list = service.orderChart_info(dto);	
 		System.out.println(list);

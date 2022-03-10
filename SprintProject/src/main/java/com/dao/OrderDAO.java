@@ -203,6 +203,7 @@ public class OrderDAO {
 	public List<OrderChartDTO> orderChart_info(OrderChartDTO dto) {
 		// TODO Auto-generated method stub
 		List<OrderChartDTO> list = session.selectList("OrderMapper.info", dto);
+		System.out.println(dto);
 		return list;
 	}
 

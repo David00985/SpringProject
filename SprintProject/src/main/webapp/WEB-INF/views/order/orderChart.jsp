@@ -115,7 +115,7 @@
                            </a>
                            </td>
 									<td class="product">
-                              <a href="orderChart_info?opindex=${dto.opindex}" class="name" type="submit"><strong>${dto.oproductname}</strong>
+                              <a href="orderChart_info?oid=${dto.oid}" class="name" type="submit"><strong>${dto.oproductname}</strong>
                               
 										<span class="icon"></span></a>
 										<ul
