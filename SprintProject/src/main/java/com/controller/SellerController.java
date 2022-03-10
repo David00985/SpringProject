@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,14 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
-import com.dto.MemberDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
+import com.dto.ReturnDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
 import com.dto.StockPageDTO;
@@ -40,7 +38,7 @@ import com.service.SellerService;
 @Controller
 public class SellerController {
 	private static final String CURR_IMAGE_REPO_PATH = 
-			"C:\\Users\\Bbangs\\git\\SpringProject\\SprintProject\\src\\main\\webapp\\resources\\images\\items";
+			"C:\\Users\\ASUS\\Desktop\\SpringProject\\SprintProject\\src\\main\\webapp\\resources\\images\\items";
 	@Autowired
 	SellerService service;
 	
@@ -492,17 +490,30 @@ public class SellerController {
 	
 	//Q&A 관리 화면.. 
 		@RequestMapping(value = "/qna")
-		public String qna() {
+		public String qna() {	
 			
 			return  "s_qna";
 		}
+	
 		
-	//반품 관리 화면.. 
+		//반품정보 페이지
 		@RequestMapping(value = "/returnGoods")
-		public String returnGoods() {
+		public String returnGoods(HttpSession session) {
 			
-			return  "s_return";
+			System.out.println("반품현황");
+			
+			SellerDTO sdto = (SellerDTO) session.getAttribute("login_seller");
+			String sid = sdto.getSid();
+
+			
+			List<ReturnDTO> list =  service.s_return(sid);
+			System.out.println(list);
+			
+			session.setAttribute("return", list);
+			
+			return "s_return";		
 		}
+		
 		
 		
 	//배송 관리 화면.. 
@@ -522,15 +533,27 @@ public class SellerController {
 			
 			return  "s_delivery";
 		}
-		
-		@RequestMapping(value = "/delivery_update")
+		//배송현황 수정
+		@RequestMapping(value = "/deliveryupdate")
 		@ResponseBody
-		public String SellerStockAdd(String deliverystatus, HttpSession session) {
+		public String deliveryupdate(@RequestParam String odelivery,String oid,HttpSession session) {
 			System.out.println("배송현황 수정");
-			System.out.println(deliverystatus);
+			
+			OrderDTO dto = new OrderDTO();
+			dto.setOdelivery(Integer.parseInt(odelivery));
+			dto.setOid(Integer.parseInt(oid));
+
 			
 			
-			return "redirect:delivery";
+			int num = service.deliveryupdate(dto);
+		
+			return "success";
 		}
 	
+		
+		
+		
+		
+		
+		
 }

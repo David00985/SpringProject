@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import com.dao.SellerDAO;
 import com.dto.CouponUserDTO;
 import com.dto.GoodsDTO;
+import com.dto.OrderChartDTO;
 import com.dto.OrderDTO;
 import com.dto.OrderProductDetailDTO;
 import com.dto.PageDTO;
+import com.dto.ReturnDTO;
 import com.dto.SellerDTO;
 import com.dto.StockDTO;
 import com.dto.StockPageDTO;
@@ -172,6 +174,25 @@ public class SellerService {
 		List<Integer> list = dao.totalinventory(sid);
 		return list;
 	}
+
+	public int deliveryupdate(OrderDTO dto) {
+		// TODO Auto-generated method stub
+		int num = dao.deliveryupdate(dto);
+		System.out.println(num);
+		System.out.println("서비스");
+		return num;
+	}
+
+	public List<ReturnDTO> s_return(String sid) {
+		// TODO Auto-generated method stub
+		List<ReturnDTO> list = dao.s_return(sid);
+		return list;
+	}
+
+	
+
+
+
 
 
 	 

@@ -200,10 +200,26 @@ public class OrderDAO {
 
 
 
-	public List<OrderChartDTO> orderChart_info(HashMap<String, String> map) {
+	public List<OrderChartDTO> orderChart_info(OrderChartDTO dto) {
 		// TODO Auto-generated method stub
-		List<OrderChartDTO> list = session.selectList("OrderMapper.info", map);
+		List<OrderChartDTO> list = session.selectList("OrderMapper.info", dto);
 		return list;
+	}
+
+
+
+	public int return_goods(OrderProductDetailDTO dto) {
+		// TODO Auto-generated method stub
+		int num = session.update("OrderMapper.ret", dto);
+		return num;
+	}
+
+
+
+	public int return_goods2(OrderDTO dto) {
+		// TODO Auto-generated method stub\
+		int num = session.update("OrderMapper.ref2", dto);
+		return num;
 	}
 
 

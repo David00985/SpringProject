@@ -7,35 +7,42 @@
   <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
 
 
+
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 </script>
+
 <script type="text/javascript">
 $(function() {
 	
 	
 	//배송현황 업데이트
-	$(".del_submit").click(function () {
-		
-		var status = $("select[name=status]").val();
-
-		$ajax({
+	$(".del_submit").on("click",function () {
+		var oid = $(this).attr("data-num");
+		var odelivery = $("#status_del").val();
+		console.log(odelivery,oid);
+		 
+		 $.ajax({
 			type:"POST",
-			url:"delivery_update",
+			url:"deliveryupdate",
 			data:{
-				status:status
+				odelivery:odelivery,
+				oid:oid
 			},
-			dataType:"json",
+			dataType:"text",
 			success: function (data,status,xhr) {
 				console.log(data);
 				alert("배송현황이 수정되었습니다.");
+				location.reload();		
 			},
 			error: function (xhr,status,error) {
 				console.log(error);
 			}
 			
 			
-		})//ajax end
-		
+		});//ajax end 
+		 
 		
 	});//업데이트 end
 	
@@ -43,8 +50,8 @@ $(function() {
 })//update end
 	
 
-
 </script>
+
 
 <!-- 여기서부터 작성하면 됩니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <hr>
@@ -55,7 +62,7 @@ $(function() {
 <div class="table-responsive" style="padding: 20px;">
 
 	<table class="table">
-		<thead class="bg-light">
+	
 			<tr>
 				<th>주문번호</th>
 				<th>상품명</th>
@@ -63,32 +70,39 @@ $(function() {
 				<th>배송현황</th>
 			</tr>
 
-		</thead>
-		<tbody>
+	
+	
 			<c:forEach var="del" items="${del}" varStatus="status">
 			<tr>
-				<td>${del.opindex}</td>
+				<td class="oid+${del.oid}" id="oid">${del.oid}</td>
 				<td>${del.oproductname}</td>
 				<td>${del.oprice}</td>
 				<c:choose>
-					<c:when test="${del.odelivery != 0 }"><td>${del.deliverystatus}</td></c:when>					
 					
+						<c:when test="${del.odelivery != 0 }"><td>${del.deliverystatus}</td></c:when>					
 						<c:when test="${del.opaymentcheck == 1}"><td>결재 완료</td></c:when>
 						<c:when test="${del.opaymentcheck == 0}"><td>결재 진행중</td></c:when>
-				
+					<c:otherwise>
+					</c:otherwise>
 				</c:choose>
-				<td><select name="status" class="status" >
-				<option value="주문 완료">주문 완료</option>
-				<option value="배송 대기">배송 준비중</option>
-				<option value="배송중">배송중</option>
-				<option value="배송 완료">배송 완료</option>
-				<option value="환불중">환불중</option>
+				
+				<td>
+				<select name="status" class="status" id="status_del">
+				<option value="none" selected>==선택==</option>
+				<option value="1">상품인수</option>
+				<option value="2">배송준비중</option>
+				<option value="3">상품이동중</option>
+				<option value="4">배송중</option>
+				<option value="5">배송완료</option>
 				</select>
-				<input type="submit" name="submit" class="del_submit" value="수정">
+				 <input type="submit" class="del_submit" value="update"  data-num="${del.oid}">
+				</td>
+				
+				
 			</tr>
 			</c:forEach>	
 
-		</tbody>
+	
 	</table>
 </div>
 

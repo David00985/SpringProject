@@ -28,10 +28,33 @@
 			window.open(popUrl,"배송조회",popOption);
 	})//배송조회페이지 end
 		
+	//환불요청페이지
+	$(".ordercancel").click(function () {
+		
+			var gid = $(this).attr("data-num");
+			var confirmed = $(".ordercancel").val();
+			console.log(gid,confirmed);
+		$.ajax({
+			type:"POST",
+			url:"return_goods",
+			data:{
+				gid:gid,
+				confirmed:confirmed
+			},
+			dataType:"text",
+			success: function (data,status,xhr) {
+				
+				alert("환불요청이 완료되었습니다");
+			},
+			error: function(xhr,status,error) {
+				console.log(error);
+			}
+		})//ajax end
 	
+	});//환불요청 end
 
 	
-	})
+	});//ready end
 	
 
 
@@ -109,12 +132,19 @@
 				                               <c:set var= "total" value="${total + (odto.gprice * odto.gamount)}" />
                                             </td>
                                             <td class="del">
-                                                <strong>배송중</strong>
+                                                <strong><c:choose>
+													<c:when test="${odto.odelivery != 0 }"><span>${odto.deliverystatus}</span></c:when>					
+													
+														<c:when test="${odto.opaymentcheck == 1}"><span>결재 완료</span></c:when>
+														<c:when test="${odto.opaymentcheck == 0}"><span>결재 진행중</span></c:when>
+													
+												
+													</c:choose></strong>
                                             </td>
                                             <td class="button">
                                                   <a href="" class="review">리뷰작성</a>
-                                                <a href="" class="ordercancel">반품요청</a>	
-                                                   <a href="" class="deliver">배송조회</a>
+                                               	  <button class="ordercancel" data-num="${odto.gid}" value="1">반품요청</button>
+                                                  <a href="" class="deliver">배송조회</a>
                                                </td>
                                         
                                         </tr>

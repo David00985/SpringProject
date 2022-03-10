@@ -57,6 +57,7 @@
 				<value>com.dto.OrderProductDetailDTO</value>	
 				<value>com.dto.OrderProductDTO</value>	
 				<value>com.dto.OrderChartDTO</value>	
+				<value>com.dto.ReturnDTO</value>	
 			</list>		
 		</property>
 	</bean>	

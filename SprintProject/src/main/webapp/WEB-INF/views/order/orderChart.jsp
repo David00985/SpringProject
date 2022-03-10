@@ -32,8 +32,30 @@
 		var opindex = $(".opindex").val();
 	});//구매자정보 조회
 	
-	
-	
+	//환불요청
+	$(".ordercancel2").click(function () {
+		
+		var opindex = $(this).attr("data-num");
+		var oconfirmed = $(".ordercancel2").val();
+		console.log(opindex,oconfirmed);
+	$.ajax({
+		type:"POST",
+		url:"return_goods2",
+		data:{
+			opindex:opindex,
+			oconfirmed:oconfirmed
+		},
+		dataType:"text",
+		success: function (data,status,xhr) {
+			
+			alert("환불요청이 완료되었습니다");
+		},
+		error: function(xhr,status,error) {
+			console.log(error);
+		}
+	})//ajax end
+
+});//환불요청 end
 	
 	
 	})
@@ -86,7 +108,7 @@
 							
 							<c:forEach items="${orderChart}" var="dto" varStatus="status"> 
 								<tr class="order_infolist">
-									<td class="opindex" value="${dto.opindex}">${dto.opindex}</td>
+									<td class="opindex">${dto.opindex}</td>
 									<td class="thumb">
                               <a href="">
                               <img alt="" src="resources/images/items/${dto.oimage}" id = image>
@@ -106,11 +128,18 @@
 										</div>
 									</td>
 									<td class="del">
-										<strong>배송중</strong>
+										<c:choose>
+													<c:when test="${dto.odelivery != 0 }"><span>${dto.deliverystatus}</span></c:when>					
+													
+													<c:when test="${dto.opaymentcheck == 1}"><span>결재 완료</span></c:when>
+													<c:when test="${dto.opaymentcheck == 0}"><span>결재 진행중</span></c:when>
+													<c:when test="${dto.oconfirmed == 2}"><span>환불중</span></c:when>
+												
+										</c:choose>
 									</td>
 									<td class="button">
                               			<a href="" class="review">리뷰작성</a>
-										<a href="" class="ordercancel">반품요청</a>	
+                              			<button class="ordercancel2" data-num="${dto.oid}" value="2">반품요청</button>
                                			<a href="" class="deliver">배송조회</a>
                            			</td>
 								

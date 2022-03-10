@@ -98,11 +98,39 @@ public class OrderService {
 
 
 
-	public List<OrderChartDTO> orderChart_info(HashMap<String, String> map) {
+	public List<OrderChartDTO> orderChart_info(OrderChartDTO dto) {
 		// TODO Auto-generated method stub
-		List<OrderChartDTO> list = dao.orderChart_info(map);
+		List<OrderChartDTO> list = dao.orderChart_info(dto);
+		System.out.println("service");
 		return list;
 	}
+
+
+
+	public int return_goods(OrderProductDetailDTO dto) {
+		// TODO Auto-generated method stub
+		int num = dao.return_goods(dto);
+		return num;
+	}
+
+
+
+	public int return_goods2(OrderDTO dto) {
+		// TODO Auto-generated method stub
+		
+		int num = dao.return_goods2(dto);
+		return num;
+	}
+
+
+
+
+
+
+
+
+
+
 
 
 
