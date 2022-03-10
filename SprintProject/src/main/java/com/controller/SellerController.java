@@ -38,7 +38,7 @@ import com.service.SellerService;
 @Controller
 public class SellerController {
 	private static final String CURR_IMAGE_REPO_PATH = 
-			"C:\\Users\\Bbangs\\git\\SpringProject\\SprintProject\\src\\main\\webapp\\resources\\images\\items";
+			"C:\\Users\\ASUS\\Desktop\\SpringProject\\SprintProject\\src\\main\\webapp\\resources\\images\\items";
 	@Autowired
 	SellerService service;
 	
@@ -484,7 +484,7 @@ public class SellerController {
 	
 	//Q&A 관리 화면.. 
 		@RequestMapping(value = "/qna")
-		public String qna() {
+		public String qna() {	
 			
 			return  "s_qna";
 		}
@@ -537,7 +537,8 @@ public class SellerController {
 			dto.setOdelivery(Integer.parseInt(odelivery));
 			dto.setOid(Integer.parseInt(oid));
 
-		
+			
+			
 			int num = service.deliveryupdate(dto);
 		
 			return "success";

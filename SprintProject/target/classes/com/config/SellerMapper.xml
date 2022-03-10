@@ -11,12 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="return" resultType="ReturnDTO" parameterType="String">
 select DISTINCT 
 	   o.oid,
+	   t.gname,
        o.oproductname,
        o.oprice,
        o.oimage,
        o.oname,
        o.oaddress1,
-       o.oconfirmed
+       o.oconfirmed,
+       t.confirmed
   from seller s
   join goods g
     on s.sid = g.sid

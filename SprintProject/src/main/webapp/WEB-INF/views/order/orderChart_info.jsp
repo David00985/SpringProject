@@ -137,6 +137,7 @@
 													
 														<c:when test="${odto.opaymentcheck == 1}"><span>결재 완료</span></c:when>
 														<c:when test="${odto.opaymentcheck == 0}"><span>결재 진행중</span></c:when>
+													
 												
 													</c:choose></strong>
                                             </td>

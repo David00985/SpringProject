@@ -98,9 +98,9 @@ public class OrderService {
 
 
 
-	public List<OrderChartDTO> orderChart_info(HashMap<String, String> map) {
+	public List<OrderChartDTO> orderChart_info(OrderChartDTO dto) {
 		// TODO Auto-generated method stub
-		List<OrderChartDTO> list = dao.orderChart_info(map);
+		List<OrderChartDTO> list = dao.orderChart_info(dto);
 		return list;
 	}
 

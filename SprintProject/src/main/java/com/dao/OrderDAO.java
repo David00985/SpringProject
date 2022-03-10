@@ -200,9 +200,9 @@ public class OrderDAO {
 
 
 
-	public List<OrderChartDTO> orderChart_info(HashMap<String, String> map) {
+	public List<OrderChartDTO> orderChart_info(OrderChartDTO dto) {
 		// TODO Auto-generated method stub
-		List<OrderChartDTO> list = session.selectList("OrderMapper.info", map);
+		List<OrderChartDTO> list = session.selectList("OrderMapper.info", dto);
 		return list;
 	}
 

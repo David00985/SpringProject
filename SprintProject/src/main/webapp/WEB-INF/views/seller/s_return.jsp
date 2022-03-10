@@ -33,26 +33,28 @@
 		
 		<%for(int i =0 ; i < list.size() ; i++){
 			 ReturnDTO dto = list.get(i);%>
-			 <%if(dto.getOconfirmed()==1 && dto.getOconfirmed() == 2 ) {%>
+			 <%if(dto.getOconfirmed()==1 || dto.getOconfirmed() == 2 ) {%>
 			<tr>
 				<td><%=dto.getOid() %></td>
 				<td><%=dto.getOname() %></td>
+				<%if(dto.getConfirmed() == 1) {%>
+					<td><strong><%=dto.getGname() %></strong>
+					[주소 <%=dto.getOaddress1() %>]</td>
+				<%} else if(dto.getOconfirmed() == 2){%>
+					
 				<td><strong><%=dto.getOproductname() %></strong>
-				[주소 <%=dto.getOaddress() %>]</td>
+				[주소 <%=dto.getOaddress1() %>]</td>
+				<%} %>
 				<td><%=dto.getOprice() %></td>
 				<td>
-				<%if(dto.getOconfirmed() == 1) {%>
+				<%if(dto.getConfirmed() == 1) {%>
 					개별반품
 				<%} else if(dto.getOconfirmed() == 2){%>
 					묶음반품
 				<%} %>
 				</td>
 			</tr>
-			<%}else{ %>
-			<tr>
-				<td colspan="5">반품내역이 없습니다.</td>
-			</tr>
-		<%break; } %>
+			<%}%>
 	<%} %>
 	</table>
 </div>

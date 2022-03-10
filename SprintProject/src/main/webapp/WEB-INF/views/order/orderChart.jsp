@@ -133,12 +133,13 @@
 													
 													<c:when test="${dto.opaymentcheck == 1}"><span>결재 완료</span></c:when>
 													<c:when test="${dto.opaymentcheck == 0}"><span>결재 진행중</span></c:when>
+													<c:when test="${dto.oconfirmed == 2}"><span>환불중</span></c:when>
 												
 										</c:choose>
 									</td>
 									<td class="button">
                               			<a href="" class="review">리뷰작성</a>
-                              			<button class="ordercancel2" data-num="${dto.opindex}" value="2">반품요청</button>
+                              			<button class="ordercancel2" data-num="${dto.oid}" value="2">반품요청</button>
                                			<a href="" class="deliver">배송조회</a>
                            			</td>
 								

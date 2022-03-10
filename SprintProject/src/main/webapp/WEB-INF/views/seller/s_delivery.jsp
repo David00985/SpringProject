@@ -15,7 +15,7 @@ $(function() {
 	//배송현황 업데이트
 	$(".del_submit").on("click",function () {
 		var oid = $(this).attr("data-num");
-		var odelivery = $("#status_del option:selected").val();
+		var odelivery = $("#status_del").val();
 		console.log(odelivery,oid);
 		 
 		 $.ajax({
@@ -80,8 +80,8 @@ $(function() {
 					<c:otherwise>
 					</c:otherwise>
 				</c:choose>
+				
 				<td>
-			
 				<select name="status" class="status" id="status_del">
 				<option value="none" selected>==선택==</option>
 				<option value="1">상품인수</option>
@@ -92,6 +92,8 @@ $(function() {
 				</select>
 				 <input type="submit" class="del_submit" value="update"  data-num="${del.oid}">
 				</td>
+				
+				
 			</tr>
 			</c:forEach>	
 

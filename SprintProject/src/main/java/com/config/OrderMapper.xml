@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
-	<select id="info" resultType="OrderChartDTO" parameterType="string">
+	<select id="info" resultType="OrderChartDTO" parameterType="OrderChartDTO">
 				select 
 					  o.opindex, 
 					  d.gid,
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				   on o.opindex = d.opindex 
 			left join orderdelivery l
 				   on o.odelivery = l.odelivery
-	join orderproduct c 
+			     join orderproduct c 
 				   on o.opindex = c.opindex
 		    left join coupon p
 				   on c.code = p.code

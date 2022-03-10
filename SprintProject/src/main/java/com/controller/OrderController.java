@@ -60,10 +60,7 @@ public class OrderController {
 		
 		int num = service.return_goods(dto);
 		System.out.println(num);
-		
-
 	
-		
 		return "success";
 	}
 	
@@ -71,12 +68,12 @@ public class OrderController {
 	//묶음 반품
 	@RequestMapping(value = "return_goods2")
 	@ResponseBody
-	public String return_goods2(OrderDTO dto,String oconfirmed,String opindex) {
+	public String return_goods2(OrderDTO dto,String oconfirmed,int opindex) {
 		
 		System.out.println("묶음 반품");
 		
 		dto.setOconfirmed(Integer.parseInt(oconfirmed));
-		dto.setOpindex(Integer.parseInt(opindex));
+		dto.setOpindex(opindex);
 		
 		int num = service.return_goods2(dto);
 		System.out.println(num);		
@@ -89,17 +86,22 @@ public class OrderController {
 	
 	//주문상세조회
 	@RequestMapping(value = "/orderChart_info")
-	public  ModelAndView orderChart_info(String opindex,HttpSession session) {
+	public  ModelAndView orderChart_info(int opindex,HttpSession session) {
 		System.out.println("구매자정보조회");
+		
 		MemberDTO mdto = (MemberDTO)session.getAttribute("login_member");
 		String mid = mdto.getMid();
-		System.out.println(opindex);
 		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("mid",mid);
-		map.put("opindex",opindex);
-		List<OrderChartDTO> list = service.orderChart_info(map);
+		System.out.println(opindex);
+		System.out.println(mid);
+		
+		OrderChartDTO dto = new OrderChartDTO();
+		dto.setMid(mid);
+		dto.setOid(opindex);
+		
+		List<OrderChartDTO> list = service.orderChart_info(dto);
 
+		
 		
 		List<OrderChartDTO> orderlist = list.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
 	
