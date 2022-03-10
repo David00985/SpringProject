@@ -99,24 +99,11 @@ public class OrderController {
 		dto.setMid(mid);
 		dto.setOid(opindex);
 		
-		List<OrderChartDTO> list = service.orderChart_info(dto);
-
-		
-		
-		//List<OrderChartDTO> orderlist = list.stream().distinct().collect(Collectors.toList()); //여러개의 중복사이즈 데이터중 중복된 데이터를 제거
-	
-		//System.out.println(orderlist);
-
-	
+		List<OrderChartDTO> list = service.orderChart_info(dto);	
 		System.out.println(list);
-
-
 		
 		ModelAndView mav = new ModelAndView();
 		
-
-		//mav.addObject("info", orderlist);
-
 		mav.addObject("info", list);
 
 		mav.setViewName("orderChart_info");

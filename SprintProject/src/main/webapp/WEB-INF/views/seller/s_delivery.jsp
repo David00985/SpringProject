@@ -7,12 +7,12 @@
   <jsp:include page="../common/topbar_s.jsp" flush="true"></jsp:include>  
 
 
-<<<<<<< HEAD
+
 <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-=======
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 </script>
->>>>>>> 487aac067539d066c0eb8f998386d57c72c3f6a3
+
 <script type="text/javascript">
 $(function() {
 	
