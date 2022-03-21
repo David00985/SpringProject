@@ -20,9 +20,9 @@ $(function() {
 	//배송현황 업데이트
 	$(".del_submit").on("click",function () {
 		var oid = $(this).attr("data-num");
-		var odelivery = $("#status_del").val();
+		var odelivery = $("#status_form option:selected").val();
 		console.log(odelivery,oid);
-		 
+		 //콘솔에 데이터 파싱 확인
 		 $.ajax({
 			type:"POST",
 			url:"deliveryupdate",
@@ -68,6 +68,7 @@ $(function() {
 				<th>상품명</th>
 				<th>주문가격</th>
 				<th>배송현황</th>
+				<th>배송현황수정</th>
 			</tr>
 
 	
@@ -87,7 +88,8 @@ $(function() {
 				</c:choose>
 				
 				<td>
-				<select name="status" class="status" id="status_del">
+				<form id="status_form">
+				<select name="status" class="status" id="status_del"${del.oid}>
 				<option value="none" selected>==선택==</option>
 				<option value="1">상품인수</option>
 				<option value="2">배송준비중</option>
@@ -96,8 +98,8 @@ $(function() {
 				<option value="5">배송완료</option>
 				</select>
 				 <input type="submit" class="del_submit" value="update"  data-num="${del.oid}">
+				</form>
 				</td>
-				
 				
 			</tr>
 			</c:forEach>	

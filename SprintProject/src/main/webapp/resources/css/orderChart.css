@@ -16,41 +16,11 @@ img{
 }
 
 /* -------------------------------------------------------------------------------------------- */
-.review{
-    display: block;
-    background: #030303;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    border-radius: 50px;
-    margin-bottom: 5px;
-    table-layout: fixed;
-    font-size: smaller;
-}
-.ordercancle{
-    display: block;
-    background: #030303;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    font-size: smaller;
-    border-radius: 50px;
-    margin-bottom: 5px;
-}
-.deliver{
-    display: block;
-    background: #030303;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    border-radius: 50px;
-    font-size: smaller;
-}
-/* 비고란 버튼 css---------------------------------------------------------------- */
+
 
 
 .ordertable{
-    border-collapse: collapse;
+    border-collapse: collapse; 
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0,.1);  

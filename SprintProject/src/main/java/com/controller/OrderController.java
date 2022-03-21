@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,6 @@ public class OrderController {
 		return "orderChart";
 	}
 	
-	//배송조회
-	@RequestMapping(value = "/deliver")
-	public String deliver() {
-		System.out.println("배송조회");
-		return "deliver";
-	}
 	//개별반품처리
 	@RequestMapping(value = "/return_goods")
 	@ResponseBody
@@ -68,12 +63,12 @@ public class OrderController {
 	//묶음 반품
 	@RequestMapping(value = "return_goods2")
 	@ResponseBody
-	public String return_goods2(OrderDTO dto,String oconfirmed,int opindex) {
+	public String return_goods2(OrderDTO dto,String oconfirmed,String oid) {
 		
 		System.out.println("묶음 반품");
 		
 		dto.setOconfirmed(Integer.parseInt(oconfirmed));
-		dto.setOpindex(opindex);
+		dto.setOid(Integer.parseInt(oid));
 		
 		int num = service.return_goods2(dto);
 		System.out.println(num);		
@@ -88,30 +83,25 @@ public class OrderController {
 	@RequestMapping(value = "/orderChart_info")
 	public  ModelAndView orderChart_info(int oid,HttpSession session) {
 		System.out.println("구매자정보조회");
-		
+		//컨트롤러 동작확인 
 		MemberDTO mdto = (MemberDTO)session.getAttribute("login_member");
 		String mid = mdto.getMid();
-		
+		//로그인한 소비자정보 파싱
 		System.out.println(oid);
 		System.out.println(mid);
-		
+		//데이터 확인
 		OrderChartDTO dto = new OrderChartDTO();
 		dto.setMid(mid);
 		dto.setOid(oid);
-		
-//		HashMap<String, String> map = new HashMap<String, String>();
-//		map.put("mid", mid);
-//		map.put("oid", oid);
-		
+		//dto에 파싱한데이터 입력
 		List<OrderChartDTO> list = service.orderChart_info(dto);	
+		//데이터를 List에 넣어서 서비스로 전달
 		System.out.println(list);
-		
+		//출력된데이터 확인
 		ModelAndView mav = new ModelAndView();
-		
 		mav.addObject("info", list);
-
 		mav.setViewName("orderChart_info");
-		
+		//데이터를 ModelAndView에 담아서 전달
 		return mav;
 	}
 	

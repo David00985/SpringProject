@@ -1,13 +1,5 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
 eclipse.preferences.version=1
-<<<<<<< HEAD
-<<<<<<< HEAD
-encoding//src/main/webapp/WEB-INF/views/order/deliver.jsp=UTF-8
-=======
 encoding//src/main/webapp/WEB-INF/views/seller/s_dashBoard.jsp=UTF-8
->>>>>>> fc40e3f06e83d94950214d80595ade2079ca469a
-=======
-encoding//src/main/webapp/WEB-INF/views/seller/s_dashBoard.jsp=UTF-8
-=======
-encoding//src/main/webapp/WEB-INF/views/order/deliver.jsp=UTF-8
->>>>>>> 3be8d7efc05616087999de4db2d33e068c02c46a
->>>>>>> 0fa53c3b7c7f9c631a5ac128c07feabab1859cdf
